@@ -1,0 +1,288 @@
+\subsection{Materiales-Pedidos}
+\subsubsection{RF5.1: Insertar nuevo material en una edición}
+
+\textbf{Entrada:} Agente externo: Organizador        Requisito de datos de entrada: RDE5.1
+
+\textbf{BD: }Requisito de datos de escritura RDW5.1
+
+\textbf{Salida:} Agente externo: ninguno
+
+Requisito de datos de salida: ninguno
+
+\textbf{RDE5.1: }Datos de entrada del patrocinador, el nuevo material y la edición
+\begin{itemize}
+	\item Edición: Número entero (4 cifras)
+\newline
+	\item Nombre de la entidad: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\newline
+	\item Nombre de material: Cadena de caracteres(30)
+	\item Cantidad suministrada:Número entero
+\end{itemize}
+
+\textbf{RDW5.1: }Datos almacenados del patrocinador, el nuevo material y la edición
+\begin{itemize}
+	\item Edición: Número entero (4 cifras)
+\newline
+	\item Nombre de la entidad: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\newline
+	\item Nombre de material: Cadena de caracteres(30)
+	\item Cantidad suministrada:Número entero
+\end{itemize}
+
+\subsubsection{RF5.2: Realizar pedido de materiales en una edición}
+\textbf{Entrada:} Agente externo: Organizador        Requisito de datos de entrada: RDE5.2
+
+\textbf{BD:} Requisito de datos de escritura RDW5.2, requisito de datos de lectura RDR5.1
+
+\textbf{Salida:} Agente externo: Patrocinador
+
+Requisito de datos de salida: RDS5.1
+
+\textbf{RDE5.2: }Datos de entrada del patrocinador, el pedido de materiales y la edición
+\begin{itemize}
+	\item Edición: Número entero (4 cifras)
+\newline
+	\item Nombre de la entidad: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\newline
+	\item Nombre de materiales solicitados: Listado de cadena de caracteres(30)
+	\item Cantidad de los materiales solicitados: Listado de números enteros
+\end{itemize}
+
+\textbf{RDW5.2:} Datos almacenados del patrocinador, el pedido de materiales y la edición
+\begin{itemize}
+	\item Edición: Número entero (4 cifras)
+\newline
+	\item Nombre de la entidad: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\newline
+	\item Nombre de materiales solicitados: Listado de cadena de caracteres(30)
+	\item Cantidad de los materiales solicitados: Listado de números enteros
+\end{itemize}
+
+\textbf{RDR5.1:} Datos de lectura del patrocinador de los materiales y cantidad solicitada
+\begin{itemize}
+	\item Nombre de la entidad: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\newline
+	\item Cantidad de los materiales solicitados: Listado de números enteros
+\end{itemize}
+
+\textbf{RDS5.1:} Datos de salida del nuevo pedido y el patrocinador
+\begin{itemize}
+	\item Número de pedido: Número entero
+\newline
+	\item Nombre de la entidad: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+    \item E-mail: cadena de caracteres (50, debe contener la @)
+    \item Teléfono: cadena numérica (12, el primero puede ser +)
+\end{itemize}
+
+\subsubsection{RF5.3: Asignar pedido a un trabajador}
+\textbf{Entrada:} Agente externo: Organizador        Requisito de datos de entrada: RDE5.3
+
+\textbf{BD:} Requisito de datos de escritura RDW5.3, requisito de datos de lectura RDR5.2
+
+\textbf{Salida:} Agente externo: Trabajador
+
+Requisito de datos de salida: RDS5.2
+
+\textbf{RDE5.3:} Datos entrada del trabajador, el pedido y la pista de recogida
+\begin{itemize}
+	\item Nombre: Cadena de caracteres (30)
+    \item Apellidos: Cadena de caracteres (60)
+    \item E-mail: cadena de caracteres (50, debe contener la @)
+    \item Teléfono: cadena numérica (12, el primero puede ser +)
+    \item Salario: tipo de dato numérico
+\newline    
+    \item Fecha: fecha en formato (DD-MM-AAAA)    
+    \item Hora de inicio: cadena numérica (HH:MM:SS)
+    \item Hora de fin: cadena numérica (HH:MM:SS)
+\newline
+    \item Número de pedido: Número entero de 4 cifras
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\newline
+    \item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+\end{itemize}
+
+\textbf{RDW5.3:} Datos almacenados del trabajador, el pedido y la pista de recogida
+\begin{itemize}
+	\item Nombre: Cadena de caracteres (30)
+    \item Apellidos: Cadena de caracteres (60)
+    \item E-mail: cadena de caracteres (50, debe contener la @)
+    \item Teléfono: cadena numérica (12, el primero puede ser +)
+    \item Salario: tipo de dato numérico
+\newline    
+    \item Fecha: fecha en formato (DD-MM-AAAA)    
+    \item Hora de inicio: cadena numérica (HH:MM:SS)
+    \item Hora de fin: cadena numérica (HH:MM:SS)
+\newline
+    \item Número de pedido: Número entero de 4 cifras
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\newline
+    \item Nombre pista recogida: cadena de caracteres (30)
+	\item Capacidad pista recogida : número entero (4 cifras)
+	\item Fecha recogida: cadena numérica (DD-MM-AAAA HH:MM:SS
+\end{itemize}
+
+\textbf{RDR5.2:} Datos de lectura del horario de un trabajador, la pista en la que trabaja y la pista y hora de recogida del pedido
+\begin{itemize}
+	\item Fecha: fecha en formato (DD-MM-AAAA)    
+    \item Hora de inicio: cadena numérica (HH:MM:SS)
+    \item Hora de fin: cadena numérica (HH:MM:SS)
+\newline
+	\item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+	\item Nombre pista recogida: cadena de caracteres (30)
+	\item Capacidad pista recogida : número entero (4 cifras)
+	\item Fecha recogida: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\textbf{RDS5.2:} Datos de salida de asignación de pedido a un trabajador
+\begin{itemize}
+	\item Número de pedido: Número entero
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+	\item Nombre de pista:Cadena de caracteres(30)
+\end{itemize}
+
+\subsubsection{RF5.4: Cancelar asignación de un pedido}
+
+\textbf{Entrada:} Agente externo: Organizador        Requisito de datos de entrada: RDE5.4
+
+\textbf{BD:} Requisito de datos de escritura RDW5.4, requisito de datos de lectura RDR5.3
+
+\textbf{Salida:} Agente externo: ninguno
+
+Requisito de datos de salida: ninguno
+
+\textbf{RDE5.4:} Datos de entrada del trabajador, el pedido y la pista de recogida
+\begin{itemize}
+    \item Nombre: Cadena de caracteres (30)
+    \item Apellidos: Cadena de caracteres (60)
+    \item E-mail: cadena de caracteres (50, debe contener la @)
+    \item Teléfono: cadena numérica (12, el primero puede ser +)
+    \item Salario: tipo de dato numérico
+\newline    
+    \item Fecha: fecha en formato (DD-MM-AAAA)    
+    \item Hora de inicio: cadena numérica (HH:MM:SS)
+    \item Hora de fin: cadena numérica (HH:MM:SS)
+\newline
+	\item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+\newline
+    \item Número de pedido: Número entero de 4 cifras
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\textbf{RDW5.4:} Datos almacenados del trabajador, el pedido y la pista de recogida
+\begin{itemize}
+    \item Nombre: Cadena de caracteres (30)
+    \item Apellidos: Cadena de caracteres (60)
+    \item E-mail: cadena de caracteres (50, debe contener la @)
+    \item Teléfono: cadena numérica (12, el primero puede ser +)
+    \item Salario: tipo de dato numérico
+\newline    
+    \item Fecha: fecha en formato (DD-MM-AAAA)    
+    \item Hora de inicio: cadena numérica (HH:MM:SS)
+    \item Hora de fin: cadena numérica (HH:MM:SS)
+\newline
+	\item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+\newline
+    \item Número de pedido: Número entero de 4 cifras
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\textbf{RDR5.3:} Datos de lectura de la fecha de recogida del pedido
+\begin{itemize}
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\subsubsection{RF5.5: Mostar pedidos realizados a un patrocinador en una edición}
+
+\textbf{Entrada:} Agente externo: Organizador    Requisito de datos de entrada: RDE5.5
+
+\textbf{BD:} Requisito de datos de lectura RDR5.4
+
+\textbf{Salida:} Agente externo: Organizador
+
+Requisito de datos de salida: RDS5.3
+
+\textbf{RDE5.5:} Datos de entrada de muestra de pedido realizados a un patrocinador
+\begin{itemize}
+	\item Edición: Número entero (4 cifras)
+\newline
+	\item Nombre de la entidad: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\end{itemize}
+
+\textbf{RDR5.4:} Datos de lectura de un pedido
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\newline
+	\item Número de pedido: número entero (4 cifras)
+	\item Nombre de materiales: Listado de cadena de caracteres(30)
+	\item Cantidad de materiales: Listado de números enteros
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\textbf{RDS5.3:} Lista de datos de salida de los pedidos realizados a un patrocinador
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\newline
+	\item Número de pedido: número entero (4 cifras)
+	\item Nombre de materiales: Listado de cadena de caracteres(30)
+	\item Cantidad de materiales: Listado de números enteros
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\subsubsection{RS5.1: Un pedido sólo puede contener materiales del mismo patrocinador}
+\textbf{RF:}5.2
+
+\textbf{RD(s):}RDE5.2, RDR5.1
+
+\textbf{Descripción: }Si a un pedido se le asigna un material de un distinto patrocinador del resto de materiales asignados, éste no queda asignado y se muestra un mensaje de error
+
+\subsubsection{RS5.2: No se puede pedir un número  mayor de materiales de los que hay}
+\textbf{RF:} 5.2
+
+\textbf{RD(s): }RDE5.2, RDR5.1
+
+\textbf{Descripción: }Si la cantidad introducida de un tipo de material es mayor a la disponible se muestra un mensaje de error y no se añade ese material al pedido
+
+\subsubsection{RS5.3: No se puede asignar un pedido a un trabajador que no está trabajando a esa hora y en esa pista}
+\textbf{RF:} 5.3
+
+\textbf{RD(s)}: RDE5.3, RDR5.2
+
+\textbf{Descripción:} Si se cancela la asignación de un pedido a un trabajador el mismo día de su entrega, se cancela la operación y se muestra un mensaje de error
+
+\subsubsection{RS5.4: No se puede cancelar la asignación de un pedido a un trabajador el mismo día que se va a entregar}
+\textbf{RF:}5.4
+
+\textbf{RD(s):}RDE5.4, RDR5.3
+
+\textbf{Descripción:} ``Si se cancela la asignación de un pedido a un trabajador el mismo día de su entrega, se cancela la operación y se muestra un mensaje de error''
+
+\subsubsection{RS5.5: No se puede asignar un nuevo pedido al mismo trabajador con menos de una hora de diferencia}
+\textbf{RF:}5.3
+
+\textbf{RD(s):} RDE5.3, RDR 5.2
+
+\textbf{Descripción:} Si se asigna un nuevo pedido al mismo trabajador con menos de una hora de diferencia se cancela la asignación y se muestra un mensaje de error
+

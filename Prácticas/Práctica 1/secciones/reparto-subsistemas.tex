@@ -1,0 +1,91 @@
+\section{Reparto de los subsistemas}
+\subsection{Jugadores-Entrenadores: Clara María Romero Lara}
+\subsubsection{Requisitos funcionales}
+\begin{itemize}
+	\item Insertar nuevo jugador en la base de datos
+	\item Asignar entrenador a pareja en una edición del torneo
+	\item Consultar entrenadores y parejas que entrena en esa edición
+	\item Inscribir pareja de jugadores en una edición
+	\item Mostrar las parejas de jugadores por ranking en una edición
+\end{itemize}
+
+\subsubsection{Condiciones}
+\begin{itemize}
+	\item Una pareja sólo puede tener un entrenador en una edición
+	\item Un jugador no puede pertenecer a dos parejas distintas en la misma edición
+\end{itemize}
+
+\subsection{Pistas-Partidos: Javier Expósito Martínez}
+\subsubsection{Requisitos funcionales}
+\begin{itemize}
+	\item Insertar partido
+	\item Añadir resultado a un partido
+	\item Mostrar los partidos que se juegan en una pista en una edición
+	\item Cambiar el árbitro de un partido
+	\item Mostrar pistas sin ningún partido asignado en esa edición
+\end{itemize}
+
+\subsubsection{Condiciones}
+\begin{itemize}
+	\item No se pueden solapar los horarios de dos partidos en una misma pista con menos de 3 horas de diferencia
+	\item En una misma pista no se pueden jugar más de dos partidos en el mismo día
+	\item Sólo puedo asignar árbitros que hayan aceptado una oferta en esta edición
+	\item Un árbitro no puede llevar más de un partido por día
+	\item No se puede añadir un resultado a un partido cuya fecha de inicio es posterior a la fecha actual
+\end{itemize}
+
+\subsection{Patrocinadores-Colaboradores: Leire Requena Garcia}
+\subsubsection{Requisitos funcionales}
+\begin{itemize}
+	\item Insertar una nueva entidad
+	\item Registrar entidad como colaborador en una edición
+	\item Mostrar dinero total obtenido en una edición
+	\item Modificar el dinero aportado por un colaborador en una edición
+	\item Eliminar patrocinador de una edición
+\end{itemize}
+
+\subsubsection{Condiciones}
+\begin{itemize}
+	\item Una entidad no puede colaborar y patrocinar en la misma edición
+	\item No se puede modificar el dinero aportado por un colaborador o patrocinador si ya ha comenzado el torneo
+	\item No se puede eliminar un patrocinador o colaborador si ya ha comenzado el torneo
+\end{itemize}
+
+\subsection{Personal-Horarios: Laura Sánchez Sánchez}
+\subsubsection{Requisitos funcionales}
+\begin{itemize}
+	\item Trabajar en una edición.
+	\item Asignar horario de trabajo a un trabajador.
+	\item Mostrar el personal que no trabaja en una edición.
+	\item Mostrar el total de salarios pagados en una edición.
+	\item Mostrar los trabajadores de una edición ordenados por horas trabajadas.
+\end{itemize}
+
+\subsubsection{Condiciones}
+\begin{itemize}
+	\item No se pueden solapar los horarios de un trabajador con menos de una hora de diferencia
+	\item No se puede asignar a un trabajador la misma pista más de dos veces el mismo día
+	\item No se puede trabajar más de 8 horas el mismo día
+	\item No puedo modificar el salario de un trabajador si ya ha realizado algún trabajo
+\end{itemize}
+
+\subsection{Materiales-Pedidos: Inés Nieto Sánchez}
+\subsubsection{Requisitos funcionales}
+\begin{itemize}
+	\item Insertar nuevo material en una edición.
+	\item Realizar pedido de materiales en una edición.
+	\item Asignar pedido a un trabajador.
+	\item Cancelar la asignación de un pedido.
+	\item Mostrar pedidos realizados por un patrocinador en una edición.
+\end{itemize}
+
+\subsubsection{Condiciones}
+\begin{itemize}
+	\item Un pedido sólo puede contener materiales del mismo patrocinador
+	\item No puedo asignar un pedido a un trabajador que no está trabajando a esa hora en esa pista
+	\item No se puede cancelar un pedido que ya esté asignado a un trabajador
+	\item No puedo cancelar la asignación de un pedido a un trabajador el mismo día en el que se va a entregar
+	\item No puedo asignar un nuevo pedido al mismo trabajador con menos de una hora de diferencia
+	\item Sólo se puede marcar un pedido como recibido después de la fecha en la que estaba prevista la entrega
+\end{itemize}
+

@@ -1,0 +1,242 @@
+\subsection{Personal-Horarios}
+\subsubsection{RF4.1: Alta a un nuevo personal}
+
+\textbf{Entrada:} Agente externo: Personal            Requisito de datos de entrada: RDE4.1
+
+\textbf{BD:} Requisito de datos de escritura RDW4.1
+
+\textbf{Salida:} Agente externo: Ninguno
+
+Requisito de datos de salida: ninguno
+
+\textbf{RDE4.1:} Datos de entrada de alta del personal
+\begin{itemize}
+	\item Nombre: Cadena de caracteres (30)
+	\item Apellidos: Cadena de caracteres (60)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser ``+'')
+\end{itemize}
+
+\textbf{RDW4.1:} Datos almacenados del personal
+\begin{itemize}
+	\item Nombre: Cadena de caracteres (30)
+	\item Apellidos: Cadena de caracteres (60)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser ``+'')
+\end{itemize}
+
+\subsubsection{RF4.2: Asignar horario de trabajo a un trabajador}
+
+\textbf{Entrada:} Agente externo: Organizador         Requisito de datos de entrada: RDE4.2
+
+\textbf{BD:} Requisito de datos de lectura RDR4.1, requisito de datos de escritura RDW4.2
+
+\textbf{Salida:} Agente externo: Trabajador
+
+Requisito de datos de salida: RDS4.1
+
+\textbf{RDE4.2:} Datos de entrada del horario, el trabajador, la pista y la edición
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Fecha: cadena numérica (DD-MM-AAAA)    
+    \item Hora de inicio: cadena numérica (HH:MM:SS)
+    \item Hora de fin: cadena numérica (HH:MM:SS)
+\newline
+	\item Nombre: Cadena de caracteres (30)
+	\item Apellidos: Cadena de caracteres (60)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+	\item Salario: dato numérico
+\newline
+	\item Nombre de la pista: Cadena de caracteres (30)
+	\item Capacidad de la pista: número entero (4 cifras)
+\end{itemize}
+
+\textbf{RDW4.2:} Datos almacenados del horario, pista, el trabajador y la edición
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Fecha: cadena numérica (DD-MM-AAAA)    
+    \item Hora de inicio: cadena numérica (HH:MM:SS)
+    \item Hora de fin: cadena numérica (HH:MM:SS)
+\newline
+	\item Nombre: Cadena de caracteres (30)
+	\item Apellidos: Cadena de caracteres (60)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+	\item Salario: dato numérico
+\newline
+	\item Nombre de la pista: Cadena de caracteres (30)
+	\item Capacidad de la pista: número entero (4 cifras)
+\end{itemize}
+
+\textbf{RDR 4.1:} Datos de lectura del trabajador y su horario en la edicíon.
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Fecha: cadena numérica (DD-MM-AAAA)    
+    \item Hora de inicio: cadena numérica (HH:MM:SS)
+    \item Hora de fin: cadena numérica (HH:MM:SS)
+\newline
+	\item Nombre: Cadena de caracteres (30)
+	\item Apellidos: Cadena de caracteres (60)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\newline
+	\item Nombre de la pista: Cadena de caracteres (30)
+	\item Capacidad de la pista: número entero (4 cifras)
+\end{itemize}
+
+
+\textbf{RDS4.1:} Datos del horario, pistas asignadas y trabajador:
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Fecha: cadena numérica (DD-MM-AAAA)    
+    \item Hora de inicio: cadena numérica (HH:MM:SS)
+    \item Hora de fin: cadena numérica (HH:MM:SS)
+\newline
+	\item Nombre: Cadena de caracteres (30)
+	\item Apellidos: Cadena de caracteres (60)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+	\item Salario: dato numérico
+\newline
+	\item Nombre de la pista: Cadena de caracteres (30)
+	\item Capacidad de la pista: número entero (4 cifras)
+\end{itemize}
+
+\subsubsection{RF4.3: Mostrar el personal que no trabaja en una edición}
+
+\textbf{Entrada:} Agente externo: Organizador        Requisito de datos de entrada: RDE4.3
+
+\textbf{BD:} Requisito de datos de lectura RDR4.2
+
+\textbf{Salida:} Agente externo: Organizador
+
+Requisito de datos de salida: RDS4.2
+
+\textbf{RDE4.3:} Datos de entrada de la edición
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\end{itemize}
+
+\textbf{RDR4.2:} Datos de lectura del personal y los horarios
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Fecha: cadena numérica (DD-MM-AAAA)    
+    \item Hora de inicio: cadena numérica (HH:MM:SS)
+    \item Hora de fin: cadena numérica (HH:MM:SS)
+\newline
+	\item Nombre: Cadena de caracteres (30)
+	\item Apellidos: Cadena de caracteres (60)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\end{itemize}
+
+\textbf{RDS4.2:} Datos de salida del personal
+\begin{itemize}
+	\item Nombre: Cadena de caracteres (30)
+	\item Apellidos: Cadena de caracteres (60)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\end{itemize}
+
+\subsubsection{RF4.4: Mostrar el total de salarios pagados en una edición}
+
+\textbf{Entrada:} Agente externo: Organizador    Requisito de datos de entrada: RDE4.4
+
+\textbf{BD:} Requisito de datos de lectura RDR4.3
+
+\textbf{Salida:} Agente externo: Organizador
+
+Requisito de datos de salida: RDS4.3
+
+\textbf{RDE4.4:} Datos de entrada de la edición
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\end{itemize}
+
+\textbf{RDR4.3:} Datos de lectura de edición y salario por horas de la edición.
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Fecha: cadena numérica (DD-MM-AAAA)    
+    \item Hora de inicio: cadena numérica (HH:MM:SS)
+    \item Hora de fin: cadena numérica (HH:MM:SS)
+\newline
+	\item Nombre: Cadena de caracteres (30)
+	\item Apellidos: Cadena de caracteres (60)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+	\item Salario: dato numérico
+\end{itemize}
+
+\textbf{RDS4.3:} Datos de salida del salario
+ \begin{itemize}
+	\item Total: tipo de dato numérico
+\end{itemize}
+
+
+
+\subsubsection{RF4.5: Mostrar los trabajadores de una edición ordenados por horas trabajadas}
+
+\textbf{Entrada:} Agente externo: Organizador         Requisito de datos de entrada: RDE4.5
+
+\textbf{BD:} Requisito de datos de lectura RDR4.4
+
+\textbf{Salida:} Agente externo: Organizador
+
+Requisito de datos de salida: RDS4.4
+
+\textbf{RDE4.5:} Datos de entrada de la edición
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\end{itemize}
+
+\textbf{RDR4.4:} Datos almacenados de los trabajadores
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Fecha: cadena numérica (DD-MM-AAAA)    
+    \item Hora de inicio: cadena numérica (HH:MM:SS)
+    \item Hora de fin: cadena numérica (HH:MM:SS)
+\newline
+	\item Nombre: Cadena de caracteres (30)
+	\item Apellidos: Cadena de caracteres (60)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\end{itemize}
+
+\textbf{RDS4.4:} Datos de salida de los trabajadores
+\begin{itemize}
+	\item Nombre: Cadena de caracteres (30)
+	\item Apellidos: Cadena de caracteres (60)
+	\item Salario por hora: tipo de dato numérico
+	\item Número de horas trabajadas: tipo de dato numérico
+	\item Salario total cobrado: tipo de dato numérico
+\end{itemize}
+
+\subsubsection{RS4.1: No se pueden solapar los horarios de un trabajador con menos de 1h de diferencia de descanso}
+\textbf{RF:} 4.2
+
+\textbf{RD(s):} RDE4.2, RDR4.1
+
+\textbf{Descripción:} Si al trabajador le asignamos un horario que no cumple con las condiciones, no se guarda la petición en la base de datos y se muestra un mensaje de error.
+
+\subsubsection{RS4.2: No se puede asignar un trabajador a una pista más de dos veces}
+\textbf{RF:} 4.2
+
+\textbf{RD(s):} RDE4.2, RDR4.1
+
+\textbf{Descripción:} Si el trabajador ha sido asignado a esa pista dos veces en ese día, no se le asigna esa pista al trabajador y se devuelve un error.
+
+\subsubsection{RS4.3: No puede trabajar más de 8h en el mismo dia}
+\textbf{RF:} 4.2
+
+\textbf{RD(s):} RDE4.2, RDR4.1
+
+\textbf{Descripción:} Si el horario introducido a ese trabajador supera las 8 horas, no se introduce tal horario en la base de datos y se muestra un mensaje de error.
+\pagebreak

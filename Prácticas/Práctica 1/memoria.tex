@@ -1,0 +1,36 @@
+\documentclass[11pt, a4paper]{aqademic}
+
+\usepackage[spanish]{babel}
+	\selectlanguage{spanish}
+
+\usepackage{graphicx}
+  \graphicspath{{img/}}
+
+\usepackage{pdfpages}
+
+\title{Sistema de un torneo de pádel}
+\author{Expósito, Nieto, Sánchez, Requena, Romero}
+
+\AqSetChapter{Práctica}
+\AqSetSection{}
+
+\begin{document}
+\AqMaketitle[
+	author    = {Javier Expósito Martínez, Inés Nieto Sánchez, Laura Sánchez Sánchez, Leire Requena Garcia, Clara María Romero Lara},
+	cover      = logo-ugr.png,
+	org         = Diseño y Desarrollo de Sistemas de Información
+]
+
+\tableofcontents
+\chapter{Análisis y especificación de requisitos en un Sistema de Información}
+	\input{secciones/descripcion-sistema.tex}
+	\pagebreak
+	\input{secciones/reparto-subsistemas.tex}
+	\pagebreak
+	\input{secciones/requisitos-funcionales.tex}
+	\pagebreak
+	\input{secciones/dfds.tex}
+\appendix
+	\input{secciones/repo.tex}
+
+\end{document}

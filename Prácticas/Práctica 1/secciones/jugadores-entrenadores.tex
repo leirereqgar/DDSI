@@ -1,0 +1,259 @@
+\subsection{Jugadores-Entrenadores}
+
+\subsubsection{RF1.1: Insertar nuevo jugador en la base de datos}
+
+\textbf{Entrada:} Agente externo: Jugador        Requisito de datos de entrada: RDE1.1
+
+\textbf{BD:} Requisito de datos de escritura RDW1.1
+
+\textbf{Salida:} Agente externo: ninguno
+
+Requisito de datos de salida: ninguno
+
+\textbf{RDE1.1:} Datos de entrada de jugador:
+\begin{itemize}
+	\item Nombre: cadena de caracteres (30)
+	\item Apellidos: cadena de caracteres (60)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+	\item E-mail: cadena de caracteres (50, debe contener @)
+\end{itemize}
+\textbf{RDW1.1:} Datos almacenados del jugador:
+\begin{itemize}
+	\item Nombre: cadena de caracteres (30)
+	\item Apellidos: cadena de caracteres (60)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+	\item E-mail: cadena de caracteres (50, debe contener @)
+\end{itemize}
+
+
+\subsubsection{RF1.2: Asignar entrenador a pareja en una edición del torneo}
+
+\textbf{Entrada:} Agente externo: Jugador        Requisito de datos de entrada: RDE1.2
+
+\textbf{BD:} Requisito de datos de escritura RDW1.2, requisito de datos de lectura RDR1.1
+
+\textbf{Salida:} Agente externo: ninguno
+
+Requisito de datos de salida: ninguno
+
+\textbf{RDE1.2:} Datos de entrada de entrenador, la pareja y la edición:
+\begin{itemize}
+	\item Edición: número entero (4, corresponde al año)
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1l: cadena de caracteres (50, debe contener la @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 2: cadena de caracteres (50)
+\newline
+	\item Nombre entrenador: cadena de caracteres (30)
+	\item Apellidos entrenador: cadena de caracteres (60)
+	\item Teléfono entrenador: cadena numérica (12, el primero puede ser +)
+	\item E-mail entrenador: cadena de caracteres (50)
+\end{itemize}
+
+\textbf{RDW1.2:} Datos almacenados de la pareja:
+\begin{itemize}
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener la @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser  +)
+	\item E-mail jugador 2: cadena de caracteres (50)
+\newline
+	\item Nombre entrenador: cadena de caracteres (30)
+	\item Apellidos entrenador: cadena de caracteres (60)
+	\item Teléfono entrenador: cadena numérica (12, el primero puede ser +)
+	\item E-mail entrenador: cadena de caracteres (50)
+\end{itemize}
+
+\textbf{RDR1.1:} Datos de salida de la pareja:
+\begin{itemize}
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener la @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser  +)
+	\item E-mail jugador 2: cadena de caracteres (50)
+\newline
+	\item Nombre entrenador: cadena de caracteres (30)
+	\item Apellidos entrenador: cadena de caracteres (60)
+	\item Teléfono entrenador: cadena numérica (12, el primero puede ser +)
+	\item E-mail entrenador: cadena de caracteres (50)
+\end{itemize}
+
+\subsubsection{RF1.3: Consultar entrenadores y parejas que entrena en esa edición}
+
+\textbf{Entrada:} Agente externo: Organizador    Requisito de datos de entrada: RDE1.3
+
+\textbf{BD:} Requisito de datos de lectura RDR1.2
+
+\textbf{Salida:} Agente externo: Organizador
+
+Requisito de datos de salida: RDS1.1
+
+\textbf{RDE1.3:} Datos de entrada de edición:
+\begin{itemize}
+	\item Edición: número entero (4, corresponde al año)
+\end{itemize}
+
+\textbf{RDR1.2:} Datos de lectura de pareja y entrenador:
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener la @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser  +)
+	\item E-mail jugador 2: cadena de caracteres (50)
+\newline
+	\item Nombre entrenador: cadena de caracteres (30)
+	\item Apellidos entrenador: cadena de caracteres (60)
+	\item Teléfono entrenador: cadena numérica (12, el primero puede ser  +)
+	\item E-mail entrenador: cadena de caracteres (50, debe contener la @)
+\end{itemize}
+
+\textbf{RDS1.1:} Datos de salida de pareja y entrenador:
+\begin{itemize}
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener la @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser  +)
+	\item E-mail jugador 2: cadena de caracteres (50)
+\end{itemize}
+
+\subsubsection{RF1.4: Inscribir pareja de jugadores en una edición}
+
+\textbf{Entrada:} Agente externo: Jugador        Requisito de datos de entrada: RDE1.4
+
+\textbf{BD:} Requisito de datos de escritura RDW1.3, requisito de datos de lectura RDR1.3
+
+\textbf{Salida:} Agente externo: ninguno
+
+Requisito de datos de salida: ninguno
+
+\textbf{RDE1.4:} Datos de entrada de la pareja:
+\begin{itemize}
+	\item Edición: número entero (4, corresponde al año)
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener la @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser  +)
+	\item E-mail jugador 2: cadena de caracteres (50)
+\end{itemize}
+
+\textbf{RDW1.3:} Datos almacenados del jugador:
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener la @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser  +)
+	\item E-mail jugador 2: cadena de caracteres (50)
+\end{itemize}
+
+\textbf{RDR1.3:} Datos de salida del jugador:
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener la @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser  +)
+	\item E-mail jugador 2: cadena de caracteres (50)
+\end{itemize}
+
+
+\subsubsection{RF1.5: Mostrar las parejas de jugadores por ranking en una edición}
+
+\textbf{Entrada:} Agente externo: Organizador        Requisito de datos de entrada: RDE1.5
+
+\textbf{BD:} Requisito de datos de lectura RDR1.4
+
+\textbf{Salida:} Agente externo: Organizador
+
+Requisito de datos de salida: RDS1.2
+
+\textbf{RDE1.5:} Datos de entrada de ranking y edición:
+\begin{itemize}
+	\item Edición: número entero (4, corresponde al año)
+	\item Cota superior: número entero
+\end{itemize}
+
+\textbf{RDR1.1:} Datos almacenados del jugador:
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+	\item Posición ranking: número entero (hasta 2 cifras)
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener la @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser  +)
+	\item E-mail jugador 2: cadena de caracteres (50)
+\end{itemize}
+
+\textbf{RDS1.2:} Datos almacenados del jugador:
+\begin{itemize}
+	\item Posición de la pareja: número entero (hasta 2 cifras)
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener la @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser  +)
+	\item E-mail jugador 2: cadena de caracteres (50)
+\end{itemize}
+
+\subsubsection{RS1.1: Una pareja solo puede tener un entrenador en una edición}
+\textbf{RF:} RF1.2
+
+\textbf{RD(s):} RDE1.2,RDR1.1
+
+\textbf{Descripción:} Si ya existe un entrenador asignado a la pareja, el nuevo entrenador no se registra y se da un mensaje de error
+
+\subsubsection{RS1.2: Un jugador no puede pertenecer a dos parejas distintas en la misma edición}
+\textbf{RF:} RF1.4
+
+\textbf{RD(s):} RDE1.4, RDR1.3
+
+\textbf{Descripción:} Si un jugador que ya pertenece a una pareja se intenta registrar con otra, la nueva pareja no se registra y se da un mensaje de error
+\pagebreak

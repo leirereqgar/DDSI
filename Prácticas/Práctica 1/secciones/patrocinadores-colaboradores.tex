@@ -1,0 +1,202 @@
+\subsection{Colaboradores-Patrocinadores}
+\subsubsection{RF3.1: Insertar una nueva entidad}
+
+\textbf{Entrada:} Agente externo: Entidad         Requisito de datos de entrada: RDE3.1
+
+\textbf{BD:} Requisito de datos de escritura RDW3.1
+
+\textbf{Salida:} Agente externo:
+
+Requisito de datos de salida:
+
+\textbf{RDE3.1:} Datos de la nueva entidad
+\begin{itemize}
+	\item Nombre: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser ``+'')
+\end{itemize}
+
+\textbf{RDW3.1:} Datos almacenados de la entidad
+\begin{itemize}
+	\item Nombre: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser ``+'')
+\end{itemize}
+
+\subsubsection{RF3.2: Registrar entidad como colaborador en una edición}
+
+\textbf{Entrada:} Agente externo: Entidad    Requisito de datos de entrada: RDE3.2
+
+\textbf{BD:} Requisito de datos de escritura RDW3.2, requisito de lectura RDR3.1
+
+\textbf{Salida:} Agente externo:
+
+Requisito de datos de salida: no tiene
+
+\textbf{RDE3.2:} Datos de la nueva entidad colaboradora
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Nombre de la entidad: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\newline
+	\item Cantidad monetaria: dos campos de números enteros
+\end{itemize}
+
+\textbf{RDW3.2:} Datos almacenados del nuevo colaborador
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Nombre de la entidad: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\newline
+	\item Cantidad monetaria: dos campos de números enteros
+\end{itemize}
+
+\textbf{RDR3.1:} Datos almacenados de los patrocinadores
+\begin{itemize}
+	\item Nombre del patrocinador: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\end{itemize}
+
+\subsubsection{RF3.3: Mostrar dinero aportado por un colaborador en una edición}
+
+\textbf{Entrada:} Agente externo: Organizador     Requisito de datos de entrada:RDE3.3
+
+\textbf{BD:} Requisito de datos de RDR3.2
+
+\textbf{Salida:} Agente externo: Organizador
+
+Requisito de datos de salida: RDS3.1
+
+\textbf{RDE3.3:} Datos del colaborador que se quiere consultar
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Nombre del colaborador: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\end{itemize}
+
+\textbf{RDR3.2:} Datos almacenados de un colaborador
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Nombre del colaborador: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\newline
+	\item Cantidad monetaria: dos campos de números enteros
+\end{itemize}
+
+\textbf{RDS3.1:} Dinero aportado por un colaborador:
+\begin{itemize}
+	\item Cantidad monetaria: dos campos de números enteros
+\end{itemize}
+
+\subsubsection{RF3.4: Modificar el dinero aportado por un colaborador en una edición}
+
+\textbf{Entrada:} Agente externo: colaborador    Requisito de datos de entrada: RDE3.4
+
+\textbf{BD:} Requisito de datos de escritura RDW3.3, requisito de datos de lectura RDR3.3
+
+\textbf{Salida:} Agente externo:
+
+Requisito de datos de salida:
+
+\textbf{RDE3.4:} Datos del colaborador almacenado
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Nombre del colaborador: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\newline
+	\item Cantidad monetaria: dos campos de números enteros
+\end{itemize}
+
+\textbf{RDW3.4:} Nueva cantidad aportada por el colaborador
+\begin{itemize}
+	\item Nombre del colaborador: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\newline
+	\item Cantidad monetaria: dos campos de números enteros
+\end{itemize}
+
+\textbf{RDR3.3:} datos almacenados de la edición
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+	\item Fecha inicio de la edición: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\subsubsection{RF3.5: Eliminar patrocinador de una edición}
+
+\textbf{Entrada:} Agente externo: patrocinador     Requisito de datos de entrada: RDE3.5
+
+\textbf{BD:} Requisito de datos de escritura RDW3.4, requisito de datos de lectura RDR3.4
+
+\textbf{Salida:} Agente externo:
+
+Requisito de datos de salida:
+
+\textbf{RDE3.5:} datos del patrocinador a eliminar
+\begin{itemize}
+	\item Nombre del colaborador: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\end{itemize}
+
+\textbf{RDW3.4:} datos almacenados del patrocinador
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+\newline
+	\item Nombre del colaborador: cadena de caracteres (30)
+	\item Persona de contacto: cadena de caracteres (80)
+	\item E-mail: cadena de caracteres (50, debe contener la @)
+	\item Teléfono: cadena numérica (12, el primero puede ser +)
+\newline
+	\item Cantidad monetaria: dos campos de números enteros
+\end{itemize}
+
+\textbf{RDR3.4:} datos almacenados de la edición
+\begin{itemize}
+	\item Edición: número entero (4 cifras)
+	\item Fecha inicio de la edición: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\subsubsection{RS3.1: Una entidad no puede colaborar y patrocinar en la misma edición}
+\textbf{RF:} 3.2
+
+\textbf{RD(s):} RDE3.2, RDR3.1
+
+\textbf{Descripción:} Una entidad no puede ser colaborador y patrocinador en la misma edición, si ya está registrado como uno de los dos al intentar inscribirse como el otro da un mensaje de error.
+
+\subsubsection{RS3.2: No modificar el dinero de un colaborador si ya ha empezado el torneo}
+\textbf{RF:} 3.4
+
+\textbf{RD(s):} RDE3.4, RDR3.3
+
+\textbf{Descripción:} No se puede modificar el dinero aportado por un colaborador o patrocinador si ya ha empezado el torneo.
+
+\subsubsection{RS3.3: No eliminar un patrocinador o colaborador con el torneo empezado}
+\textbf{RF:}3.5
+
+\textbf{RD(s): }RDE3.5, RDR3.4
+
+\textbf{Descripción:} No se puede eliminar un patrocinador o colaborador si ya ha comenzado el torneo.
+
+\pagebreak

@@ -1,0 +1,387 @@
+\subsection{Pistas-Partidos}
+
+\subsubsection{RF2.1: Insertar partido}
+\textbf{Entrada:} Agente externo: Organizador    Requisito de datos de entrada:RDE2.1
+
+\textbf{BD:} Requisito de datos de  escritura RDW2.1, requisito de datos de lectura RDR2.1
+
+\textbf{Salida:} Agente externo:Ninguno
+
+Requisito de datos de salida:
+
+\textbf{RDE2.1:} Datos de entrada del partido
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 2: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 3: cadena de caracteres (30)
+	\item Apellidos jugador 3: cadena de caracteres (60)
+	\item Teléfono jugador 3: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 3: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 4: cadena de caracteres (30)
+	\item Apellidos jugador 4: cadena de caracteres (60)
+	\item Teléfono jugador 4: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 4: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre árbitro: cadena de caracteres (30)
+	\item Apellidos árbitro: cadena de caracteres (60)
+	\item Teléfono árbitro: cadena numérica (12, el primero puede ser +)
+	\item E-mail árbitro: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+
+\end{itemize}
+
+\textbf{RDW2.1:} Datos almacenados del partido
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 2: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 3: cadena de caracteres (30)
+	\item Apellidos jugador 3: cadena de caracteres (60)
+	\item Teléfono jugador 3: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 3: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 4: cadena de caracteres (30)
+	\item Apellidos jugador 4: cadena de caracteres (60)
+	\item Teléfono jugador 4: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 4: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre árbitro: cadena de caracteres (30)
+	\item Apellidos árbitro: cadena de caracteres (60)
+	\item Teléfono árbitro: cadena numérica (12, el primero puede ser +)
+	\item E-mail árbitro: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\textbf{RDR2.1:} Datos de lectura de la pista en la que se jugará el partido
+\begin{itemize}
+	\item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\subsubsection{RF2.2: Añadir resultado a un partido}
+\textbf{Entrada:} Agente externo:Organizador    Requisito de datos de entrada: RDE2.2
+
+\textbf{BD:} Requisito de datos de  escritura RDW2.2, requisito de datos de lectura RDR2.2
+
+\textbf{Salida:} Ninguna   Agente externo: Ninguno
+
+Requisito de datos de salida:
+
+\textbf{RDE2.2:} Datos de entrada del resultado
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 2: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 3: cadena de caracteres (30)
+	\item Apellidos jugador 3: cadena de caracteres (60)
+	\item Teléfono jugador 3: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 3: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 4: cadena de caracteres (30)
+	\item Apellidos jugador 4: cadena de caracteres (60)
+	\item Teléfono jugador 4: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 4: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre árbitro: cadena de caracteres (30)
+	\item Apellidos árbitro: cadena de caracteres (60)
+	\item Teléfono árbitro: cadena numérica (12, el primero puede ser +)
+	\item E-mail árbitro: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\newline
+	\item Nº sets pareja 1: número entero (1 cifras)
+	\item Nº sets pareja 2: número entero (1 cifras)
+\end{itemize}
+
+
+\textbf{RDW2.2:} Datos almacenados del resultado
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 2: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 3: cadena de caracteres (30)
+	\item Apellidos jugador 3: cadena de caracteres (60)
+	\item Teléfono jugador 3: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 3: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 4: cadena de caracteres (30)
+	\item Apellidos jugador 4: cadena de caracteres (60)
+	\item Teléfono jugador 4: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 4: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre árbitro: cadena de caracteres (30)
+	\item Apellidos árbitro: cadena de caracteres (60)
+	\item Teléfono árbitro: cadena numérica (12, el primero puede ser +)
+	\item E-mail árbitro: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\newline
+	\item Resultado: cadena de caracteres(30)
+	\item Nº sets pareja 1: número entero (1 cifras)
+	\item Nº sets pareja 2: número entero (1 cifras)
+\end{itemize}
+
+\textbf{RDR2.2: }Fecha en la que se juega el partido
+\begin{itemize}
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+     
+\subsubsection{RF2.3: Mostrar partidos que se juegan en una pista en una edición}
+\textbf{Entrada:} Agente externo: Organizador        Requisito de datos de entrada: RDE2.3
+
+\textbf{BD:} Requisito de datos de  lectura RDR2.3
+
+\textbf{Salida:} Agente externo:Organizador
+
+Requisito de datos de salida: RDS2.1
+
+\textbf{RDE2.3:} Datos de entrada para la búsqueda de los partidos
+\begin{itemize}
+	\item Edición: número entero de 4 cifras
+	\item Nombre de la pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+\end{itemize}
+
+\textbf{RDR2.3:} Datos de lectura de los partidos
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 2: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 3: cadena de caracteres (30)
+	\item Apellidos jugador 3: cadena de caracteres (60)
+	\item Teléfono jugador 3: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 3: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 4: cadena de caracteres (30)
+	\item Apellidos jugador 4: cadena de caracteres (60)
+	\item Teléfono jugador 4: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 4: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre árbitro: cadena de caracteres (30)
+	\item Apellidos árbitro: cadena de caracteres (60)
+	\item Teléfono árbitro: cadena numérica (12, el primero puede ser +)
+	\item E-mail árbitro: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\textbf{RDS2.1:} Datos de salida de los partidos
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 2: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 3: cadena de caracteres (30)
+	\item Apellidos jugador 3: cadena de caracteres (60)
+	\item Teléfono jugador 3: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 3: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 4: cadena de caracteres (30)
+	\item Apellidos jugador 4: cadena de caracteres (60)
+	\item Teléfono jugador 4: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 4: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre árbitro: cadena de caracteres (30)
+	\item Apellidos árbitro: cadena de caracteres (60)
+	\item Teléfono árbitro: cadena numérica (12, el primero puede ser +)
+	\item E-mail árbitro: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\subsubsection{RF2.4: Cambiar árbitro de un partido}
+\textbf{Entrada:} Agente externo: Organizador        Requisito de datos de entrada: RDE2.4
+
+\textbf{BD:} Requisito de datos de  escritura RDW2.3
+
+\textbf{Salida:} Agente externo:
+
+Requisito de datos de salida: Ninguno
+
+\textbf{RDE2.4:} Datos de entrada del árbitro nuevo
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 2: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 3: cadena de caracteres (30)
+	\item Apellidos jugador 3: cadena de caracteres (60)
+	\item Teléfono jugador 3: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 3: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 4: cadena de caracteres (30)
+	\item Apellidos jugador 4: cadena de caracteres (60)
+	\item Teléfono jugador 4: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 4: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre árbitro: cadena de caracteres (30)
+	\item Apellidos árbitro: cadena de caracteres (60)
+	\item Teléfono árbitro: cadena numérica (12, el primero puede ser +)
+	\item E-mail árbitro: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\textbf{RDW2.3:} Datos de escritura del árbitro nuevo
+\begin{itemize}
+	\item Edición: Número entero de 4 cifras
+\newline
+	\item Nombre jugador 1: cadena de caracteres (30)
+	\item Apellidos jugador 1: cadena de caracteres (60)
+	\item Teléfono jugador 1: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 1: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 2: cadena de caracteres (30)
+	\item Apellidos jugador 2: cadena de caracteres (60)
+	\item Teléfono jugador 2: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 2: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 3: cadena de caracteres (30)
+	\item Apellidos jugador 3: cadena de caracteres (60)
+	\item Teléfono jugador 3: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 3: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre jugador 4: cadena de caracteres (30)
+	\item Apellidos jugador 4: cadena de caracteres (60)
+	\item Teléfono jugador 4: cadena numérica (12, el primero puede ser +)
+	\item E-mail jugador 4: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre árbitro: cadena de caracteres (30)
+	\item Apellidos árbitro: cadena de caracteres (60)
+	\item Teléfono árbitro: cadena numérica (12, el primero puede ser +)
+	\item E-mail árbitro: cadena de caracteres (50, debe contener @)
+\newline
+	\item Nombre pista: cadena de caracteres (30)
+	\item Capacidad pista : número entero (4 cifras)
+	\item Fecha: cadena numérica (DD-MM-AAAA HH:MM:SS)
+\end{itemize}
+
+\subsubsection{RF2.5:Mostrar pistas sin ningún partido asignado en esta edición}
+\textbf{Entrada:} Agente externo: Organizador        Requisito de datos de entrada:RDE2.5
+
+\textbf{BD:} Requisito de datos de  lectura RDR2.4
+
+\textbf{Salida:} Agente externo:Organizador
+
+Requisito de datos de salida:RDS2.2
+
+\textbf{RDE2.5 :}Datos de la edición
+\begin{itemize}
+	\item Edición: número entero de 4 cifras
+\end{itemize}
+
+\textbf{RDR2.4:} Datos de lectura de las pistas sin ningún partido asignado
+\begin{itemize}
+	\item Nombre de la pista:cadenas de caracteres (30)
+	\item Capacidad de la pista: número  entero  (4 cifras)
+\end{itemize}
+
+\textbf{RDS2.2:} Datos de salida de las pistas sin ningún partido asignado
+\begin{itemize}
+	\item Nombre de la pista:cadenas de caracteres (30)
+	\item Capacidad de la pista: número  entero  (4 cifras)
+\end{itemize}
+
+\subsubsection{RS2.1: No se pueden solapar los horarios de dos partidos}
+\textbf{RF:} 2.1
+
+\textbf{RD(s):} RDE2.1,RDR2.1
+
+\textbf{Descripción:} No se pueden solapar los horarios de dos partidos en una misma pista con menos de tres horas de diferencia
+
+\subsubsection{RS2.2: No se pueden solapar dos partidos en una misma pista}
+\textbf{RF:} RF2.1
+
+\textbf{RD(s):} RDE2.1,RDR2.1
+
+\textbf{Descripción:}En una misma pista no se puede jugar más de dos partidos en un día1
+
+
+
+\subsubsection{RS2.3:No se puede añadir un resultado a un partido}
+\textbf{RF:} 2.2
+
+\textbf{RD(s):} RDE2.2 ,RDR2.2
+
+\textbf{Descripción:}No se puede añadir un resultado a un partido cuya fecha es posterior a la fecha actual
+\pagebreak

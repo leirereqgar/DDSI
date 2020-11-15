@@ -1,0 +1,26 @@
+\chapter{Descripción, introducción e histora de ERP5}
+ERP5 es un ERP de código abierto escrito en Python con bases de datos SQL. Es parte de la suite software desarrollada y mantenida por Nexedi. 
+
+Nexedi es la mayor desarrolladora estrictamente open-source en Europa. En el eslógan de ERP5 se autodenominan como el ERP open-source más potente.  
+
+Mientras que la mayoría de los ERP son desarrollados de forma específica para un único ámbito empresarial, ERP5 es apto para múltiples industrias porque utiliza un modelo abstracto, el “Unified Business Model”.
+
+
+El UBS consiste de 5 módulos base, he ahí el 5 de ERP5. Estos son: recursos, nodos, movimientos, caminos y objetos.
+
+Con estos módulos abstractos interconectados eliminamos lo específico de cada campo, y podemos adaptarnos a cualquier proceso de manera unificada. Un ejemplo: 
+\begin{itemize}
+	\item Pongamos que queremos vender una cámara por 100\$. La cámara es un recurso
+	\item Los nodos son emisores y receptores recursos: nosotros y el comprador seremos nodos
+	\item La conexión entre dos nodos es un movimiento, la venta de la cámara
+	\item Un camino es la condición bajo la cual un nodo puede acceder al recurso: para el comprador, es darnos los 100\$
+	\item Finalmente, los item son instancias físicas del recurso, por ejemplo, si asignamos un número identificador de pedido a esta cámara
+\end{itemize}
+
+El proyecto ERP5 comienza en 2001: la visión del creador, Jean-Paul Smets, era crear un modelo universal de administración.
+
+El desarrollo empieza el 10 de diciembre en la plataforma de código Ohloh, y, aunque es difícil determinarlo exactamente debido a que Ohloh ya no existe, es bastante extendido que la primera official release de código libre fue en la versión 5.0 de la aplicación, el 21 de abril del 2008. Su punto álgido de commits fue entre 2010 y 2011.
+
+En 2004, la primera implementación de prueba de ERP5 en una empresa se llevó el premio a “mejor proyecto ERP” en la revista francesa \textit{Decision Informatique}
+
+El repositorio de Github aún se usa a día de hoy. Fue creado al inicio del desarrollo, pero se empieza a utilizar en noviembre de 2003.
