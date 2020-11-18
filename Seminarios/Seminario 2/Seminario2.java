@@ -9,9 +9,9 @@ import java.util.Scanner;
 class Seminario2 {
 	public static void main(String ar[]) {
 		System.out.println("Introduzca su usuario (que coincide con su password): ");
-		String entrada																																		= "x5985367";
+		String entrada;
 		Scanner entradaEscaner = new Scanner (System.in);
-		//entrada = entradaEscaner.nextLine();
+		entrada = entradaEscaner.nextLine();
 
 		try(Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//oracle0.ugr.es:1521/practbd.oracle0.ugr.es", entrada, entrada)){
 			if(conn != null){
