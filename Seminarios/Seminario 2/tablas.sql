@@ -1,19 +1,21 @@
-CREATE TABLE Stock{
+CREATE TABLE Stock(
 	Cproducto INT NOT NULL,
 	Cantidad INT,
 	PRIMARY KEY (Cproducto)
-};
+);
 
-CREATE TABLE Pedido{
+CREATE TABLE Pedido(
 	Cpedido INT NOT NULL,
 	Ccliente INT,
-	Fecha-pedido DATE,
+	Fecha_pedido DATE,
 	PRIMARY KEY (Cpedido)
-};
+);
 
-CREATE TABLE Detalle-pedido{
-	Cpedido INT NOT NULL FOREIGN KEY REFERENCES Pedido(Cpedido),
-	Cproducto INT NOT NULL FOREIGN KEY REFERENCES Producto(Cproducto),
-	Cantidad INT,
-	PRIMARY KEY (Cpedido, Cproducto),
-};
+CREATE TABLE Detalle_pedido(
+  Cpedido INT NOT NULL,
+  Cproducto INT NOT NULL,
+  Cantidad int,
+  FOREIGN KEY(Cpedido) REFERENCES Pedido(Cpedido),
+  FOREIGN KEY(Cproducto) REFERENCES Producto(Cproducto),
+  PRIMARY KEY(Cpedido,Cproducto)
+);
