@@ -23,21 +23,6 @@ class Seminario2 {
 				Statement stmt=null;
 
 				try {
-					/*//Dropear las tablas si existen
-					query = "IF EXISTS (SELECT * FROM Detalle_pedido) DROP TABLE Detalle_pedido";
-					stmt  = conn.createStatement();
-					stmt.executeUpdate(query);
-
-					query = "IF EXISTS (SELECT * FROM Pedido) DROP TABLE Pedido";
-					stmt  = conn.createStatement();
-					stmt.executeUpdate(query);
-
-					query = "IF EXISTS (SELECT * FROM Stock) DROP TABLE Stock";
-					stmt  = conn.createStatement();
-					stmt.executeUpdate(query);*/
-
-
-
 					int menu = -1;
 
 					//Interfaz
@@ -53,6 +38,49 @@ class Seminario2 {
 
 						switch(menu){
 							case 1:
+								//Dropear las tablas si existen
+								try{
+									query = "DELETE Detalle_pedido";
+									stmt  = conn.createStatement();
+									stmt.executeUpdate(query);
+
+									query = "DROP TABLE Detalle_pedido";
+									stmt  = conn.createStatement();
+									stmt.executeUpdate(query);
+									System.out.println("Tabla Detalle_pedido dropeada");
+
+								} catch(Exception e){
+									System.out.println("La tabla Detalle_pedido no existia");
+								}
+
+								try{
+									query = "DELETE Pedido";
+									stmt  = conn.createStatement();
+									stmt.executeUpdate(query);
+
+									query = "DROP TABLE Pedido";
+									stmt  = conn.createStatement();
+									stmt.executeUpdate(query);
+									System.out.println("Tabla Pedido dropeada");
+
+								} catch(Exception e){
+									System.out.println("La tabla Pedido no existia");
+								}
+
+								try{
+									query = "DELETE Stock";
+									stmt  = conn.createStatement();
+									stmt.executeUpdate(query);
+
+									query = "DROP TABLE Stock";
+									stmt  = conn.createStatement();
+									stmt.executeUpdate(query);
+									System.out.println("Tabla Stock dropeada");
+
+								} catch(Exception e){
+									System.out.println("La tabla Stock no existia");
+								}
+
 								//Crear tablas
 								query = "CREATE TABLE Stock(Cproducto INT NOT NULL, Cantidad INT, PRIMARY KEY (Cproducto))";
 								stmt  = conn.createStatement();
@@ -67,7 +95,57 @@ class Seminario2 {
 								stmt.executeUpdate(query);
 
 								//Insertar tuplas
-									//TODO
+								//String[] insert_query = new String[10];
+
+								query="INSERT INTO Stock(Cproducto, Cantidad) VALUES (1,34)";
+								stmt  = conn.createStatement();
+								stmt.executeUpdate(query);
+
+								query="INSERT INTO Stock(Cproducto, Cantidad) VALUES (2,66)";
+								stmt  = conn.createStatement();
+								stmt.executeUpdate(query);
+
+								query="INSERT INTO Stock(Cproducto, Cantidad) VALUES (3,12)";
+								stmt  = conn.createStatement();
+								stmt.executeUpdate(query);
+
+								query="INSERT INTO Stock(Cproducto, Cantidad) VALUES (4,46)";
+								stmt  = conn.createStatement();
+								stmt.executeUpdate(query);
+
+								query="INSERT INTO Stock(Cproducto, Cantidad) VALUES (5,2)";
+								stmt  = conn.createStatement();
+								stmt.executeUpdate(query);
+
+								query="INSERT INTO Stock(Cproducto, Cantidad) VALUES (6,34)";
+								stmt  = conn.createStatement();
+								stmt.executeUpdate(query);
+
+								query="INSERT INTO Stock(Cproducto, Cantidad) VALUES (7,21)";
+								stmt  = conn.createStatement();
+								stmt.executeUpdate(query);
+
+								query="INSERT INTO Stock(Cproducto, Cantidad) VALUES (8,17)";
+								stmt  = conn.createStatement();
+								stmt.executeUpdate(query);
+
+								query="INSERT INTO Stock(Cproducto, Cantidad) VALUES (9,50)";
+								stmt  = conn.createStatement();
+								stmt.executeUpdate(query);
+
+								query="INSERT INTO Stock(Cproducto, Cantidad) VALUES (10,71)";
+								stmt  = conn.createStatement();
+								stmt.executeUpdate(query);
+
+								//Intento de insertar con un bucle, no es straightforward
+								/*for (int i=0; i<10; i++) {
+									stmt  = conn.createStatement();
+									stmt.executeUpdate(insert_query[i]);
+									System.out.println("Insertando tupla " + i);
+								}*/
+
+								conn.commit();
+								System.out.println("Datos insertados en la tabla Stock");
 
 							break;
 
@@ -140,7 +218,7 @@ class Seminario2 {
 							case 3:
 								System.out.println("Introduzca el código de pedido: ");
 								entradaEscaner = new Scanner (System.in);
-								int cpedido = entradaEscaner.nextInt();
+								cpedido = entradaEscaner.nextInt();
 								//TODO borrar la tupla de pedido y sus correspondientes detalles
 							break;
 
