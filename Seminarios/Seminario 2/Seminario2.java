@@ -150,6 +150,8 @@ class Seminario2 {
 							break;
 
 							case 2:
+								//Creamos el savepoint al que volver si al final no se realiza el pedido
+								Savepoint save = conn.setSavepoint();
 								System.out.println("--- Introduzca los datos del pedido ---");
 								System.out.println("Código de pedido: ");
 								entradaEscaner = new Scanner (System.in);
@@ -200,7 +202,9 @@ class Seminario2 {
 										break;
 
 										case 3:
-											//TODO Eliminar pedido y todos sus detalles (rollback)
+											// Se vuelve al savepoint que hemos creado al principio y salimos al menú principal
+											System.out.println("No se han hecho efectivos los cambios");
+											conn.rollback(save);
 
 										break;
 
