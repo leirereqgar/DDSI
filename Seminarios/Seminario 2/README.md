@@ -2,7 +2,7 @@
 
 1. Escoger un lenguaje de programación y SGDB relacional que permita la gestión de transacciones
 
-   - **C++**, C, Python, Ruby, Java, otros previa consulta
+   - C++, C, Python, Ruby, **Java**, otros previa consulta
    - **Oracle**, otros previa consulta
 
 2. Implementar un SI sencillo que trabaje con las siguientes tablas
