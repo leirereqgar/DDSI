@@ -181,7 +181,7 @@ class Seminario2 {
 
 									switch(nuevo_pedido){
 										case 1:
-											System.out.println("\nIntroduzca código de producto: ");
+											System.out.println("Introduzca código de producto: ");
 											entradaEscaner = new Scanner (System.in);
 											int cproducto = entradaEscaner.nextInt();
 
@@ -189,9 +189,41 @@ class Seminario2 {
 											entradaEscaner = new Scanner (System.in);
 											int cantidad = entradaEscaner.nextInt();
 
-											//TODO consultar si hay stock.cantidad de stock.cproducto
-											// y si la hay, restar la cantidad introducida de stock.cantidad
-											// e insertar en detalle_pedido la cpedido, cproducto y cantidad
+											stmt  = conn.createStatement();
+											ResultSet rset = stmt.executeQuery ("SELECT Cantidad FROM Stock WHERE Cproducto='" + cproducto + "'");
+
+											while(rset.next()){
+												int cantidad_actual = rset.getInt(1);
+
+												if(cantidad_actual >= cantidad){
+													cantidad_actual -= cantidad;
+
+													System.out.println("Cantidad disponible, procesando...");
+
+													query="UPDATE Stock SET Cantidad=" + cantidad_actual + " WHERE Cproducto='" + cproducto + "'";
+													stmt  = conn.createStatement();
+													stmt.executeUpdate(query);
+
+													System.out.println("Registrando pedido...");
+
+																	//Esto lo tiene que hacer al entrar en el caso, pero lo necesito ahora mismo BORRAR LUEGO
+																	//query="INSERT INTO Pedido(Cpedido) VALUES (" + cpedido + ")";
+																	//stmt  = conn.createStatement();
+																	//stmt.executeUpdate(query);
+
+																	//conn.commit();
+
+
+													query="INSERT INTO Detalle_pedido(Cpedido, Cproducto, Cantidad) VALUES ((SELECT CPedido FROM Pedido WHERE Cpedido='" + cpedido + "'), (SELECT Cproducto FROM Stock WHERE Cproducto='" + cproducto + "')," + cantidad + ")";
+													stmt  = conn.createStatement();
+													stmt.executeUpdate(query);
+
+													//conn.commit();
+
+												} else{
+													System.out.println("Cantidad no disponible, faltan " + (cantidad-cantidad_actual) + " unidades");
+												}
+											}
 
 										break;
 
