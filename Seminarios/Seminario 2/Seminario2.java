@@ -1,5 +1,9 @@
 import java.sql.*;
 import java.util.Scanner;
+import java.util.regex.*;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.format.*;
 
 
 //Compilar con javac Seminario2.java
@@ -161,10 +165,70 @@ class Seminario2 {
 								entradaEscaner = new Scanner (System.in);
 								int ccliente = entradaEscaner.nextInt();
 
-								System.out.println("Fecha pedido (YYYY-MM-DD): ");
-								entradaEscaner = new Scanner (System.in);
-								String fecha = entradaEscaner.nextLine();
-
+								//COMPROBACIÓN DE LA FECHA	
+								boolean fecha_correcta = false;
+  								boolean formato_correcto = false;
+  								
+  								while(!fecha_correcta){
+									System.out.println("Fecha pedido (YYYY-MM-DD): ");
+									entradaEscaner = new Scanner (System.in);
+									String fecha = entradaEscaner.nextLine();
+								  	
+								  	//COMPROBACIÓN DEL FORMATO
+								  	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+								  	try{
+										formatter.parse(fecha, LocalDate::from);
+										formato_correcto = true;
+									}
+									catch(DateTimeParseException e){
+										System.out.println("\u001B[31m" + "Formato incorrecto " + "\u001B[0m");
+									}
+								  	
+								  	if(formato_correcto){
+									  	//COMPROBACIÓN DE LA FECHA
+									  	//mes
+									  	String res = fecha.substring(5,7);
+									  	int mes = Integer.parseInt(res);
+									  	
+									  	//día
+									  	res = fecha.substring(8,10);
+									  	int dia = Integer.parseInt(res);
+									  	
+									  	if(mes == 2){
+									  		if(1 <= dia && dia <= 28){
+												query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";
+//"INSERT INTO Pedido VALUES(2,2,TO_DATE('2020-02-21','YYYY-MM-DD'))";
+								  				
+									  			stmt  = conn.createStatement();
+												stmt.executeUpdate(query);
+									  			System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
+									  			fecha_correcta = true;
+									  		}
+									  	} 
+									  	else{
+									  		if(mes%2 == 1){
+									  			if(1 <= dia && dia <= 31){
+													query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";
+									  				
+									  				stmt  = conn.createStatement();
+													stmt.executeUpdate(query);
+									  				System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
+									  				fecha_correcta = true;
+									  			}
+									  		}
+									  		else{
+									  			if(1 <= dia && dia <= 30){
+													query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";
+					  		
+									  				stmt  = conn.createStatement();
+													stmt.executeUpdate(query);
+									  				System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
+									  				fecha_correcta = true;
+									  			}
+									  		}
+									  	}
+								  	}
+								  }	
 								//TODO insercion
 
 								int nuevo_pedido = -1;
