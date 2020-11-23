@@ -165,15 +165,15 @@ class Seminario2 {
 								entradaEscaner = new Scanner (System.in);
 								int ccliente = entradaEscaner.nextInt();
 
-								//COMPROBACIÓN DE LA FECHA	
+								//COMPROBACIÓN DE LA FECHA
 								boolean fecha_correcta = false;
   								boolean formato_correcto = false;
-  								
+
   								while(!fecha_correcta){
 									System.out.println("Fecha pedido (YYYY-MM-DD): ");
 									entradaEscaner = new Scanner (System.in);
 									String fecha = entradaEscaner.nextLine();
-								  	
+
 								  	//COMPROBACIÓN DEL FORMATO
 								  	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 								  	try{
@@ -183,33 +183,33 @@ class Seminario2 {
 									catch(DateTimeParseException e){
 										System.out.println("\u001B[31m" + "Formato incorrecto " + "\u001B[0m");
 									}
-								  	
+
 								  	if(formato_correcto){
 									  	//COMPROBACIÓN DE LA FECHA
 									  	//mes
 									  	String res = fecha.substring(5,7);
 									  	int mes = Integer.parseInt(res);
-									  	
+
 									  	//día
 									  	res = fecha.substring(8,10);
 									  	int dia = Integer.parseInt(res);
-									  	
+
 									  	if(mes == 2){
 									  		if(1 <= dia && dia <= 28){
 												query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";
 //"INSERT INTO Pedido VALUES(2,2,TO_DATE('2020-02-21','YYYY-MM-DD'))";
-								  				
+
 									  			stmt  = conn.createStatement();
 												stmt.executeUpdate(query);
 									  			System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
 									  			fecha_correcta = true;
 									  		}
-									  	} 
+									  	}
 									  	else{
 									  		if(mes%2 == 1){
 									  			if(1 <= dia && dia <= 31){
 													query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";
-									  				
+
 									  				stmt  = conn.createStatement();
 													stmt.executeUpdate(query);
 									  				System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
@@ -219,7 +219,7 @@ class Seminario2 {
 									  		else{
 									  			if(1 <= dia && dia <= 30){
 													query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";
-					  		
+
 									  				stmt  = conn.createStatement();
 													stmt.executeUpdate(query);
 									  				System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
@@ -228,7 +228,7 @@ class Seminario2 {
 									  		}
 									  	}
 								  	}
-								  }	
+								  }
 								//TODO insercion
 
 								int nuevo_pedido = -1;
@@ -292,8 +292,11 @@ class Seminario2 {
 										break;
 
 										case 2:
-											//TODO buscar en detalle_pedido una tupla con el cpedido
-											// introducido y borrarla
+											System.out.println("\n\u001B[36m" + "Introduzca el código de pedido que desea borrar" + "\u001B[0m");
+											cpedido = entradaEscaner.nextInt();
+
+											query="DELETE FROM Detalle_pedido WHERE Cpedido= "+cpedido;
+											stmt.executeUpdate(query);
 
 										break;
 
