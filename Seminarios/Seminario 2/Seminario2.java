@@ -302,15 +302,31 @@ class Seminario2 {
 								entradaEscaner = new Scanner(System.in);
 								cpedido = entradaEscaner.nextInt();
 
-								stmt = conn.createStatement();
+								//Comprobar que el pedido existe: explicitar el tipo de result statement para que se pueda
+								//iterar sobre él tanto adelante como hacia atrás (de normal solo se puede ir hacia delante).
+								//Se comprueba que el primer result statement no es nulo: si lo es, mensaje de error y fin;
+								//si no, se deshace la iteración que hemos hecho para la comprobación con .previous() y el programa
+								//continua normalmente. Hay un bool para imprimir o no el mensaje de éxito al borrar el pedido
+
+								Boolean existe = true;
+
+								stmt = conn.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 								ResultSet cproducto1 = stmt.executeQuery("SELECT Cproducto,Cantidad FROM Detalle_pedido WHERE Cpedido='"+ cpedido + "'");
+
+								if (cproducto1.next() == false) {
+									System.out.println("El pedido introducido no existe");
+									existe = false;
+
+								} else {
+									cproducto1.previous();
+								}
 
 								while (cproducto1.next()) {
 									int cproducto2 = cproducto1.getInt(1);
 									int ccantidad = cproducto1.getInt(2);
 									int cantidad_total = 0;
 
-									System.out.println("El pedido corresponde a: ");
+									System.out.println("El pedido introducido corresponde a: ");
 									System.out.println("  Código del producto: " + cproducto2);
 									System.out.println("  Cantidad: " + ccantidad);
 
@@ -325,19 +341,23 @@ class Seminario2 {
 									query = "UPDATE Stock SET Cantidad=" + cantidad_total + " WHERE Cproducto='" + cproducto2+ "'";
 									stmt.executeUpdate(query);
 
-							}
+								}
+
 
 							//Borrado de tuplas
-							query = "DELETE FROM DETALLE_PEDIDO WHERE Cpedido = " + cpedido;
-							stmt = conn.createStatement();
-							stmt.executeUpdate(query);
+								query = "DELETE FROM DETALLE_PEDIDO WHERE Cpedido = " + cpedido;
+								stmt = conn.createStatement();
+								stmt.executeUpdate(query);
 
-							query = "DELETE FROM PEDIDO WHERE Cpedido = " + cpedido;
-							stmt = conn.createStatement();
-							stmt.executeUpdate(query);
+								query = "DELETE FROM PEDIDO WHERE Cpedido = " + cpedido;
+								stmt = conn.createStatement();
+								stmt.executeUpdate(query);
 
-							conn.commit();
-							System.out.println("\u001B[32m" + "El pedido se ha eliminado correctamente" + "\u001B[0m");
+								if(existe){
+									conn.commit();
+									System.out.println("\u001B[32m" + "El pedido se ha eliminado correctamente" + "\u001B[0m");
+								}
+
 							break;
 
 							case 4:
