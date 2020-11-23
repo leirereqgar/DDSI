@@ -298,10 +298,46 @@ class Seminario2 {
 							break;
 
 							case 3:
-								System.out.println("\nIntroduzca el código de pedido: ");
-								entradaEscaner = new Scanner (System.in);
+								System.out.println("\nIntroduzca el código de pedido a eliminar: ");
+								entradaEscaner = new Scanner(System.in);
 								cpedido = entradaEscaner.nextInt();
-								//TODO borrar la tupla de pedido y sus correspondientes detalles
+
+								stmt = conn.createStatement();
+								ResultSet cproducto1 = stmt.executeQuery("SELECT Cproducto,Cantidad FROM Detalle_pedido WHERE Cpedido='"+ cpedido + "'");
+
+								while (cproducto1.next()) {
+									int cproducto2 = cproducto1.getInt(1);
+									int ccantidad = cproducto1.getInt(2);
+									int cantidad_total = 0;
+
+									System.out.println("El pedido corresponde a: ");
+									System.out.println("  Código del producto: " + cproducto2);
+									System.out.println("  Cantidad: " + ccantidad);
+
+									//Actualizar la cantidad
+									stmt  = conn.createStatement();
+									ResultSet rset_stock = stmt.executeQuery ("SELECT Cantidad FROM Stock WHERE Cproducto='" + cproducto2 + "'");
+
+									while(rset_stock.next()){
+										cantidad_total = rset_stock.getInt(1) + ccantidad;
+									}
+
+									query = "UPDATE Stock SET Cantidad=" + cantidad_total + " WHERE Cproducto='" + cproducto2+ "'";
+									stmt.executeUpdate(query);
+
+							}
+
+							//Borrado de tuplas
+							query = "DELETE FROM DETALLE_PEDIDO WHERE Cpedido = " + cpedido;
+							stmt = conn.createStatement();
+							stmt.executeUpdate(query);
+
+							query = "DELETE FROM PEDIDO WHERE Cpedido = " + cpedido;
+							stmt = conn.createStatement();
+							stmt.executeUpdate(query);
+
+							conn.commit();
+							System.out.println("\u001B[32m" + "El pedido se ha eliminado correctamente" + "\u001B[0m");
 							break;
 
 							case 4:
