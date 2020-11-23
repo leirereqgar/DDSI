@@ -98,7 +98,6 @@ class Seminario2 {
 								stmt.executeUpdate(query);
 
 								//Insertar tuplas
-								//String[] insert_query = new String[10];
 
 								query="INSERT INTO Stock(Cproducto, Cantidad) VALUES (1,34)";
 								stmt  = conn.createStatement();
@@ -140,13 +139,6 @@ class Seminario2 {
 								stmt  = conn.createStatement();
 								stmt.executeUpdate(query);
 
-								//Intento de insertar con un bucle, no es straightforward
-								/*for (int i=0; i<10; i++) {
-									stmt  = conn.createStatement();
-									stmt.executeUpdate(insert_query[i]);
-									System.out.println("Insertando tupla " + i);
-								}*/
-
 								conn.commit();
 								System.out.println("Datos insertados en la tabla Stock");
 
@@ -184,52 +176,50 @@ class Seminario2 {
 										System.out.println("\u001B[31m" + "Formato incorrecto " + "\u001B[0m");
 									}
 
-								  	if(formato_correcto){
-									  	//COMPROBACIÓN DE LA FECHA
-									  	//mes
-									  	String res = fecha.substring(5,7);
-									  	int mes = Integer.parseInt(res);
+									if(formato_correcto){
+										//COMPROBACIÓN DE LA FECHA
+										//mes
+										String res = fecha.substring(5,7);
+										int mes = Integer.parseInt(res);
 
-									  	//día
-									  	res = fecha.substring(8,10);
-									  	int dia = Integer.parseInt(res);
+										//día
+										res = fecha.substring(8,10);
+										int dia = Integer.parseInt(res);
 
-									  	if(mes == 2){
-									  		if(1 <= dia && dia <= 28){
-												query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";
-//"INSERT INTO Pedido VALUES(2,2,TO_DATE('2020-02-21','YYYY-MM-DD'))";
+										if(mes == 2){
+											if(1 <= dia && dia <= 28){
+												query = "INSERT INTO PEDIDO VALUES(" + cpedido + "," + ccliente + ",TO_DATE('" + fecha + "','YYYY-MM-DD'))";
 
-									  			stmt  = conn.createStatement();
+												stmt  = conn.createStatement();
 												stmt.executeUpdate(query);
-									  			System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
-									  			fecha_correcta = true;
-									  		}
-									  	}
-									  	else{
-									  		if(mes%2 == 1){
-									  			if(1 <= dia && dia <= 31){
+												System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
+												fecha_correcta = true;
+											}
+										}
+										else{
+											if(mes%2 == 1){
+												if(1 <= dia && dia <= 31){
 													query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";
 
-									  				stmt  = conn.createStatement();
+													stmt  = conn.createStatement();
 													stmt.executeUpdate(query);
-									  				System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
-									  				fecha_correcta = true;
-									  			}
-									  		}
-									  		else{
-									  			if(1 <= dia && dia <= 30){
+													System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
+													fecha_correcta = true;
+												}
+											}
+											else{
+												if(1 <= dia && dia <= 30){
 													query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";
 
-									  				stmt  = conn.createStatement();
+													stmt  = conn.createStatement();
 													stmt.executeUpdate(query);
-									  				System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
-									  				fecha_correcta = true;
-									  			}
-									  		}
-									  	}
-								  	}
-								  }
-								//TODO insercion
+													System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
+													fecha_correcta = true;
+												}
+											}
+										}
+									}
+								}
 
 								int nuevo_pedido = -1;
 
@@ -270,19 +260,10 @@ class Seminario2 {
 
 													System.out.println("Registrando pedido...");
 
-																	//Esto lo tiene que hacer al entrar en el caso, pero lo necesito ahora mismo BORRAR LUEGO
-																	//query="INSERT INTO Pedido(Cpedido) VALUES (" + cpedido + ")";
-																	//stmt  = conn.createStatement();
-																	//stmt.executeUpdate(query);
-
-																	//conn.commit();
-
-
 													query="INSERT INTO Detalle_pedido(Cpedido, Cproducto, Cantidad) VALUES ((SELECT CPedido FROM Pedido WHERE Cpedido='" + cpedido + "'), (SELECT Cproducto FROM Stock WHERE Cproducto='" + cproducto + "')," + cantidad + ")";
 													stmt  = conn.createStatement();
 													stmt.executeUpdate(query);
 
-													//conn.commit();
 
 												} else{
 													System.out.println("Cantidad no disponible, faltan " + (cantidad-cantidad_actual) + " unidades");
@@ -292,9 +273,6 @@ class Seminario2 {
 										break;
 
 										case 2:
-											System.out.println("\n\u001B[36m" + "Introduzca el código de pedido que desea borrar" + "\u001B[0m");
-											cpedido = entradaEscaner.nextInt();
-
 											query="DELETE FROM Detalle_pedido WHERE Cpedido= "+cpedido;
 											stmt.executeUpdate(query);
 
