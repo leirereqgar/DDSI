@@ -1,0 +1,30 @@
+\documentclass[11pt, a4paper]{aqademic}
+
+\usepackage[spanish]{babel}
+	\selectlanguage{spanish}
+
+\usepackage{graphicx}
+  \graphicspath{{img/}}
+
+\usepackage{pdfpages}
+
+\title{Seminario 2}
+\author{Expósito, Nieto, Sánchez, Requena, Romero}
+
+\AqSetChapter{Apartado}
+\AqSetSection{}
+
+\begin{document}
+\AqMaketitle[
+	author    = {Javier Expósito Martínez, Inés Nieto Sánchez, Laura Sánchez Sánchez, Leire Requena Garcia, Clara María Romero Lara},
+	cover      = logo-ugr.png,
+	org         = Diseño y Desarrollo de Sistemas de Información
+]
+
+\tableofcontents
+
+\input{secciones/introduccion.tex}
+\input{secciones/implementacion.tex}
+\input{secciones/instrucciones.tex}
+
+\end{document}

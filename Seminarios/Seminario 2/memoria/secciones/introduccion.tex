@@ -1,0 +1,19 @@
+\chapter{Introducción}
+
+En este seminario hemos implementado un sencillo SI basado en el procesado de pedidos. Contamos con tres tablas:
+\begin{enumerate}
+	\item Stock (Cproducto, Cantidad) 
+	\item Pedido (Cpedido, Ccliente, Fecha\_pedido)
+	\item Detalle\_Pedido (Cpedido, Cproducto, Cantidad)
+\end{enumerate}
+
+El sistema se conecta mediante JDBC a la base de datos oracle0.ugr.es. El programa principal, escrito en Java, cuenta con una interfaz simple de texto que permite seleccionar varias opciones hasta que decidamos finalizar la conexión a la base de datos.
+
+El seminario se ha desarrollado de forma modular: tras consultar la documentación de JDBC de conexión a la base de datos, se programó el esqueleto que contiene los menús y finalmente se implementaron las sentencias SQL y comprobaciones necesarias. El reparto entre los colaboradores del equipo es como sigue:
+\begin{enumerate}
+	\item Javier Expósito: eliminación de Detalle\_pedido 
+	\item Inés Nieto: conexión a la base de datos, inserción Pedido
+	\item Laura Sánchez: eliminación de Pedido
+	\item Leire Requena: menús, commits y rollback
+	\item Clara Mª Romero: menús, inserción Detalle\_pedido
+\end{enumerate}
