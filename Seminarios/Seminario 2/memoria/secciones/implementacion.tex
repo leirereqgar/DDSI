@@ -419,7 +419,7 @@ entradaEscaner = new Scanner(System.in);
 cpedido = entradaEscaner.nextInt();
 \end{lstlisting}
 
-Una vez tenemos el \texttt{cpedido} tenemos que comprobar que en la tabla existe un pedido con ese código, para ello hay que explicitar que tipo de resultado da el statement para iterar hacia delante y hacia atrás.
+Una vez tenemos el \texttt{cpedido} tenemos que comprobar que en la tabla existe un pedido con ese código, para ello hay que explicitar nuestro tipo de Result Statement para que perminta iterar hacia delante y hacia atrás. Por defecto, los Result Statement solo pueden iterarse hacia delante.
 
 Si el primer resultado es nulo lanzamos un mensaje de error y salimos de esta opción; si es nulo deshacemos la iteración (\texttt{conn.previous()}) y continuamos el programa normalmente. Tendremos una variable bool para imprimir o no el éxito al borrar el pedido.
 
