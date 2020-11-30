@@ -2,14 +2,14 @@
 
 \section{Menú}
 
-La interfaz del programa se realiza desde la terminal, para ello se van indicando los pasos a seguir con la salida por pantalla y se espera la recogida de datos introducida por el usuario.
+La interfaz del programa se visualiza desde la terminal, para ello se van indicando los pasos a seguir con la salida por pantalla y se espera la recogida de datos introducida por el usuario.
 
-Se estructura con dos bucles while uno anidado dentro de otro con el que se comprueba la opción escogida por el usuario y se realiza la acción correspondiente en la base de datos. 
+Se estructura con dos bucles while uno anidado dentro de otro con el que se comprueba la opción escogida por el usuario y se realiza la acción correspondiente en la base de datos.
 
 En el siguiente cuadro está la versión simplificada de esta parte del programa
 \begin{lstlisting}[language=Java]
 System.out.println("Introduzca su usuario (que coincide con su password): ");
-String entrada;	
+String entrada;
 Scanner entradaEscaner = new Scanner (System.in);
 entrada = entradaEscaner.nextLine();
 
@@ -37,16 +37,16 @@ while( menu != 4 ){
 			System.out.println("Código de pedido: ");
 			entradaEscaner = new Scanner (System.in);
 			int cpedido = entradaEscaner.nextInt();
-	
+
 			System.out.println("Código de cliente: ");
 			entradaEscaner = new Scanner (System.in);
 			int ccliente = entradaEscaner.nextInt();
 
-			
+
 			System.out.println("Fecha pedido (YYYY-MM-DD): ");
 			entradaEscaner = new Scanner (System.in);
 			String fecha = entradaEscaner.nextLine();
-					  	
+
 			//Comprobación e inserción en la tabla pedido
 
 			int nuevo_pedido = -1;
@@ -101,14 +101,14 @@ while( menu != 4 ){
 				System.out.println("\nIntroduzca el código de pedido: ");
 				entradaEscaner = new Scanner (System.in);
 				cpedido = entradaEscaner.nextInt();
-				
+
 				// Eliminación del pedido y sus detalles correspondientes
 
 				break;
 
 			case 4:
 				System.out.println("\u001B[31m" + "Cerrando la conexion..." + "\u001B[0m");
-	
+
 				break;
 
 			default: System.out.println("\u001B[31m" + "Por favor, seleccione una opcion valida: " + "\u001B[0m");
@@ -119,7 +119,7 @@ while( menu != 4 ){
 
 \section{Borrado, creación e inserción de tuplas en las tablas}
 
-Al inicio del programa hay que borrar las tablas para reiniciar la base de datos, para ello si al intentar ejecutar las sentencias de \texttt{DROP} da algún fallo porque la tabla no existía se avisa al usuario y se continúa con el programa. Además antes de eliminar la tabla se borran los datos con \texttt{DELETE}
+Al inicio del programa hay que borrar las tablas para reiniciar la base de datos, para ello: si al intentar ejecutar las sentencias de \texttt{DROP} da algún fallo (porque la tabla no existía) se avisa al usuario y se continúa con el programa. Además antes de eliminar la tabla se borran los datos con \texttt{DELETE}
 
 \begin{lstlisting}[language=Java]
 try{
@@ -181,8 +181,6 @@ stmt  = conn.createStatement();
 stmt.executeUpdate(query);
 \end{lstlisting}
 
-Para la inserción de tablas y el resto de sentencias de sql creamos una \texttt{String query} que reutilizaremos en todas ellas.
-
 La inserción de las 10 tuplas predefinidas tiene que hacerse de uno en uno porque nuestra versión de JDBC no permite automatizarlo al dar algunos fallos en la sintaxis de sql.
 
 \begin{lstlisting}[language=Java]
@@ -238,7 +236,7 @@ Al final de esta parte debemos hacer un commit para poder ver los cambios de la 
 
 Antes de hacer ningún cambio creamos un savepoint para el commit o el rollback que finalizan esta sección.
 
-Los datos se piden por pantalla de forma normal, excepto por la fecha que hay que comprobar que esté en el formato correcto (YYY-MM-DD) para poder insertarla en la tabla.
+Los datos se piden por pantalla de forma normal, excepto por la fecha que hay que comprobar que esté en el formato correcto (YYYY-MM-DD) para poder insertarla en la tabla.
 
 \begin{lstlisting}[language=Java]
 //Creamos el savepoint al que volver si al final no se realiza el pedido
@@ -253,15 +251,15 @@ System.out.println("Código de cliente: ");
 entradaEscaner = new Scanner (System.in);
 int ccliente = entradaEscaner.nextInt();
 
-//COMPROBACIÓN DE LA FECHA	
+//COMPROBACIÓN DE LA FECHA
 boolean fecha_correcta = false;
 boolean formato_correcto = false;
-  								
+
 while(!fecha_correcta){
 	System.out.println("Fecha pedido (YYYY-MM-DD): ");
 	entradaEscaner = new Scanner (System.in);
 	String fecha = entradaEscaner.nextLine();
-				  	
+
 	//COMPROBACIÓN DEL FORMATO
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	try{
@@ -271,35 +269,35 @@ while(!fecha_correcta){
 	catch(DateTimeParseException e){
 		System.out.println("\u001B[31m" + "Formato incorrecto " + "\u001B[0m");
 	}
-	  	
+
 	if(formato_correcto){
 	  	//COMPROBACIÓN DE LA FECHA
-	  	
+
 	  	/*
-	  	 * Recogemos el mes i la fecha de la cadena de caracteres que se ha pasado para ver si son correctos
+	  	 * Recogemos el mes y la fecha de la cadena de caracteres que se ha pasado para ver si son correctos
 	  	 */
 	  	//mes
 	  	String res = fecha.substring(5,7);
 	  	int mes = Integer.parseInt(res);
-									  	
+
 	  	//día
 		res = fecha.substring(8,10);
 	  	int dia = Integer.parseInt(res);
-									  	
+
 		/*
 		 * En el caso de que el mes sea febrero comprobamos que no se haya introducido un día mas allá del 28
 		 */
 	  	if(mes == 2){
 	  		if(1 <= dia && dia <= 28){
 				query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";
-		
+
 				//"INSERT INTO Pedido VALUES(2,2,TO_DATE('2020-02-21','YYYY-MM-DD'))";
 				stmt  = conn.createStatement();
 				stmt.executeUpdate(query);
 				System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
 				fecha_correcta = true;
 			}
-		} 
+		}
 		else{
 			/*
 			 * Se comprueba que en los meses con 31 días no se supere ese número
@@ -307,7 +305,7 @@ while(!fecha_correcta){
 			if(mes%2 == 1){
 				if(1 <= dia && dia <= 31){
 					query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";
-									  				
+
 					stmt  = conn.createStatement();
 					stmt.executeUpdate(query);
 					System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
@@ -319,7 +317,7 @@ while(!fecha_correcta){
 				 * Comprobación para que el día no sea mayor que 30 en los meses con ese número de días
 				 */
 				if(1 <= dia && dia <= 30){
-					query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";	
+					query = "INSERT INTO PEDIDO VALUES("+cpedido+","+ccliente + ",TO_DATE('"+fecha+"','YYYY-MM-DD'))";
 					stmt  = conn.createStatement();
 					stmt.executeUpdate(query);
   					System.out.println("\u001B[32mAñadiendo pedido \u001B[0m");
@@ -328,15 +326,15 @@ while(!fecha_correcta){
   			}
 		}
 	}
-}	
+}
 \end{lstlisting}
 
-Como se puede ver la inserción es de la misma forma que en la tabla de \texttt{Stock} una vez que se ha comprobado que la fecha introducida es correcta y tiene el formato adecuado.
+Como se puede ver, la inserción funciona de la misma forma que en la tabla de \texttt{Stock} una vez que se ha comprobado que la fecha introducida es correcta y tiene el formato adecuado.
 
 \subsection{Insertar los detalles de un pedido}
-Como hemos visto al principio del capítulo dentro de la opción de añadir un pedido se pueden especificar o borrar los detalles correspondientes, además de hacer o no efectivo el pedido.
+Como hemos visto al principio del capítulo, dentro de la opción de "añadir un pedido" se pueden especificar o borrar los detalles correspondientes, además de hacer o no efectivo el pedido.
 
-Para insertar los datos se pide el código del producto y la cantidad que se desea de él de forma normal:
+Para insertar los datos se pide el código del producto y la cantidad que se desea de él:
 
 \begin{lstlisting}[language=Java]
 System.out.println("Introduzca código de producto: ");
@@ -349,9 +347,9 @@ int cantidad = entradaEscaner.nextInt();
 
 \end{lstlisting}
 
-Después hay que comprobar si se dispone de la cantidad que se ha solicitado, para ello usamos un \texttt{SELECT} que nos indique la cantidad total del producto en stock y si es suficiente actualizamos el producto restandole las unidades que se han pedido.
+Después hay que comprobar si se dispone de la cantidad que se ha solicitado, para ello usamos un \texttt{SELECT} que nos indique la cantidad total del producto en stock y, si es suficiente, actualizamos el producto restándole las unidades que se han pedido.
 
-Por último se inserta la tupla en \texttt{Detalle\_Pedido}
+Por último, se inserta la tupla en \texttt{Detalle\_Pedido}
 
 \begin{lstlisting}[language=Java]
 stmt  = conn.createStatement();
@@ -394,7 +392,7 @@ stmt.executeUpdate(query);
 
 \subsection{Finalización del pedido}
 
-Hay dos maneras de finalizar estas operaciones con el pedido, eliminar todos los cambios hechos o hacerlos efectivos.
+Hay dos maneras de finalizar estas operaciones con el pedido: eliminar todos los cambios hechos o hacerlos efectivos.
 
 Para eliminarlos simplemente hacemos un rollback para volver al savepoint que se ha creado antes de pedir los datos relativos al pedido:
 \begin{lstlisting}[language=Java]
@@ -419,11 +417,11 @@ entradaEscaner = new Scanner(System.in);
 cpedido = entradaEscaner.nextInt();
 \end{lstlisting}
 
-Una vez tenemos el \texttt{cpedido} tenemos que comprobar que en la tabla existe un pedido con ese código, para ello hay que explicitar nuestro tipo de Result Statement para que perminta iterar hacia delante y hacia atrás. Por defecto, los Result Statement solo pueden iterarse hacia delante.
+Una vez tenemos el \texttt{cpedido} tenemos que comprobar que en la tabla existe un pedido con ese código, para ello hay que explicitar nuestro tipo de Result Statement para que permita iterar hacia delante y hacia atrás. Por defecto, los Result Statement solo pueden iterarse hacia delante.
 
-Si el primer resultado es nulo lanzamos un mensaje de error y salimos de esta opción; si es nulo deshacemos la iteración (\texttt{conn.previous()}) y continuamos el programa normalmente. Tendremos una variable bool para imprimir o no el éxito al borrar el pedido.
+Si el primer resultado es nulo lanzamos un mensaje de error (la tupla estaba vacía) y salimos de esta opción; si no, deshacemos la iteración (\texttt{conn.previous()}) y continuamos el programa normalmente. Tendremos una variable bool para imprimir o no el éxito al borrar el pedido.
 
-Tenemos en cuenta también que si se borra el pedido hay que actualizar la tabla stock para devolver la cantidad de productos indicada en Detalle\_pedido.
+Tenemos en cuenta también que, si se borra el pedido, hay que actualizar la tabla stock para devolver la cantidad de productos indicada en Detalle\_pedido.
 
 \begin{lstlisting}[language=Java]
 Boolean existe = true;
