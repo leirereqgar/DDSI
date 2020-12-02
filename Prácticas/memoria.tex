@@ -7,6 +7,7 @@
   \graphicspath{{img/}}
 
 \usepackage{pdfpages}
+\usepackage{lscape}
 
 \title{Sistema de un torneo de pádel}
 \author{Expósito, Nieto, Sánchez, Requena, Romero}
@@ -23,14 +24,17 @@
 
 \tableofcontents
 \chapter{Análisis y especificación de requisitos en un Sistema de Información}
-	\input{secciones/descripcion-sistema.tex}
+	\input{secciones/1_1-descripcion-sistema.tex}
 	\pagebreak
-	\input{secciones/reparto-subsistemas.tex}
+	\input{secciones/1_2-reparto-subsistemas.tex}
 	\pagebreak
-	\input{secciones/requisitos-funcionales.tex}
+	\input{secciones/1_3-requisitos-funcionales.tex}
 	\pagebreak
-	\input{secciones/dfds.tex}
-\appendix
-	\input{secciones/repo.tex}
+	\input{secciones/1_4-dfds.tex}
+
+\chapter{Diseño de datos}
+\vfill
+	\input{secciones/2_1-diagramas-externos.tex}
+	\input{secciones/2_2-bd-conceptual.tex}
 
 \end{document}
