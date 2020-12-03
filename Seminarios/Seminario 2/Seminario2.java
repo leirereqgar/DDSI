@@ -146,7 +146,7 @@ class Seminario2 {
 
 							case 2:
 								//Creamos el savepoint al que volver si al final no se realiza el pedido
-								Savepoint save = conn.setSavepoint();
+								Savepoint save1 = conn.setSavepoint();
 
 								System.out.println("\n\u001B[36m--- Introduzca los datos del pedido ---\u001B[0m");
 								System.out.println("Código de pedido: ");
@@ -235,6 +235,7 @@ class Seminario2 {
 
 									switch(nuevo_pedido){
 										case 1:
+											Savepoint save2 = conn.setSavepoint();
 											System.out.println("Introduzca código de producto: ");
 											entradaEscaner = new Scanner (System.in);
 											int cproducto = entradaEscaner.nextInt();
@@ -273,15 +274,15 @@ class Seminario2 {
 										break;
 
 										case 2:
-											query="DELETE FROM Detalle_pedido WHERE Cpedido= "+cpedido;
-											stmt.executeUpdate(query);
+											// Eliminamos todos los detalles que hemos añadido al pedido
+											conn.rollback(save2);
 
 										break;
 
 										case 3:
 											// Se vuelve al savepoint que hemos creado al principio y salimos al menú principal
 											System.out.println("\u001B[31m" + "No se han hecho efectivos los cambios" + "\u001B[0m");
-											conn.rollback(save);
+											conn.rollback(save1);
 
 										break;
 

@@ -331,12 +331,16 @@ while(!fecha_correcta){
 
 Como se puede ver, la inserción funciona de la misma forma que en la tabla de \texttt{Stock} una vez que se ha comprobado que la fecha introducida es correcta y tiene el formato adecuado.
 
+\pagebreak
 \subsection{Insertar los detalles de un pedido}
 Como hemos visto al principio del capítulo, dentro de la opción de "añadir un pedido" se pueden especificar o borrar los detalles correspondientes, además de hacer o no efectivo el pedido.
 
 Para insertar los datos se pide el código del producto y la cantidad que se desea de él:
 
 \begin{lstlisting}[language=Java]
+// Creamos un savepoint por si se escogiese la opción de eliminar los detalles del pedido
+Savepint save2 = conn.savepoint();
+
 System.out.println("Introduzca código de producto: ");
 entradaEscaner = new Scanner (System.in);
 int cproducto = entradaEscaner.nextInt();
@@ -381,18 +385,18 @@ while(rset.next()){
 }
 \end{lstlisting}
 
+\pagebreak
 \subsection{Eliminación de los detalles del pedido}
 
-Para borrar el detalle del pedido con el que estamos trabajando solo hay que indicar que borre la tupla si coincide con ese \texttt{cpedido}
+Para borrar el detalle del pedido que habíamos añadido solo tenemos que hacer un \texttt{rollback} al segundo savepoint que hemos creado, el que está justo antes de empezar a insertar los datos del detalle:
 
 \begin{lstlisting}[language=Java]
-query="DELETE FROM Detalle\_pedido WHERE Cpedido= " + cpedido;
-stmt.executeUpdate(query);
+conn.rollback(save2);
 \end{lstlisting}
 
 \subsection{Finalización del pedido}
 
-Hay dos maneras de finalizar estas operaciones con el pedido: eliminar todos los cambios hechos o hacerlos efectivos.
+Hay dos maneras de finalizar estas operaciones con el pedido: eliminar todos los cambios hechos, opción 3 del segundo menú; o hacerlos efectivos, opción 4 del segundo menú.
 
 Para eliminarlos simplemente hacemos un rollback para volver al savepoint que se ha creado antes de pedir los datos relativos al pedido:
 \begin{lstlisting}[language=Java]
