@@ -93,7 +93,7 @@ class Seminario2 {
 								stmt  = conn.createStatement();
 								stmt.executeUpdate(query);
 
-								query = "CREATE TABLE Detalle_pedido (Cpedido INT NOT NULL, Cproducto INT NOT NULL, Cantidad int,FOREIGN KEY(Cpedido) REFERENCES Pedido(Cpedido),FOREIGN KEY(Cproducto) REFERENCES Stock(Cproducto),PRIMARY KEY(Cpedido,Cproducto))";
+								query = "CREATE TABLE Detalle_pedido (Cpedido INT NOT NULL, Cproducto INT NOT NULL, Cantidad int,FOREIGN KEY(Cpedido) REFERENCES Pedido(Cpedido) ON DELETE CASCADE,FOREIGN KEY(Cproducto) REFERENCES Stock(Cproducto) ON DELETE CASCADE,PRIMARY KEY(Cpedido,Cproducto))";
 								stmt  = conn.createStatement();
 								stmt.executeUpdate(query);
 
@@ -221,6 +221,7 @@ class Seminario2 {
 									}
 								}
 
+								Savepoint save2 = conn.setSavepoint();
 								int nuevo_pedido = -1;
 
 								while(nuevo_pedido != 3 && nuevo_pedido != 4){
@@ -235,7 +236,6 @@ class Seminario2 {
 
 									switch(nuevo_pedido){
 										case 1:
-											Savepoint save2 = conn.setSavepoint();
 											System.out.println("Introduzca código de producto: ");
 											entradaEscaner = new Scanner (System.in);
 											int cproducto = entradaEscaner.nextInt();
@@ -346,10 +346,6 @@ class Seminario2 {
 
 
 							//Borrado de tuplas
-								query = "DELETE FROM DETALLE_PEDIDO WHERE Cpedido = " + cpedido;
-								stmt = conn.createStatement();
-								stmt.executeUpdate(query);
-
 								query = "DELETE FROM PEDIDO WHERE Cpedido = " + cpedido;
 								stmt = conn.createStatement();
 								stmt.executeUpdate(query);

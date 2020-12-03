@@ -47,8 +47,10 @@ while( menu != 4 ){
 			entradaEscaner = new Scanner (System.in);
 			String fecha = entradaEscaner.nextLine();
 
-			//Comprobación e inserción en la tabla pedido
 
+			// Creamos un savepoint por si se escogiese la opción de eliminar los detalles del pedido
+			Savepint save2 = conn.savepoint();
+			//Comprobación e inserción en la tabla pedido
 			int nuevo_pedido = -1;
 
 			while(nuevo_pedido != 3 && nuevo_pedido != 4){
@@ -164,7 +166,7 @@ try{
 }
 \end{lstlisting}
 
-Para la creación de las tablas usamos la sentencia \texttt{CREATE TABLE} indicando sus atributos, las claves primarias y las claves externas.
+Para la creación de las tablas usamos la sentencia \texttt{CREATE TABLE} indicando sus atributos, las claves primarias y las claves externas. En la tabla Detalle_pedido hemos habilitado la opción de borrado en cascada.
 
 \begin{lstlisting}[language=Java]
 //Crear tablas
@@ -176,7 +178,7 @@ query = "CREATE TABLE Pedido (Cpedido INT NOT NULL, Ccliente INT, Fecha_pedido D
 stmt  = conn.createStatement();
 stmt.executeUpdate(query);
 
-query = "CREATE TABLE Detalle_pedido (Cpedido INT NOT NULL, Cproducto INT NOT NULL, Cantidad int,FOREIGN KEY(Cpedido) REFERENCES Pedido(Cpedido),FOREIGN KEY(Cproducto) REFERENCES Stock(Cproducto),PRIMARY KEY(Cpedido,Cproducto))";
+query = "CREATE TABLE Detalle_pedido (Cpedido INT NOT NULL, Cproducto INT NOT NULL, Cantidad int,FOREIGN KEY(Cpedido) REFERENCES Pedido(Cpedido) ON DELETE CASCADE,FOREIGN KEY(Cproducto) REFERENCES Stock(Cproducto) ON DELETE CASCADE,PRIMARY KEY(Cpedido,Cproducto))";
 stmt  = conn.createStatement();
 stmt.executeUpdate(query);
 \end{lstlisting}
@@ -338,9 +340,6 @@ Como hemos visto al principio del capítulo, dentro de la opción de "añadir un
 Para insertar los datos se pide el código del producto y la cantidad que se desea de él:
 
 \begin{lstlisting}[language=Java]
-// Creamos un savepoint por si se escogiese la opción de eliminar los detalles del pedido
-Savepint save2 = conn.savepoint();
-
 System.out.println("Introduzca código de producto: ");
 entradaEscaner = new Scanner (System.in);
 int cproducto = entradaEscaner.nextInt();
@@ -425,7 +424,7 @@ Una vez tenemos el \texttt{cpedido} tenemos que comprobar que en la tabla existe
 
 Si el primer resultado es nulo lanzamos un mensaje de error (la tupla estaba vacía) y salimos de esta opción; si no, deshacemos la iteración (\texttt{conn.previous()}) y continuamos el programa normalmente. Tendremos una variable bool para imprimir o no el éxito al borrar el pedido.
 
-Tenemos en cuenta también que, si se borra el pedido, hay que actualizar la tabla stock para devolver la cantidad de productos indicada en Detalle\_pedido.
+Tenemos en cuenta también que, si se borra el pedido, hay que actualizar la tabla stock para devolver la cantidad de productos indicada en Detalle\_pedido. Una vez se han seguido todos estos pasos, podemos borrar la tabla Pedido directamente, ya que la tupla de Detalle_pedido se borrará en cascada con ella.
 
 \begin{lstlisting}[language=Java]
 Boolean existe = true;
@@ -464,10 +463,6 @@ while (cproducto1.next()) {
 
 
 //Borrado de tuplas
-query = "DELETE FROM DETALLE_PEDIDO WHERE Cpedido = " + cpedido;
-stmt = conn.createStatement();
-stmt.executeUpdate(query);
-
 query = "DELETE FROM PEDIDO WHERE Cpedido = " + cpedido;
 stmt = conn.createStatement();
 stmt.executeUpdate(query);
