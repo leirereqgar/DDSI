@@ -235,6 +235,7 @@ class Seminario2 {
 
 									switch(nuevo_pedido){
 										case 1:
+										// Creamos un savepoint por si se escogiese la opción de eliminar los detalles del pedido
 											Savepoint save2 = conn.setSavepoint();
 											System.out.println("Introduzca código de producto: ");
 											entradaEscaner = new Scanner (System.in);
