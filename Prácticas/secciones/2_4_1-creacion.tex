@@ -9,7 +9,7 @@ CREATE TABLE Jugador(
 	idJugador INT,
 	nombreJ VARCHAR(30),
 	apellidoJ VARCHAR(60),
-	telefonoJ VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'\+?[0-9]')),
+	telefonoJ VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'^[/+]?[0-9]')),
 	emailJ VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
 	PRIMARY KEY (idJugador)
 );
@@ -18,7 +18,7 @@ CREATE TABLE Entrenador(
 	idEntrenador INT,
 	nombreE VARCHAR(30),
 	apellidoE VARCHAR(60),
-	telefonoE VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'\+?[0-9]')),
+	telefonoE VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'^[/+]?[0-9]')),
 	emailE VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
 	PRIMARY KEY (idEntrenador)
 );
@@ -34,7 +34,7 @@ CREATE TABLE Arbitro(
 	idArbitro INT,
 	nombreA VARCHAR(30),
 	apellidoA VARCHAR(60),
-	telefonoA VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'\+?[0-9]')),
+	telefonoA VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'^[/+]?[0-9]')),
 	emailA VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
 	PRIMARY KEY (idArbitro)
 );
@@ -43,7 +43,7 @@ CREATE TABLE Personal(
 	idPersonal INT,
 	nombreP VARCHAR(30),
 	apellidosP VARCHAR(60),
-	telefonoP VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'\+?[0-9]')),
+	telefonoP VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'^[/+]?[0-9]')),
 	emailP VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
 	PRIMARY KEY (idPersonal)
 );
@@ -59,7 +59,7 @@ CREATE TABLE Entidad(
 	idEntidad INT,
 	nombreEn VARCHAR(30),
 	persona_de_contacto VARCHAR(80),
-	telefonoEn VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'\+?[0-9]')),
+	telefonoEn VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'^[/+]?[0-9]')),
 	emailEn VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
 	PRIMARY KEY (idEntidad)
 );

@@ -36,17 +36,22 @@
 \end{enumerate}
 
 \subsection{Normalización}
-En este caso no se ha tenido que hacer ningún cambio en las tablas cuando se han normalizado porque el diseño
-no tenía errores y las tablas están desde un principio en la forma normal del Boyce-Codd.
+En este caso, las tablas no han sufrido ningún cambio durante el proceso de normalización
+porque el diseño era correcto y nuestras tablas, desde un principio, se encontraban en
+forma normal de Boyce-Codd.
 
 \subsubsection{2FN}
-Se encuentran desde un principio en segunda forma normal porque todos los atributos no primos dependen de las claves candidatas,
-y como en cada tabla solo hay una dependen por tanto de la clave primaria.
+La segunda forma normal se cumplía: todos los atributos no primos de las tablas dependen de las claves candidatas.
+Dado que en cada tabla sólo hay una clave candidata, estos atributos no primos dependen de ella, la clave primaria.
+
 
 \subsubsection{3FN}
-Para esta forma normal ya se cumple que están en segunda forma normal y además no hay ninguna dependencia transitiva problemática,
-porque como hemos dicho todos los atributos no primos dependen únicamente de la clave primaria y no hay ninguno que dependa de algún
-atributo que no sea clave.
+También cumplíamos los requisitos de la tercera forma normal: está en segunda forma normal;
+y no existe ninguna dependencia transitiva problemática (tipo $A \rightarrow B, B \rightarrow C, C \rightarrow !A$). Esto se debe a
+que, como hemos explicado, todos los atributos no primos sólo dependen de la clave primaria, y no
+hay ninguno que dependa de algo que no sea la clave.
+
 
 \subsubsection{FNBC}
-En este caso no hay más de una clave candidata por lo que no hay claves candidatas compuestas que tengan atributos en común.
+En el caso de la forma normal de Boyce-Codd, no hay más que una clave candidata, por lo que no
+hay claves candidatas compuestas que tengan atributos en común.
