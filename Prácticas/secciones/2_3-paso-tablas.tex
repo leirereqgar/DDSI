@@ -1,0 +1,52 @@
+\section{Paso a tablas}
+\subsubsection{Leyenda}
+\begin{itemize}
+	\item Para indicar una clave primaria esta se \underline{subrayará}.
+	\item Para indicar una clave externa se acompañará de CE y el número de la tabla de la que viene la clave.
+	\item Para indicar una clave compuesta se encerrará entre corchetes [].
+\end{itemize}
+
+\subsubsection{Tablas}
+\begin{enumerate}
+	\item \textbf{Edición: } (\underline{Año})
+	\item \textbf{Jugador: } (\underline{idJugador}, nombreJ, apellidoJ, teléfonoJ, e-mailJ)
+	\item \textbf{Entrenador: } (\underline{idEntrenador}, nombreE, apellidoE, teléfonoE, e-mailE)
+	\item \textbf{Partido: } (\underline{idPartido}, fecha, resultado)
+	\item \textbf{Árbitro: } (\underline{idÁrbitro}, nombreA, apellidoA, teléfonoA,e-mailA)
+	\item \textbf{Personal: } (\underline{idPersonal}, nombreP, apellidosP, e-mailP, teléfonoP)
+	\item \textbf{Pista: } (\underline{idPista}, nombre, capacidad)
+	\item \textbf{Entidad: } (\underline{idEntidad}, nombreEn, persona de contacto, e-mailEn, teléfonoEn)
+	\item \textbf{Material: } (\underline{idMaterial}, nombre\_material)
+	\item \textbf{Pedido: } (\underline{Numero\_pedido})
+\newline
+	\item \textbf{Se juega en: } (\underline{idPartido CE4}, idPista CE7)
+	\item \textbf{Arbitrado: } (\underline{idPartido CE4}, idArbitro CE5)
+	\item \textbf{Participan: } (\underline{[[idJugador, idJugador], Año] CE16, idPartido CE4})
+	\item \textbf{Jugado: } (\underline{idPartido CE4}, idAño CE1)
+	\item \textbf{Pareja: } (\underline{[idJugador CE 2, idJugador CE 2]})
+	\item \textbf{Inscrita: } (\underline{[[idJugador, idJugador] CE 15, Año CE 1]}, pos\_ranking)
+	\item \textbf{Entrena: } (\underline{[[[[idJugador, idJugador] CE 15, Año CE 1] CE 16], idEntrenador CE 3]})
+	\item \textbf{Trabaja: } (\underline{[idPersonal CE6, año CE1]}, sueldo)
+	\item \textbf{Asigna: } (\underline{[[idPersonal, año]CE18, idPista CE7, FechaInicio, FechaFin]})
+	\item \textbf{Colabora: } (\underline{[idEntidad CE8, Año CE 1]}, dinero aportado)
+	\item \textbf{Patrocina: } (\underline{[idEntidad CE8, Año CE 1]}, dinero aportado)
+	\item \textbf{Proporciona: } (\underline{idMaterial CE 9}, [idEntidad, Año]CE21, Cantidad\_suministrada)
+	\item \textbf{Recoge: } (\underline{Numero\_pedido CE 10},[[idPersonal, año], idPista, FechaInicio, FechaFin]CE19, Fecha)
+	\item \textbf{Compuesto: } (\underline{[idMaterial CE 22, Numero\_pedido CE 10]}, Cantidad)
+\end{enumerate}
+
+\subsection{Normalización}
+En este caso no se ha tenido que hacer ningún cambio en las tablas cuando se han normalizado porque el diseño
+no tenía errores y las tablas están desde un principio en la forma normal del Boyce-Codd.
+
+\subsubsection{2FN}
+Se encuentran desde un principio en segunda forma normal porque todos los atributos no primos dependen de las claves candidatas,
+y como en cada tabla solo hay una dependen por tanto de la clave primaria.
+
+\subsubsection{3FN}
+Para esta forma normal ya se cumple que están en segunda forma normal y además no hay ninguna dependencia transitiva problemática,
+porque como hemos dicho todos los atributos no primos dependen únicamente de la clave primaria y no hay ninguno que dependa de algún
+atributo que no sea clave.
+
+\subsubsection{FNBC}
+En este caso no hay más de una clave candidata por lo que no hay claves candidatas compuestas que tengan atributos en común.

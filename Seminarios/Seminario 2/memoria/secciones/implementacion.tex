@@ -125,16 +125,16 @@ Al inicio del programa hay que borrar las tablas para reiniciar la base de datos
 
 \begin{lstlisting}[language=Java]
 try{
-	query = "DELETE Detalle_pedido";
+	query = "DELETE Detalle\_pedido";
 	stmt  = conn.createStatement();
 	stmt.executeUpdate(query);
-	query = "DROP TABLE Detalle_pedido";
+	query = "DROP TABLE Detalle\_pedido";
 	stmt  = conn.createStatement();
 	stmt.executeUpdate(query);
-	System.out.println("Tabla Detalle_pedido dropeada");
+	System.out.println("Tabla Detalle\_pedido dropeada");
 
 } catch(Exception e){
-	System.out.println("La tabla Detalle_pedido no existia");
+	System.out.println("La tabla Detalle\_pedido no existia");
 }
 
 try{
@@ -166,7 +166,7 @@ try{
 }
 \end{lstlisting}
 
-Para la creación de las tablas usamos la sentencia \texttt{CREATE TABLE} indicando sus atributos, las claves primarias y las claves externas. En la tabla Detalle_pedido hemos habilitado la opción de borrado en cascada.
+Para la creación de las tablas usamos la sentencia \texttt{CREATE TABLE} indicando sus atributos, las claves primarias y las claves externas. En la tabla Detalle\_pedido hemos habilitado la opción de borrado en cascada.
 
 \begin{lstlisting}[language=Java]
 //Crear tablas
@@ -178,7 +178,7 @@ query = "CREATE TABLE Pedido (Cpedido INT NOT NULL, Ccliente INT, Fecha_pedido D
 stmt  = conn.createStatement();
 stmt.executeUpdate(query);
 
-query = "CREATE TABLE Detalle_pedido (Cpedido INT NOT NULL, Cproducto INT NOT NULL, Cantidad int,FOREIGN KEY(Cpedido) REFERENCES Pedido(Cpedido) ON DELETE CASCADE,FOREIGN KEY(Cproducto) REFERENCES Stock(Cproducto) ON DELETE CASCADE,PRIMARY KEY(Cpedido,Cproducto))";
+query = "CREATE TABLE Detalle\_pedido (Cpedido INT NOT NULL, Cproducto INT NOT NULL, Cantidad int,FOREIGN KEY(Cpedido) REFERENCES Pedido(Cpedido) ON DELETE CASCADE,FOREIGN KEY(Cproducto) REFERENCES Stock(Cproducto) ON DELETE CASCADE,PRIMARY KEY(Cpedido,Cproducto))";
 stmt  = conn.createStatement();
 stmt.executeUpdate(query);
 \end{lstlisting}
@@ -373,7 +373,7 @@ while(rset.next()){
 		System.out.println("Registrando pedido...");
 
 
-		query="INSERT INTO Detalle_pedido(Cpedido, Cproducto, Cantidad) VALUES ((SELECT CPedido FROM Pedido WHERE Cpedido='" + cpedido + "'), (SELECT Cproducto FROM Stock WHERE Cproducto='" + cproducto + "')," + cantidad + ")";
+		query="INSERT INTO Detalle\_pedido(Cpedido, Cproducto, Cantidad) VALUES ((SELECT CPedido FROM Pedido WHERE Cpedido='" + cpedido + "'), (SELECT Cproducto FROM Stock WHERE Cproducto='" + cproducto + "')," + cantidad + ")";
 		stmt  = conn.createStatement();
 		stmt.executeUpdate(query);
 
@@ -424,13 +424,13 @@ Una vez tenemos el \texttt{cpedido} tenemos que comprobar que en la tabla existe
 
 Si el primer resultado es nulo lanzamos un mensaje de error (la tupla estaba vacía) y salimos de esta opción; si no, deshacemos la iteración (\texttt{conn.previous()}) y continuamos el programa normalmente. Tendremos una variable bool para imprimir o no el éxito al borrar el pedido.
 
-Tenemos en cuenta también que, si se borra el pedido, hay que actualizar la tabla stock para devolver la cantidad de productos indicada en Detalle\_pedido. Una vez se han seguido todos estos pasos, podemos borrar la tabla Pedido directamente, ya que la tupla de Detalle_pedido se borrará en cascada con ella.
+Tenemos en cuenta también que, si se borra el pedido, hay que actualizar la tabla stock para devolver la cantidad de productos indicada en Detalle\_pedido. Una vez se han seguido todos estos pasos, podemos borrar la tabla Pedido directamente, ya que la tupla de Detalle\_pedido se borrará en cascada con ella.
 
 \begin{lstlisting}[language=Java]
 Boolean existe = true;
 
 stmt = conn.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-ResultSet cproducto1 = stmt.executeQuery("SELECT Cproducto,Cantidad FROM Detalle_pedido WHERE Cpedido='"+ cpedido + "'");
+ResultSet cproducto1 = stmt.executeQuery("SELECT Cproducto,Cantidad FROM Detalle\_pedido WHERE Cpedido='"+ cpedido + "'");
 
 if (cproducto1.next() == false) {
 	System.out.println("El pedido introducido no existe");
