@@ -2,8 +2,11 @@
 \subsection{Edición}
 \begin{lstlisting}[language=sql]
 INSERT INTO Edicion (Año) VALUES (2015);
+
 INSERT INTO Edicion (Año) VALUES (2016);
+
 INSERT INTO Edicion (Año) VALUES (2020);
+
 INSERT INTO Edicion (Año) VALUES (2019);
 \end{lstlisting}
 
@@ -26,10 +29,13 @@ VALUES ('4','Sara','Sarao','999333999','sara@g.com');
 \begin{lstlisting}[language=sql]
 INSERT INTO Entrenador(idEntrenador, nombreE,apellidoE,telefonoE,emailE)
 VALUES (1, 'Alberto', 'Lopez', '342567687', 'albi@gmail.com');
+
 INSERT INTO Entrenador(idEntrenador, nombreE,apellidoE,telefonoE,emailE)
 VALUES (2, 'Miguel', 'Morena', '754756386', 'morc@gmail.com');
+
 INSERT INTO Entrenador(idEntrenador, nombreE,apellidoE,telefonoE,emailE)
 VALUES (3, 'Pedro', 'Hidalgo', '456789853', 'pdrh@gmail.com');
+
 INSERT INTO Entrenador(idEntrenador, nombreE,apellidoE,telefonoE,emailE)
 VALUES (4, 'Curro', 'Toledano', '124567890', 'Curreoat@gmail.com');
 \end{lstlisting}
@@ -47,7 +53,6 @@ VALUES(3,TO_TIMESTAMP('2018-08-08 08:16:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF
 
 INSERT INTO Partido(idPartido,fecha,resultado)
 VALUES(4,TO_TIMESTAMP('2018-08-09 08:17:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),19);
-
 \end{lstlisting}
 
 \pagebreak
@@ -154,30 +159,6 @@ INSERT INTO Arbitrado (idPartido,idArbitro) VALUES (3,3);
 INSERT INTO Arbitrado (idPartido,idArbitro) VALUES (4,4);
 \end{lstlisting}
 
-\subsection{Participan}
-\begin{lstlisting}[language=sql]
-INSERT INTO Participan(IdJugador1,idJugador2,Año,idPartido) VALUES(1,2,2020,2);
-
-INSERT INTO Participan(IdJugador1,idJugador2,Año,idPartido) VALUES(3,4,2020,1);
-
-INSERT INTO Participan(IdJugador1,idJugador2,Año,idPartido) VALUES(1,3,2016,3);
-
-INSERT INTO Participan(IdJugador1,idJugador2,Año,idPartido) VALUES(2,4,2019,4);
-\end{lstlisting}
-
-\pagebreak
-
-\subsection{Jugado}
-\begin{lstlisting}[language=sql]
-INSERT INTO Jugado (idPartido,Año) VALUES (1,2016);
-
-INSERT INTO Jugado (idPartido,Año) VALUES (2,2017);
-
-INSERT INTO Jugado (idPartido,Año) VALUES (3,2018);
-
-INSERT INTO Jugado (idPartido,Año) VALUES (4,2019);
-\end{lstlisting}
-
 \subsection{Pareja}
 \begin{lstlisting}[language=sql]
 INSERT INTO Pareja(idJugador1, idJugador2) VALUES (1,2);
@@ -188,6 +169,8 @@ INSERT INTO Pareja(idJugador1, idJugador2) VALUES (1,3);
 
 INSERT INTO Pareja(idJugador1, idJugador2) VALUES (2,4);
 \end{lstlisting}
+
+\pagebreak
 
 \subsection{Inscrita}
 \begin{lstlisting}[language=sql]
@@ -202,6 +185,28 @@ VALUES ('1','3','2015','6');
 
 INSERT INTO Inscrita(idJugador1, idJugador2, Año, Pos_ranking)
 VALUES ('2','4','2019','3');
+\end{lstlisting}
+
+\subsection{Participan}
+\begin{lstlisting}[language=sql]
+INSERT INTO Participan(IdJugador1,idJugador2,Año,idPartido) VALUES(1,2,2020,2);
+
+INSERT INTO Participan(IdJugador1,idJugador2,Año,idPartido) VALUES(3,4,2020,1);
+
+INSERT INTO Participan(IdJugador1,idJugador2,Año,idPartido) VALUES(1,3,2015,3);
+
+INSERT INTO Participan(IdJugador1,idJugador2,Año,idPartido) VALUES(2,4,2019,4);
+\end{lstlisting}
+
+\subsection{Jugado}
+\begin{lstlisting}[language=sql]
+INSERT INTO Jugado (idPartido,Año) VALUES (1,2016);
+
+INSERT INTO Jugado (idPartido,Año) VALUES (2,2015);
+
+INSERT INTO Jugado (idPartido,Año) VALUES (3,2020);
+
+INSERT INTO Jugado (idPartido,Año) VALUES (4,2019);
 \end{lstlisting}
 
 \subsection{Entrena}
@@ -333,7 +338,6 @@ VALUES(4,1,2019,2,
 	TO_TIMESTAMP('2018-08-06 12:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),
 	TO_TIMESTAMP('2018-08-06 10:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF')
 );
-
 \end{lstlisting}
 
 \subsection{Compuesto}

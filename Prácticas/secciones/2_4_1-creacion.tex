@@ -9,8 +9,8 @@ CREATE TABLE Jugador(
 	idJugador INT,
 	nombreJ VARCHAR(30),
 	apellidoJ VARCHAR(60),
-	telefonoJ INT,
-	emailJ VARCHAR(50),
+	telefonoJ VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'\+?[0-9]')),
+	emailJ VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
 	PRIMARY KEY (idJugador)
 );
 
@@ -18,8 +18,8 @@ CREATE TABLE Entrenador(
 	idEntrenador INT,
 	nombreE VARCHAR(30),
 	apellidoE VARCHAR(60),
-	telefonoE INT,
-	emailE VARCHAR(50),
+	telefonoE VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'\+?[0-9]')),
+	emailE VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
 	PRIMARY KEY (idEntrenador)
 );
 
@@ -34,8 +34,8 @@ CREATE TABLE Arbitro(
 	idArbitro INT,
 	nombreA VARCHAR(30),
 	apellidoA VARCHAR(60),
-	telefonoA INT,
-	emailA VARCHAR(50),
+	telefonoA VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'\+?[0-9]')),
+	emailA VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
 	PRIMARY KEY (idArbitro)
 );
 
@@ -43,8 +43,8 @@ CREATE TABLE Personal(
 	idPersonal INT,
 	nombreP VARCHAR(30),
 	apellidosP VARCHAR(60),
-	telefonoP INT,
-	emailP VARCHAR(50),
+	telefonoP VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'\+?[0-9]')),
+	emailP VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
 	PRIMARY KEY (idPersonal)
 );
 
@@ -59,8 +59,8 @@ CREATE TABLE Entidad(
 	idEntidad INT,
 	nombreEn VARCHAR(30),
 	persona_de_contacto VARCHAR(80),
-	telefonoEn INT,
-	emailEn VARCHAR(50),
+	telefonoEn VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'\+?[0-9]')),
+	emailEn VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
 	PRIMARY KEY (idEntidad)
 );
 
@@ -91,6 +91,24 @@ CREATE TABLE Arbitrado(
 	CONSTRAINT idArbitro_clave_externa FOREIGN KEY(idArbitro) REFERENCES Arbitro(idArbitro)
 );
 
+CREATE TABLE Pareja(
+	idJugador1 INT,
+	idJugador2 INT,
+	FOREIGN KEY(idJugador1) REFERENCES Jugador(idJugador),
+	FOREIGN KEY(idJugador2) REFERENCES Jugador(idJugador),
+	PRIMARY KEY (idJugador1, idJugador2)
+);
+
+CREATE TABLE Inscrita(
+	idJugador1 INT,
+	idJugador2 INT,
+	Año INT,
+	Pos_ranking INT,
+	FOREIGN KEY(idJugador1, idJugador2) REFERENCES Pareja(idJugador1, idJugador2),
+	FOREIGN KEY(Año) REFERENCES Edicion(Año),
+	PRIMARY KEY (idJugador1, idJugador2, Año)
+);
+
 CREATE TABLE Participan(
 	idJugador1 INT CONSTRAINT jugadorP1_no_nulo NOT NULL,
 	idJugador2 INT CONSTRAINT jugadorP2_no_nulo NOT NULL,
@@ -110,25 +128,6 @@ CREATE TABLE Jugado(
 	CONSTRAINT idPartidoJ_clave_primaria PRIMARY KEY(idPartido),
 	CONSTRAINT idPartidoJ_clave_externa FOREIGN KEY(idPartido) REFERENCES Partido(idPartido),
 	CONSTRAINT idAño_clave_externa FOREIGN KEY(Año) REFERENCES Edicion(Año)
-);
-
-CREATE TABLE Pareja(
-	idJugador1 INT,
-	idJugador2 INT,
-	FOREIGN KEY(idJugador1) REFERENCES Jugador(idJugador),
-	FOREIGN KEY(idJugador2) REFERENCES Jugador(idJugador),
-	PRIMARY KEY (idJugador1, idJugador2)
-);
-
-CREATE TABLE Inscrita(
-	idJugador1 INT,
-	idJugador2 INT,
-	Año INT,
-	Pos_ranking INT,
-	FOREIGN KEY(idJugador1) REFERENCES Pareja(idJugador1),
-	FOREIGN KEY(idJugador2) REFERENCES Pareja(idJugador2),
-	FOREIGN KEY(Año) REFERENCES Edicion(Año),
-	PRIMARY KEY (idJugador1, idJugador2, Año)
 );
 
 CREATE TABLE Entrena(
@@ -153,14 +152,16 @@ CREATE TABLE Trabaja (
 
 CREATE TABLE Asigna (
 	idPersonal INT,
-	año INT,
+	Año INT,
 	idPista INT,
-	FechaInicio DATE,
-	FechaFin DATE,
-	FOREIGN KEY (idPersonal, año) REFERENCES Trabaja (idPersonal, año),
+	FechaInicio TIMESTAMP,
+	FechaFin TIMESTAMP,
+	FOREIGN KEY (idPersonal, Año) REFERENCES Trabaja (idPersonal, Año),
+	CHECK (FechaFin > FechaInicio),
+	CHECK (FechaFin > FechaInicio),
+	CHECK ((CAST (FechaFin as DATE) - CAST (FechaInicio as DATE))*24< 8),
 	FOREIGN KEY (idPista) REFERENCES Pista (idPista),
-	CHECK (FechaFin > FechaInicio)
-	PRIMARY KEY (idPersonal, año, idPista, FechaInicio, FechaFin)
+	PRIMARY KEY (idPersonal, Año, idPista, FechaInicio, FechaFin)
 );
 
 CREATE TABLE Colabora (
