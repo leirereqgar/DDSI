@@ -9,8 +9,8 @@ CREATE TABLE Jugador(
 	idJugador INT,
 	nombreJ VARCHAR(30),
 	apellidoJ VARCHAR(60),
-	telefonoJ VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'^[/+]?[0-9]')),
-	emailJ VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
+	telefonoJ VARCHAR(12) CONSTRAINT tfnoJ CHECK(regexp_like(telefonoJ,'^[/+]?[0-9]')),
+	emailJ VARCHAR(50) CONSTRAINT mail_checkJ CHECK (emailJ LIKE '%_@__%.__%'),
 	PRIMARY KEY (idJugador)
 );
 
@@ -18,8 +18,8 @@ CREATE TABLE Entrenador(
 	idEntrenador INT,
 	nombreE VARCHAR(30),
 	apellidoE VARCHAR(60),
-	telefonoE VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'^[/+]?[0-9]')),
-	emailE VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
+	telefonoE VARCHAR(12) CONSTRAINT tfnoE CHECK(regexp_like(telefonoE,'^[/+]?[0-9]')),
+	emailE VARCHAR(50) CONSTRAINT mail_checkE CHECK (emailE LIKE '%_@__%.__%'),
 	PRIMARY KEY (idEntrenador)
 );
 
@@ -34,8 +34,8 @@ CREATE TABLE Arbitro(
 	idArbitro INT,
 	nombreA VARCHAR(30),
 	apellidoA VARCHAR(60),
-	telefonoA VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'^[/+]?[0-9]')),
-	emailA VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
+	telefonoA VARCHAR(12) CONSTRAINT tfnoA CHECK(regexp_like(telefonoA,'^[/+]?[0-9]')),
+	emailA VARCHAR(50) CONSTRAINT mail_checkA CHECK (emailA LIKE '%_@__%.__%'),
 	PRIMARY KEY (idArbitro)
 );
 
@@ -43,8 +43,8 @@ CREATE TABLE Personal(
 	idPersonal INT,
 	nombreP VARCHAR(30),
 	apellidosP VARCHAR(60),
-	telefonoP VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'^[/+]?[0-9]')),
-	emailP VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
+	telefonoP VARCHAR(12) CONSTRAINT tfnoP CHECK(regexp_like(telefonoP,'^[/+]?[0-9]')),
+	emailP VARCHAR(50) CONSTRAINT mail_checkP CHECK (emailP LIKE '%_@__%.__%'),
 	PRIMARY KEY (idPersonal)
 );
 
@@ -59,8 +59,8 @@ CREATE TABLE Entidad(
 	idEntidad INT,
 	nombreEn VARCHAR(30),
 	persona_de_contacto VARCHAR(80),
-	telefonoEn VARCHAR(12) CONSTRAINT tfno CHECK(regexp_like(telefonoJ,'^[/+]?[0-9]')),
-	emailEn VARCHAR(50) CONSTRAINT mail_check CHECK (emailJ LIKE '%_@__%.__%'),
+	telefonoEn VARCHAR(12) CONSTRAINT tfnoEn CHECK(regexp_like(telefonoEn,'^[/+]?[0-9]')),
+	emailEn VARCHAR(50) CONSTRAINT mail_checkEn CHECK (emailEn LIKE '%_@__%.__%'),
 	PRIMARY KEY (idEntidad)
 );
 
