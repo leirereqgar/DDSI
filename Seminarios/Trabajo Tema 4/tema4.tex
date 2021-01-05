@@ -1,0 +1,35 @@
+\documentclass[11pt, a4paper]{aqademic}
+
+\usepackage[spanish]{babel}
+	\selectlanguage{spanish}
+
+\usepackage{graphicx}
+  \graphicspath{{img/}}
+
+\usepackage{pdfpages}
+\usepackage{multirow}
+
+\title{Trabajo del Tema 4, lenguajes NoSQL}
+\author{Expósito, Nieto, Sánchez, Requena, Romero}
+
+\AqSetChapter{Apartado}
+\AqSetSection{}
+
+\begin{document}
+\AqMaketitle[
+	author    = {Javier Expósito Martínez, Inés Nieto Sánchez, Laura Sánchez Sánchez, Leire Requena Garcia, Clara María Romero Lara},
+	cover      = logo-ugr.png,
+	org         = Diseño y Desarrollo de Sistemas de Información
+]
+
+\tableofcontents
+
+\input{secciones/1-instalacion.tex}
+\input{secciones/2-descripcion.tex}
+\input{secciones/3-sentencias.tex}
+\input{secciones/4-conexion.tex}
+\input{secciones/5-implementacionP3.tex}
+
+\input{secciones/repo.tex}
+
+\end{document}
