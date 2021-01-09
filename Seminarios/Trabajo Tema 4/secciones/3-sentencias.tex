@@ -1,1 +1,74 @@
 \chapter{Creación, inserción y modificación de estructuras}
+De nuevo, hemos creado una base de datos muy similar a la del Seminario 2. Cuenta con tres colecciones: \texttt{Stock(id, cantidad)}, \texttt{Clientes(id, nombre)} y \texttt{Pedidos(id, Cliente-id, Stock-id, Artículos, Fecha)}. A continuación, veamos como hemos desplegado la base de datos y algunas otras sentencias. Se incluye entre paréntesis el equivalente a SQL.
+
+\bigskip
+{\large Creación de las colecciones y documentos (CREATE + INSERT)}
+  \begin{lstlisting}
+  db.Stock.insert({"_id":1, "cantidad":10})
+  db.Stock.insert({"_id":2, "cantidad":31})
+  db.Stock.insert({"_id":3, "cantidad":6 })
+  db.Stock.insert({"_id":4, "cantidad":10})
+  db.Stock.insert({"_id":5, "cantidad":23})
+  db.Stock.insert({"_id":6, "cantidad":43})
+
+  db.Clientes.insert({"_id":1, "nombre":"Paco"})
+  db.Clientes.insert({"_id":2, "nombre":"Mari"})
+  db.Clientes.insert({"_id":3, "nombre":"Alex"})
+
+  db.Pedidos.insert({"_id":1,"Cliente_id":1,"Stock_id":2,"Articulos":3})
+  db.Pedidos.insert({"_id":2,"Cliente_id":1,"Stock_id":6,"Articulos":5})
+  db.Pedidos.insert({"_id":3,"Cliente_id":9,"Stock_id":9,"Articulos":3})
+  \end{lstlisting}
+
+  Es en esta tabla Pedido donde empezamos a ver diferencias difíciles de salvar respecto al modelo relacional: no existen restricciones de clave foránea. Esto quiere decir que el sistema no nos va a impedir registrar un pedido con un Cliente-id y Stock-id que no existe, como en la tercera sentencia. Solo se podría solucionar desde la implementación de una aplicación externa.
+
+\bigskip
+{\large Añadir un campo a todos los documentos de una colección (ALTER)}
+
+  \begin{lstlisting}
+  db.Pedidos.update({}, {\$set : {"fecha":new Date()}},{upsert:false, multi:true})
+  \end{lstlisting}
+
+  Vamos a profundizar un poco en esta sentencia para destacar la variedad de usos del \texttt{update()}: estamos filtrando sin especificar ningún criterio para tomar todos los documentos de la colección, creamos y insertamos simultáneamente el nuevo campo (fecha), y con la flag multi nos aseguramos que esto se aplique a todos los documentos.
+
+\pagebreak
+\bigskip
+{\large Actualizar información en documento (UPDATE)}
+
+  \begin{lstlisting}
+  db.Pedidos.update( { _id: 3 }, {\$set:{ "Cliente_id":2, "Stock_id": 4}} )
+  \end{lstlisting}
+
+\bigskip
+{\large Crear colección (CREATE)}
+
+  \begin{lstlisting}
+  db.createCollection("Pruebas", { capped : true, size : 5242880, max : 5000 } )
+  \end{lstlisting}
+
+  Como ya hemos mencionado, la primera llamada desde un método a una colección la crea automáticamente. Si decidimos llamar al método \texttt{createCollection()} es probablemente porque queremos algún parámetro específico para ésta, por lo que hemos creado una colección capada e indicado su tamaño y número máximo de documentos.
+
+\bigskip
+{\large Crear documento, eliminar campo del documento, eliminar documento (INSERT, DELETE)}
+
+  \begin{lstlisting}
+  db.Pruebas.insert( {"_id": 1, "test": "123"} )
+
+  db.Pruebas.update( { _id: 1 }, { \$unset: { test: ""} })
+
+  db.Pruebas.deleteOne( {"_id": 1} )
+  \end{lstlisting}
+
+\bigskip
+{\large Borrar colección (DROP)}
+
+  \begin{lstlisting}
+  db.Pruebas.drop()
+  \end{lstlisting}
+
+\bigskip
+{\large Buscar según campo (SELECT)}
+
+  \begin{lstlisting}
+  db.Clientes.find({"Nombre":"Alex"})
+  \end{lstlisting}
