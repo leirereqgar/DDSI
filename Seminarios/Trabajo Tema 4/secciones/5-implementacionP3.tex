@@ -1,1 +1,10 @@
-\chapter{¿Sería adecuado para nuestro sistema del torneo de padel}
+\chapter{¿Sería adecuado para nuestro sistema del torneo de padel?}{}
+{\large
+En este trabajo hemos desarrollado una pequeña base de datos que se aproxima al modelo relacional. Esto nos ha causado ciertos problemas de consistencia e integridad, y solo demuestra que no existe superioridad entre SQL y NoSQL: simplemente existen sistemas que encajan mejor en uno o en el otro.
+
+
+La conclusión que sacamos tras el desarrollo de este trabajo es que no, no sería el mejor lenguaje para el desarrollo de nuestra práctica. El sistema del Torneo de Pádel cuenta con una gran cantidad de restricciones de claves foráneas que habríamos tenido que comprobar desde la aplicación, ya sea en Java o en otro lenguaje. Es un ejercicio altamente dependiente del sistema relacional difícil de traducir al de documentos.
+
+
+Los lenguajes NoSQL tienen mucho que ofrecer, son extremadamente rápidos respecto a SQL y altamente flexibles, pero están hechos para otro tipo de aplicaciones que necesitan de esa velocidad y flexibilidad. Nuestro sistema no requiere altas velocidades ni va a sufrir grandes modificaciones en su estructura, además que es más dependiente de la base de datos que de la implementación en una aplicación.
+}

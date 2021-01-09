@@ -1,1 +1,45 @@
-\chapter{Descripcion de DDL y DML}
+\chapter{Descripción de DDL y DML}
+En SQL, estos comandos componen lo que tradicionalmente conocemos como DDL (Data Definition Language) y DML (Data Manipulation Language). Veremos sus equivalentes en MongoDB, pero antes haremos un breve inciso para hablar sobre las diferencias entre el modelo relacional y el modelo de documentos.
+
+Antes de crear una base de datos basada en el modelo de documentos tenemos que dejar atrás las restricciones del modelo relacional: un documento y sus campos no equivalen a una tabla y sus columnas, y las restricciones de claves son mucho más laxas.
+
+Es realmente importante tener esto en mente al desplegar una base de datos NoSQL, ya que toda la velocidad que ganamos se debe a que no se aplican tantas restricciones. Una enorme parte de las comprobaciones que hagamos para mantener la integridad del sistema se harán desde la aplicación externa, no desde la base de datos. Con estos conceptos claros, veamos como se adapta el DDL y DML:
+
+\bigskip
+
+{\LARGE DDL}
+
+  \begin{itemize}
+    \item \textbf{CREATE}: No es estrictamente necesario explicitar la creación de una colección (el equivalente a las tablas), sino que al introducir el primer \texttt{insert()} se creará la colección.
+
+    En mongoDB, la orden equivalente a un CREATE es \texttt{db.collection.createCollection(nombre, opciones)}. Las opciones usadas han sido capped (colección de tamaño estático), size (tamaño de una colección capped) y max (número máximo de documentos en esta).
+
+    \item \textbf{ALTER}: No existe como tal. Recordamos la diferencia con el modelo relacional: no estamos usando tablas. Si queremos alterar la estructura de un documento añadiendo un nuevo campo, lo haremos con update().
+
+    La orden que hemos utilizado para emular un ALTER es update con el operador \texttt{\$set}, para añadir un campo a todos los documentos: \texttt{db.collection.update(\{condiciones\}, \{\$set : \{nuevo campo\}\},opciones)} . En las condiciones indicamos qué documentos queremos actualizar, así que si lo dejamos vacío serán todos. Las opciones a configurar son upsert (crear un nuevo documento si ninguno coincide con las condiciones), y multi (aplicar los cambios a todos los documentos que coincidan).
+
+    \item \textbf{DROP}: Se mantiene igual respecto a SQL. La orden es \texttt{db.Collection.drop()} y elimina la colección indicada.
+
+  \end{itemize}
+
+\bigskip
+
+\pagebreak
+\bigskip
+{\LARGE DML}
+
+  \begin{itemize}
+    \item \textbf{INSERT}: Como hemos dicho, si es la primera instancia implica la declaración de la colección. Si al nombre de un campo le añadimos \_id, este campo será considerado automáticamente clave primaria. Para la sentencia, sería simplemente \texttt{db.collection.insert(\{'campo1':valor1, 'campo2':valor2,...\}}
+
+    \item \textbf{SELECT}: Devuelve los documentos que coincidan con los criterios indicados. La orden es \texttt{db.collection.find(criterio, proyeccion)}, donde criterio son los criterios de búsqueda; y proyección los campos que devuelve de los documentos coincidentes.
+
+    \item \textbf{UPDATE}: Para actualizar información de un campo, se mantiene de forma muy similar a SQL, y además cuenta con los añadidos vistos en ALTER o DELETE. Emplea operadores para especificar el tipo de actualización (\texttt{\$set, \$unset...}).
+
+    La sentencia utilizada para actualizar un campo sería \texttt{db.collection.update( \{condicion\}, \{\$set:\{ 'Campo a actualizar': valor nuevo\}\}, opciones )}.
+
+    \item \textbf{DELETE}: Existen operadores como \texttt{\$unset} para update(), que eliminan un campo de un documento; o \texttt{deleteOne()}, que elimina un documento de la colección.
+    Para eliminar un campo: \texttt{db.collection.update( \{condicion\}, \{\$unset:\{ 'Campo a borrar': ''\}\}, opciones )}, donde el nuevo valor del campo es simplemente conjunto vacío.
+    Para eliminar un documento: \texttt{db.collection.deleteOne( \{condicion\} )}.
+
+
+  \end{itemize}
