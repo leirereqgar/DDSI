@@ -192,8 +192,8 @@ class TPadel {
 											emailj = entradaEscaner.nextLine();
 
 											try {
-												query = "CALL insertarJugador("+ idJugador + "," + nombrej
-												+ "," + apellidoj + "," + telefonoj + "," + emailj + ")";
+												query = "CALL insertarJugador("+ idJugador + ",'" + nombrej
+												+"','" + apellidoj + "'," + telefonoj + ",'" + emailj + "')";
 
 												stmt = conn.createStatement();
 												stmt.executeUpdate(query);
@@ -207,7 +207,7 @@ class TPadel {
 										case 2:
 											String nombree, apellidoe, telefonoe, emaile;
 
-											System.out.println("\nIntroduzca el id del jugador ");
+											System.out.println("\nIntroduzca el id del entrenador ");
 											entradaEscaner = new Scanner (System.in);
 											idEntrenador = entradaEscaner.nextInt();
 
@@ -228,8 +228,8 @@ class TPadel {
 											emaile = entradaEscaner.nextLine();
 
 											try {
-												query = "CALL insertarEntrenador("+ idEntrenador + "," + nombree
-												+ "," + apellidoe + "," + telefonoe + "," + emaile + ")";
+												query = "CALL insertarEntrenador("+ idEntrenador + ",'" + nombree
+												+ "','" + apellidoe + "'," + telefonoe + ",'" + emaile + "')";
 
 												stmt = conn.createStatement();
 												stmt.executeUpdate(query);
@@ -308,9 +308,13 @@ class TPadel {
 											System.out.println("\nIntroduzca el id del entrenador ");
 											entradaEscaner = new Scanner (System.in);
 											idEntrenador = entradaEscaner.nextInt();
+											
+										    System.out.println("\nIntroduzca la posición de la pareja en el ranking ");
+											entradaEscaner = new Scanner (System.in);
+											ranking = entradaEscaner.nextInt();
 
 											try {
-												query = "CALL registrarEntrena("+ miembro1 + "," + miembro2 + "," + idEntrenador + "," + anio + ")";
+												query = "CALL registrarEntrena("+ miembro1 + "," + miembro2 + "," + idEntrenador + "," + anio + "," + ranking +")";
 
 												stmt = conn.createStatement();
 												stmt.executeUpdate(query);
@@ -366,7 +370,7 @@ class TPadel {
 											capacidad = entradaEscaner.nextInt();
 
 											try {
-												query = "CALL insertarPista("+ idPista + "," + nombre + "," + capacidad + ")";
+												query = "CALL insertarPista("+ idPista + ",'" + nombre + "'," + capacidad + ")";
 
 												stmt = conn.createStatement();
 												stmt.executeUpdate(query);
@@ -422,11 +426,11 @@ class TPadel {
 													//día
 													res = fecha.substring(8,10);
 													int dia = Integer.parseInt(res);
-
+//CALL insertarPartido(10,TO_TIMESTAMP('2018-08-06 08:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),1,2019,11);
 													if(mes == 2){
 														if(1 <= dia && dia <= 28){
 															try {
-																query = "CALL insertarPartido("+ idPartido + "," + fecha + "," + resultado + "," + idPista + "," + anio + ")";
+																query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " 08:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF')," + resultado + "," + anio + "," + idPista + ")";
 
 																stmt = conn.createStatement();
 																stmt.executeUpdate(query);
@@ -443,7 +447,7 @@ class TPadel {
 														if(mes%2 == 1){
 															if(1 <= dia && dia <= 31){
 																try {
-																	query = "CALL insertarPartido("+ idPartido + "," + fecha + "," + resultado + "," + idPista + "," + anio + ")";
+																	query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " 08:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF')," + resultado + "," + anio + "," + idPista + ")";
 
 																	stmt = conn.createStatement();
 																	stmt.executeUpdate(query);
@@ -459,7 +463,7 @@ class TPadel {
 														else{
 															if(1 <= dia && dia <= 30){
 																try {
-																	query = "CALL insertarPartido("+ idPartido + "," + fecha + "," + resultado + "," + idPista + "," + anio + ")";
+																	query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " 08:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF')," + resultado + "," + anio + "," + idPista + ")";
 
 																	stmt = conn.createStatement();
 																	stmt.executeUpdate(query);
@@ -532,8 +536,8 @@ class TPadel {
 											emailen = entradaEscaner.nextLine();
 
 											try {
-												query = "CALL insertarEntidad("+ idEntidad + "," + nombreen
-												+ "," + contacto + "," + telefonoen + "," + emailen + ")";
+												query = "CALL insertarEntidad("+ idEntidad + ",'" + nombreen
+												+ "','" + contacto + "'," + telefonoen + ",'" + emailen + "')";
 
 												stmt = conn.createStatement();
 												stmt.executeUpdate(query);
@@ -720,8 +724,8 @@ class TPadel {
 											emailp = entradaEscaner.nextLine();
 
 											try {
-												query = "CALL insertarPersonal("+ idPersonal + "," + nombrep
-												+ "," + apellidop + "," + telefonop + "," + emailp + ")";
+												query = "CALL insertarPersonal("+ idPersonal + ",'" + nombrep
+												+ "','" + apellidop + "'," + telefonop + ",'" + emailp + "')";
 
 												stmt = conn.createStatement();
 												stmt.executeUpdate(query);
@@ -818,7 +822,7 @@ class TPadel {
 											String nombrem = entradaEscaner.nextLine();
 
 											try {
-												query = "CALL insertarMaterial("+ idMaterial + "," + nombrem + ")";
+												query = "CALL insertarMaterial("+ idMaterial + ",'" + nombrem + "')";
 
 												stmt = conn.createStatement();
 												stmt.executeUpdate(query);
@@ -871,14 +875,14 @@ class TPadel {
 											entradaEscaner = new Scanner (System.in);
 											String fechafin = entradaEscaner.nextLine();
 
-											System.out.println("\nIntroduzca el nombre de la fecha de recogida ");
+											System.out.println("\nIntroduzca la fecha de recogida ");
 											entradaEscaner = new Scanner (System.in);
 											String fecharecogida = entradaEscaner.nextLine();
 
 											try {
 												query = "CALL insertarAsignacionRecogida("+ idPedido + "," + idTrabajador + "," +
-												                                          anio + "," + idPista + "," + fechainicio + "," +
-																										fechafin + "," + fecharecogida + ")";
+												                                          anio + "," + idPista + ",TO_TIMESTAMP('" + fechainicio + "06:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),TO_TIMESTAMP('" +
+																										fechafin + "11:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),TO_TIMESTAMP('" + fecharecogida + "09:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'))";
 
 												stmt = conn.createStatement();
 												stmt.executeUpdate(query);
