@@ -1,0 +1,196 @@
+\section{Disparadores}
+
+\subsection{Un jugador no puede pertenecer a dos parejas distintas en la misma edición}
+Este disparador afecta a la tabla \texttt{Inscrita} donde se almacenan las parejas
+junto a la edición en la que participan.
+
+Con el cursor \texttt{cJugador} recorremos la tabla primero comprobando que el
+id de ninguno de los nuevos jugadores esté ya inscrito como pareja de otro jugador
+que ya estuviese en la tabla; si ocurre esto informamos del error con el que estaría repetido.
+
+
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE TRIGGER jugador_unico
+	BEFORE
+	INSERT ON Inscrita
+	FOR EACH ROW
+DECLARE
+	CURSOR cJugador IS SELECT * FROM Inscrita WHERE (:new.Año = Año);
+	jugadores Inscrita%ROWTYPE;
+BEGIN
+	OPEN cJugador;
+	FETCH cJugador INTO jugadores;
+	WHILE (cJugador%FOUND) LOOP
+		IF (:new.idJugador1 = jugadores.idJugador1 OR :new.IdJugador1 = jugadores.idJugador2)
+			THEN raise_application_error(-20600, :new.idJugador1 || 'JUGADOR 1: No se puede pertenecer a más de una pareja en la misma edicion');
+		END IF;
+
+		IF (:new.idJugador2 = jugadores.idJugador1 OR :new.IdJugador2 = jugadores.idJugador2)
+			THEN raise_application_error(-20600, :new.idJugador2 || 'JUGADOR 2: No se puede pertenecer a más de una pareja en la misma edicion');
+		END IF;
+
+		FETCH cJugador INTO jugadores;
+	END LOOP;
+
+	CLOSE cJugador;
+END;
+\end{lstlisting}
+
+\subsection{No se pueden jugar más de dos partidos en la misma pista}
+
+Según nuestro diseño del sistema de información este disparador necesitaba acceder
+a atributos de varias tablas por lo que para simplificarlo hemos creado una vista:
+
+\begin{lstlisting}[language=sql]
+CREATE VIEW PistaPartidoFecha
+AS (SELECT DISTINCT SeJuegaEn.idPista,SeJuegaEn.idPartido,Partido.fecha
+	FROM SeJuegaEn, SeJuegaEn cjuega, Partido, Partido par
+	WHERE(
+		((Partido.fecha - par.fecha)<1 AND Partido.idPartido<>par.idPartido)
+		AND
+		(SeJuegaEn.idPista=cjuega.idPista AND SeJuegaEn.idPartido<>cjuega.idPartido)
+		AND
+		(Partido.idPartido=SeJuegaEn.idPartido)
+));
+\end{lstlisting}
+
+Para el disparador necesitamos dos cursores: uno para coger las fechas de los partidos
+(\texttt{cPartidoFecha}) y otro para recoger solo los partidos (\texttt{cPartido}),
+y una variable donde guardemos el número de partidos que hay en la misma pista el mismo día.
+
+Dentro de los bucles comprobaremos si en el caso de que el nuevo partido coincida en fecha
+y pista con alguno de los que ya existen no sea el tercero que se jugara ese día, es decir,
+si ya hay dos no se insertará en la tabla.
+
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE TRIGGER partido_unico
+	BEFORE
+	INSERT ON SeJuegaEn
+	FOR EACH ROW
+DECLARE
+	CURSOR cPartidoFecha IS SELECT * FROM PistaPartidoFecha;
+	CURSOR cPartido IS SELECT * FROM Partido;
+	datos PistaPartidoFecha%ROWTYPE;
+	datosPartido Partido%ROWTYPE;
+	numPartidos number;
+BEGIN
+	OPEN cPartidoFecha;
+	OPEN cPartido;
+	SELECT (SELECT COUNT(*) FROM PistaPartidoFecha) INTO numPartidos FROM dual;
+	FETCH cPartidoFecha INTO datos;
+	FETCH cPartido INTO datosPartido;
+
+	WHILE(cPartidoFecha%FOUND)LOOP
+		WHILE(cPartido%FOUND)LOOP
+			IF(numPartidos >= 2 AND :new.idPista = datos.idPista AND :new.idPartido <> datos.idPartido AND
+				(:new.idPartido = datosPartido.idPartido AND (datosPartido.fecha-datos.fecha) < 1))
+				THEN raise_application_error(-20600, :new.idPartido || 'No se jugar más de dos partidos en la misma pista en un mismo dia');
+			END IF;
+
+			FETCH cPartido INTO datosPartido;
+		END LOOP;
+
+		FETCH cPartidoFecha INTO datos;
+	END LOOP;
+
+	CLOSE cPartido;
+	CLOSE cPartidoFecha;
+END;
+\end{lstlisting}
+
+\subsection{No se puede modificar el dinero aportado por un colaborador o patrocinador si ya ha empezado el torneo}
+
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE TRIGGER dinero_tras_inicio_colab
+	BEFORE UPDATE OF Dinero_aportado ON Colabora
+	FOR EACH ROW
+DECLARE
+	CURSOR cPrimerPartido IS
+	SELECT fecha FROM Partido WHERE fecha IN (SELECT MIN(fecha) FROM Partido
+	WHERE (EXTRACT(YEAR FROM fecha) = :old.Año) GROUP BY to_char(fecha,'YYYY')) GROUP BY fecha;
+
+	earliest DATE;
+BEGIN
+	OPEN cPrimerPartido;
+	FETCH cPrimerPartido INTO earliest;
+
+	IF (earliest < CURRENT_DATE)
+		THEN raise_application_error(-20600, :new.Dinero_aportado || 'No se puede modificar el dinero aportado si ya ha comenzado el torneo');
+	END IF;
+
+	CLOSE cPrimerPartido;
+END;
+/
+
+CREATE OR REPLACE TRIGGER dinero_tras_inicio_patr
+	BEFORE UPDATE OF Dinero_aportado ON Patrocina
+	FOR EACH ROW
+DECLARE
+	CURSOR cPrimerPartido IS
+	SELECT fecha FROM Partido WHERE fecha IN (SELECT MIN(fecha) FROM Partido
+	WHERE (EXTRACT(YEAR FROM fecha) = :old.Año) GROUP BY to_char(fecha,'YYYY')) GROUP BY fecha;
+
+	earliest DATE;
+BEGIN
+	OPEN cPrimerPartido;
+	FETCH cPrimerPartido INTO earliest;
+
+	IF (earliest < CURRENT_DATE)
+		THEN raise_application_error(-20600, :new.Dinero_aportado || 'No se puede modificar el dinero aportado si ya ha comenzado el torneo');
+	END IF;
+
+	CLOSE cPrimerPartido;
+END;
+/
+\end{lstlisting}
+
+\subsection{No se puede modificar el salario de un trabajador si ya ha realizado algún trabajo}
+
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE TRIGGER modificaSalario
+	BEFORE UPDATE OF sueldo ON Trabaja
+	FOR EACH ROW
+DECLARE
+	CURSOR fechas IS SELECT FechaInicio FROM Asigna WHERE (idPersonal = :new.idPersonal) ;
+	registro DATE;
+BEGIN
+	OPEN fechas;
+	FETCH fechas INTO registro;
+
+	WHILE (fechas%FOUND)LOOP
+		IF (sysdate > registro) THEN
+			RAISE_APPLICATION_ERROR(-20600, :new.sueldo || '***EXCEPTION**** No se puede modificar el sueldo ya que ya ha empezado su trabajo');
+		END IF;
+		FETCH fechas INTO registro;
+	END LOOP;
+
+CLOSE fechas;
+END;
+/
+\end{lstlisting}
+
+\subsection{No se puede asignar un nuevo pedido al mismo trabajador con menos de una hora de diferencia}
+\begin{lstlisting}[language=sql]
+CREATE TRIGGER recogida
+	BEFORE INSERT ON Recoge
+	FOR EACH ROW
+DECLARE
+	CURSOR cRecoge IS SELECT * FROM Recoge;
+	diferencia NUMERIC;
+	asignacion Recoge%ROWTYPE;
+BEGIN
+	OPEN cRecoge;
+	FETCH cRecoge INTO asignacion;
+	WHILE (cRecoge%FOUND) LOOP
+		diferencia := EXTRACT(HOUR FROM :new.fecha - asignacion.fecha);
+
+		IF(diferencia < 1 AND asignacion.idPersonal = :new.idPersonal AND asignacion.año = :new.año) THEN
+			raise_application_error(-20600, :new.fecha || 'Un trabajador no puede serle asignado un pedido con menos de 1 hora de diferencia');
+		END IF;
+
+		FETCH cRecoge INTO asignacion;
+	END LOOP;
+
+	CLOSE cRecoge;
+END;
+\end{lstlisting}
