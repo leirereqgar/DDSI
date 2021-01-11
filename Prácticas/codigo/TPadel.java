@@ -27,6 +27,7 @@ class TPadel {
 				String query;
 				Statement stmt = null;
 				ResultSet rset = null;
+				CallableStatement cs = null; 
 
 				try {
 					int menu = -1;
@@ -88,9 +89,17 @@ class TPadel {
 											anio = entradaEscaner.nextInt();
 
 											try {
-												query = "CALL mostrarRecaducacion("+ anio +")";
-												stmt = conn.createStatement();
-												stmt.executeQuery(query);
+											cs = conn.prepareCall("{CALL mostrarRecaducacion(?,?)}");
+											cs.setInt(1, anio);
+
+											cs.registerOutParameter(2, java.sql.Types.INTEGER);
+											cs.executeUpdate();
+
+											//read the OUT parameter now
+											int result = cs.getInt(2);
+
+											System.out.println("Dinero recaudado::"+result);
+
 											} catch (SQLException e) {
 												System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
 											} catch (Exception e) {
@@ -111,9 +120,18 @@ class TPadel {
 											idEntrenador = entradaEscaner.nextInt();
 
 											try {
-												query = "CALL mostrarEntrenador("+ anio + "," + idEntrenador +")";
-												stmt = conn.createStatement();
-												stmt.executeUpdate(query);
+												cs = conn.prepareCall("{CALL mostrarEntrenador(?,?,?)}");
+												cs.setInt(1, anio);
+												cs.setInt(2, idEntrenador);
+
+												cs.registerOutParameter(3, java.sql.Types.CLOB);
+												cs.executeUpdate();
+
+												//read the OUT parameter now
+												String result = cs.getString(3);
+
+												System.out.println("\n" + result);
+
 											} catch (SQLException e) {
 												System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
 											} catch (Exception e) {
@@ -127,9 +145,16 @@ class TPadel {
 											anio = entradaEscaner.nextInt();
 
 											try {
-												query = "CALL mostrarPersonal(" + anio + ")";
-												stmt = conn.createStatement();
-												stmt.executeUpdate(query);
+												cs = conn.prepareCall("{CALL mostrarPersonal(?,?)}");
+												cs.setInt(1, anio);
+
+												cs.registerOutParameter(2, java.sql.Types.CLOB);
+												cs.executeUpdate();
+
+												//read the OUT parameter now
+												String result = cs.getString(2);
+
+												System.out.println("\nNo trabajan en la edicion " + anio + ":\n" + result);
 											} catch (SQLException e) {
 												System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
 											} catch (Exception e) {
