@@ -27,7 +27,7 @@ class TPadel {
 				String query;
 				Statement stmt = null;
 				ResultSet rset = null;
-				CallableStatement cs = null; 
+				CallableStatement cs = null;
 
 				try {
 					int menu = -1;
@@ -39,11 +39,11 @@ class TPadel {
 					while (menu != 7) {
 						System.out.println("\n\u001B[34m\t\t--- MENU ---\u001B[0m");
 						System.out.println("\u001B[36m1.Ediciones\u001B[0m");
-						System.out.println("\u001B[36m2.Jugadores/Colaboradores\u001B[0m");
+						System.out.println("\u001B[36m2.Jugadores/Entrenadores\u001B[0m");
 						System.out.println("\u001B[36m3.Pistas/Partidos\u001B[0m");
 						System.out.println("\u001B[36m4.Patrocinadores/Colaboradores\u001B[0m");
 						System.out.println("\u001B[36m5.Personal/Horarios\u001B[0m");
-						System.out.println("\u001B[36m6.Materiales/pedidos\u001B[0m");
+						System.out.println("\u001B[36m6.Materiales/Pedidos\u001B[0m");
 						System.out.println("\u001B[36m7.Salir del programa\u001B[0m");
 
 						entradaEscaner = new Scanner (System.in);
@@ -89,7 +89,7 @@ class TPadel {
 											anio = entradaEscaner.nextInt();
 
 											try {
-											cs = conn.prepareCall("{CALL mostrarRecaducacion(?,?)}");
+											cs = conn.prepareCall("{CALL mostrarRecaudacion(?,?)}");
 											cs.setInt(1, anio);
 
 											cs.registerOutParameter(2, java.sql.Types.INTEGER);
@@ -333,7 +333,7 @@ class TPadel {
 											System.out.println("\nIntroduzca el id del entrenador ");
 											entradaEscaner = new Scanner (System.in);
 											idEntrenador = entradaEscaner.nextInt();
-											
+
 										    System.out.println("\nIntroduzca la posición de la pareja en el ranking ");
 											entradaEscaner = new Scanner (System.in);
 											ranking = entradaEscaner.nextInt();
