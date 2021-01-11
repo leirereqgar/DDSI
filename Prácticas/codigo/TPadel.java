@@ -39,11 +39,11 @@ class TPadel {
 					while (menu != 7) {
 						System.out.println("\n\u001B[34m\t\t--- MENU ---\u001B[0m");
 						System.out.println("\u001B[36m1.Ediciones\u001B[0m");
-						System.out.println("\u001B[36m2.Jugadores/Colaboradores\u001B[0m");
+						System.out.println("\u001B[36m2.Jugadores/Entrenadores\u001B[0m");
 						System.out.println("\u001B[36m3.Pistas/Partidos\u001B[0m");
 						System.out.println("\u001B[36m4.Patrocinadores/Colaboradores\u001B[0m");
 						System.out.println("\u001B[36m5.Personal/Horarios\u001B[0m");
-						System.out.println("\u001B[36m6.Materiales/pedidos\u001B[0m");
+						System.out.println("\u001B[36m6.Materiales/Pedidos\u001B[0m");
 						System.out.println("\u001B[36m7.Salir del programa\u001B[0m");
 
 						entradaEscaner = new Scanner (System.in);
