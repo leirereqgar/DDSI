@@ -27,7 +27,7 @@ class TPadel {
 				String query;
 				Statement stmt = null;
 				ResultSet rset = null;
-				CallableStatement cs = null; 
+				CallableStatement cs = null;
 
 				try {
 					int menu = -1;
@@ -89,7 +89,7 @@ class TPadel {
 											anio = entradaEscaner.nextInt();
 
 											try {
-											cs = conn.prepareCall("{CALL mostrarRecaducacion(?,?)}");
+											cs = conn.prepareCall("{CALL mostrarRecaudacion(?,?)}");
 											cs.setInt(1, anio);
 
 											cs.registerOutParameter(2, java.sql.Types.INTEGER);
@@ -333,7 +333,7 @@ class TPadel {
 											System.out.println("\nIntroduzca el id del entrenador ");
 											entradaEscaner = new Scanner (System.in);
 											idEntrenador = entradaEscaner.nextInt();
-											
+
 										    System.out.println("\nIntroduzca la posición de la pareja en el ranking ");
 											entradaEscaner = new Scanner (System.in);
 											ranking = entradaEscaner.nextInt();
@@ -626,11 +626,12 @@ class TPadel {
 										case 4:
 											int quesoy = -1;
 											Savepoint save1 = conn.setSavepoint();
-											while (quesoy != 3) {
+											while (quesoy != 3 && quesoy != 4) {
 												System.out.println("\n\u001B[36m\t\t" + "--- ¿Colaborador o patrocinador? ---" + "\u001B[0m");
 												System.out.println("\u001B[33m" + "1.Colaborador" + "\u001B[0m");
 												System.out.println("\u001B[33m" + "2.Patrocinador" + "\u001B[0m"); //sejuegaen jugado arbitrado y participan
-												System.out.println("\u001B[33m" + "3.Salir" + "\u001B[0m");
+												System.out.println("\u001B[33m" + "3.Guardar" + "\u001B[0m");
+												System.out.println("\u001B[33m" + "4.Cancelar" + "\u001B[0m");
 
 												entradaEscaner = new Scanner (System.in);
 												quesoy = entradaEscaner.nextInt();
@@ -687,6 +688,10 @@ class TPadel {
 													break;
 
 													case 3:
+														conn.commit();
+													break;
+
+													case 4:
 														conn.rollback(save1);
 													break;
 
