@@ -894,12 +894,17 @@ class TPadel {
 											entradaEscaner = new Scanner (System.in);
 											idPersonal = entradaEscaner.nextInt();
 
-											System.out.println("\nIntroduzca el sueldo ");
+											System.out.println("\nIntroduzca el año ");
+											entradaEscaner = new Scanner (System.in);
+											anio = entradaEscaner.nextInt();
+
+
+											System.out.println("\nIntroduzca el sueldo actualizado ");
 											entradaEscaner = new Scanner (System.in);
 											sueldo = entradaEscaner.nextInt();
 
 											try {
-												query = "CALL modificarSalario("+ idPersonal + "," + sueldo + ")";
+												query = "CALL modificarSalario("+ idPersonal + "," + anio + "," + sueldo + ")";
 
 												stmt = conn.createStatement();
 												stmt.executeUpdate(query);

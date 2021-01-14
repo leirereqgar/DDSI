@@ -274,11 +274,11 @@ END;
 /
 
 /******************************************************************************************************************************/
-CREATE OR REPLACE PROCEDURE modificarSalario(idPersonal1 INT, nuevoSueldo NUMBER) AS
+CREATE OR REPLACE PROCEDURE modificarSalario(idPersonal1 INT, anio NUMBER, nuevoSueldo NUMBER) AS
 BEGIN
     UPDATE Trabaja
     SET sueldo = nuevoSueldo
-    WHERE idPersonal = idPersonal1;
+    WHERE idPersonal = idPersonal1 AND Año = anio;
 END;
 /
 
