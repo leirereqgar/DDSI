@@ -24,7 +24,7 @@ CREATE TABLE Entrenador(
 CREATE TABLE Partido(
 	idPartido INT,
 	fecha DATE,
-	resultado INT,
+	resultado VARCHAR(30),
 	PRIMARY KEY (idPartido)
 );
 
@@ -133,7 +133,6 @@ CREATE TABLE Entrena(
 	idJugador2 INT,
 	idEntrenador INT,
 	Año INT,
-	Pos_ranking INT,
 	FOREIGN KEY(idJugador1,idJugador2, Año) REFERENCES Inscrita(idJugador1,idJugador2, Año),
 	FOREIGN KEY(idEntrenador) REFERENCES Entrenador(idEntrenador),
 	PRIMARY KEY (idJugador1, idJugador2, Año, idEntrenador)
