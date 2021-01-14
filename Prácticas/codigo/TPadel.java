@@ -531,7 +531,7 @@ class TPadel {
 													if(mes == 2){
 														if(1 <= dia && dia <= 28){
 															try {
-																query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " 08:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF')," + resultado + "," + anio + "," + idPista + ")";
+																query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " 08:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),'" + resultado + "'," + anio + "," + idPista + ")";
 
 																stmt = conn.createStatement();
 																stmt.executeUpdate(query);
@@ -548,7 +548,7 @@ class TPadel {
 														if(mes%2 == 1){
 															if(1 <= dia && dia <= 31){
 																try {
-																	query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " 08:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF')," + resultado + "," + anio + "," + idPista + ")";
+																	query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " 08:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),'" + resultado + "'," + anio + "," + idPista + ")";
 
 																	stmt = conn.createStatement();
 																	stmt.executeUpdate(query);
@@ -564,7 +564,7 @@ class TPadel {
 														else{
 															if(1 <= dia && dia <= 30){
 																try {
-																	query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " 08:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF')," + resultado + "," + anio + "," + idPista + ")";
+																	query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " 08:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),'" + resultado + "'," + anio + "," + idPista + ")";
 
 																	stmt = conn.createStatement();
 																	stmt.executeUpdate(query);
