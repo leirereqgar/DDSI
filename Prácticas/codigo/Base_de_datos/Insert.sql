@@ -38,16 +38,16 @@ VALUES (4, 'Curro', 'Toledano', '124567890', 'Curreoat@gmail.com');
 /******************************************************************************************************************************/
 
 INSERT INTO Partido(idPartido,fecha,resultado)
-VALUES(1,TO_TIMESTAMP('2016-08-06 08:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),15);
+VALUES(1,TO_TIMESTAMP('2016-08-06 08:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),'1-5');
 
 INSERT INTO Partido(idPartido,fecha,resultado)
-VALUES(2,TO_TIMESTAMP('2015-08-07 08:15:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),17);
+VALUES(2,TO_TIMESTAMP('2015-08-07 08:15:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),'2-2');
+
+INSERT INTO Partido(idPartido,fecha)
+VALUES(3,TO_TIMESTAMP('2020-08-08 08:16:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'));
 
 INSERT INTO Partido(idPartido,fecha,resultado)
-VALUES(3,TO_TIMESTAMP('2020-08-08 08:16:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),18);
-
-INSERT INTO Partido(idPartido,fecha,resultado)
-VALUES(4,TO_TIMESTAMP('2019-08-09 08:17:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),19);
+VALUES(4,TO_TIMESTAMP('2019-08-09 08:17:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),'4-3');
 
 /******************************************************************************************************************************/
 
@@ -169,11 +169,11 @@ INSERT INTO Pareja(idJugador1, idJugador2) VALUES (4,3);
 
 /******************************************************************************************************************************/
 
-INSERT INTO Inscrita(idJugador1, idJugador2, Año, Pos_ranking)
-VALUES ('1','2','2020','3');
+INSERT INTO Inscrita(idJugador1, idJugador2, Año)
+VALUES ('1','2','2020');
 
-INSERT INTO Inscrita(idJugador1, idJugador2, Año, Pos_ranking)
-VALUES ('3','4','2020','2');
+INSERT INTO Inscrita(idJugador1, idJugador2, Año)
+VALUES ('3','4','2020');
 
 INSERT INTO Inscrita(idJugador1, idJugador2, Año, Pos_ranking)
 VALUES ('1','3','2015','6');
@@ -203,17 +203,17 @@ INSERT INTO Jugado (idPartido,Año) VALUES (4,2019);
 
 /******************************************************************************************************************************/
 
-INSERT INTO Entrena(idJugador1, idJugador2, idEntrenador, Año, Pos_ranking)
-VALUES ('1','2','1','2020','3');
+INSERT INTO Entrena(idJugador1, idJugador2, idEntrenador, Año)
+VALUES ('1','2','1','2020');
 
-INSERT INTO Entrena(idJugador1, idJugador2, idEntrenador, Año, Pos_ranking)
-VALUES ('3','4','1','2020','2');
+INSERT INTO Entrena(idJugador1, idJugador2, idEntrenador, Año)
+VALUES ('3','4','1','2020');
 
-INSERT INTO Entrena(idJugador1, idJugador2, idEntrenador, Año, Pos_ranking)
-VALUES ('1','3','3','2015','6');
+INSERT INTO Entrena(idJugador1, idJugador2, idEntrenador, Año)
+VALUES ('1','3','3','2015');
 
-INSERT INTO Entrena(idJugador1, idJugador2, idEntrenador, Año, Pos_ranking)
-VALUES ('2','4','2','2019','3');
+INSERT INTO Entrena(idJugador1, idJugador2, idEntrenador, Año)
+VALUES ('2','4','2','2019');
 
 /******************************************************************************************************************************/
 

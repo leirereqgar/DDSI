@@ -136,10 +136,10 @@ END;
 --EXEC registrarInscrita(1,5,2021,6);
 
 /******************************************************************************************************************************/
-CREATE OR REPLACE PROCEDURE registrarEntrena(idJ1 NUMBER, idJ2 NUMBER, idE NUMBER, anio NUMBER, ranking NUMBER) AS
+CREATE OR REPLACE PROCEDURE registrarEntrena(idJ1 NUMBER, idJ2 NUMBER, idE NUMBER, anio NUMBER) AS
 BEGIN
-    INSERT INTO Entrena(idJugador1, idJugador2, idEntrenador, Año, Pos_ranking)
-    VALUES (idJ1,idJ2,idE,anio,ranking);
+    INSERT INTO Entrena(idJugador1, idJugador2, idEntrenador, Año)
+    VALUES (idJ1,idJ2,idE,anio);
 END;
 /
 
@@ -186,7 +186,7 @@ END;
 --EXEC insertarArbitro('5','Neutro','Neutral','611111116','neu@tral.com');
 
 /******************************************************************************************************************************/
-CREATE OR REPLACE PROCEDURE InsertarPartido(idPartido NUMBER, fecha TIMESTAMP, resultado NUMBER, idEdicion NUMBER, idPista NUMBER) IS
+CREATE OR REPLACE PROCEDURE InsertarPartido(idPartido NUMBER, fecha TIMESTAMP, resultado VARCHAR2, idEdicion NUMBER, idPista NUMBER) IS
 BEGIN
     INSERT INTO Partido(idPartido,fecha,resultado) VALUES (idPartido,fecha,resultado);
     INSERT INTO SeJuegaEN(idPartido,idPista) VALUES (idPartido,idPista);

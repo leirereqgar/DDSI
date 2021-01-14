@@ -16,7 +16,7 @@ class TPadel {
 		System.out.println("Introduzca su usuario (que coincide con su password): ");
 		String entrada;
 		Scanner entradaEscaner = new Scanner (System.in);
-		entrada = entradaEscaner.nextLine();
+		entrada = "x5985367";//entradaEscaner.nextLine();
 
 		try(Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//oracle0.ugr.es:1521/practbd.oracle0.ugr.es", entrada, entrada)){
 			if(conn != null){
@@ -177,15 +177,16 @@ class TPadel {
 
 							case 2:
 								int jugentr = -1;
-								while(jugentr != 6 && jugentr != 7) {
+								while(jugentr != 7 && jugentr != 8) {
 									System.out.println("\n\u001B[36m\t\t" + "--- Operaciones sobre jugadores y entrenadores ---" + "\u001B[0m");
 									System.out.println("\u001B[33m" + "1.Insertar nuevo jugador" + "\u001B[0m");
 									System.out.println("\u001B[33m" + "2.Insertar entrenador" + "\u001B[0m");
 									System.out.println("\u001B[33m" + "3.Registrar pareja" + "\u001B[0m");
 									System.out.println("\u001B[33m" + "4.Inscribir pareja en edición" + "\u001B[0m");
 									System.out.println("\u001B[33m" + "5.Añadir entrenador a pareja" + "\u001B[0m");
-									System.out.println("\u001B[33m" + "6.Guardar cambios" + "\u001B[0m");
-									System.out.println("\u001B[33m" + "7.Cancelar" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "6.Añadir posicionamiento en el ranking" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "7.Guardar cambios" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "8.Cancelar" + "\u001B[0m");
 
 									entradaEscaner = new Scanner (System.in);
 									jugentr = entradaEscaner.nextInt();
@@ -288,6 +289,7 @@ class TPadel {
 
 										case 4:
 											int ranking;
+											char rank_opcional;
 
 											System.out.println("\nIntroduzca año donde quiere inscribir la pareja ");
 											entradaEscaner = new Scanner (System.in);
@@ -301,20 +303,47 @@ class TPadel {
 											entradaEscaner = new Scanner (System.in);
 											miembro2 = entradaEscaner.nextInt();
 
-											System.out.println("\nPosicion de la pareja en el ranking ");
-											entradaEscaner = new Scanner (System.in);
-											ranking = entradaEscaner.nextInt();
+											do{
+												rank_opcional = 'N';
 
-											try {
-												query = "CALL registrarInscrita("+ miembro1 + "," + miembro2 + "," + anio + "," + ranking + ")";
+												System.out.println("\n¿Desea registrar la posicion en el ranking? Y/N");
+												entradaEscaner = new Scanner (System.in);
+												rank_opcional = entradaEscaner.next().charAt(0);
 
-												stmt = conn.createStatement();
-												stmt.executeUpdate(query);
-											} catch (SQLException e) {
-												System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
-											} catch (Exception e) {
-												e.printStackTrace();
-											}
+												rank_opcional = Character.toUpperCase(rank_opcional);
+
+												if(rank_opcional == 'Y'){
+														System.out.println("\nPosicion de la pareja en el ranking ");
+														entradaEscaner = new Scanner (System.in);
+														ranking = entradaEscaner.nextInt();
+
+														try {
+															query = "CALL registrarInscrita("+ miembro1 + "," + miembro2 + "," + anio + "," + ranking + ")";
+
+															stmt = conn.createStatement();
+															stmt.executeUpdate(query);
+														} catch (SQLException e) {
+															System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
+														} catch (Exception e) {
+															e.printStackTrace();
+														}
+
+												} else if (rank_opcional == 'N'){
+														try {
+															query = "CALL registrarInscrita("+ miembro1 + "," + miembro2 + "," + anio + ", NULL )";
+
+															stmt = conn.createStatement();
+															stmt.executeUpdate(query);
+														} catch (SQLException e) {
+															System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
+														} catch (Exception e) {
+															e.printStackTrace();
+														}
+												} else{
+													System.out.println("\nPor favor, introduzca una opcion valida: Y para si, N para no");
+												}
+											}while(rank_opcional != 'Y' && rank_opcional != 'N');
+
 										break;
 
 										case 5:
@@ -334,12 +363,8 @@ class TPadel {
 											entradaEscaner = new Scanner (System.in);
 											idEntrenador = entradaEscaner.nextInt();
 
-										    System.out.println("\nIntroduzca la posición de la pareja en el ranking ");
-											entradaEscaner = new Scanner (System.in);
-											ranking = entradaEscaner.nextInt();
-
 											try {
-												query = "CALL registrarEntrena("+ miembro1 + "," + miembro2 + "," + idEntrenador + "," + anio + "," + ranking +")";
+												query = "CALL registrarEntrena("+ miembro1 + "," + miembro2 + "," + idEntrenador + "," + anio + ")";
 
 												stmt = conn.createStatement();
 												stmt.executeUpdate(query);
@@ -348,13 +373,43 @@ class TPadel {
 											} catch (Exception e) {
 												e.printStackTrace();
 											}
+
 										break;
 
 										case 6:
-											conn.commit();
+										System.out.println("\nIntroduzca año en el que está inscrita la pareja ");
+										entradaEscaner = new Scanner (System.in);
+										anio = entradaEscaner.nextInt();
+
+										System.out.println("\nIntroduzca el id del primer miembro de la pareja ");
+										entradaEscaner = new Scanner (System.in);
+										miembro1 = entradaEscaner.nextInt();
+
+										System.out.println("\nIntroduzca el id del segundo miembro de la pareja ");
+										entradaEscaner = new Scanner (System.in);
+										miembro2 = entradaEscaner.nextInt();
+
+										System.out.println("\nIntroduzca posicion de la pareja en el ranking ");
+										entradaEscaner = new Scanner (System.in);
+										ranking = entradaEscaner.nextInt();
+
+										try {
+											query = "UPDATE Inscrita SET pos_ranking = " + ranking + " WHERE idJugador1=" + miembro1 + "AND idJugador2=" + miembro2 + " AND Año=" + anio;
+
+											stmt = conn.createStatement();
+											stmt.executeUpdate(query);
+										} catch (SQLException e) {
+											System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
+										} catch (Exception e) {
+											e.printStackTrace();
+										}
 										break;
 
 										case 7:
+											conn.commit();
+										break;
+
+										case 8:
 											conn.rollback();
 										break;
 
@@ -365,12 +420,13 @@ class TPadel {
 
 							case 3:
 								int pistpart = -1;
-								while(pistpart != 3 && pistpart != 4) {
+								while(pistpart != 4 && pistpart != 5) {
 									System.out.println("\n\u001B[36m\t\t" + "--- Operaciones sobre pistas y partidos ---" + "\u001B[0m");
 									System.out.println("\u001B[33m" + "1.Insertar pista" + "\u001B[0m");
 									System.out.println("\u001B[33m" + "2.Insertar partido" + "\u001B[0m");
-									System.out.println("\u001B[33m" + "3.Guardar cambios" + "\u001B[0m");
-									System.out.println("\u001B[33m" + "4.Cancelar" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "3.Registrar resultado de partido" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "4.Guardar cambios" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "5.Cancelar" + "\u001B[0m");
 
 									entradaEscaner = new Scanner (System.in);
 									pistpart = entradaEscaner.nextInt();
@@ -381,6 +437,8 @@ class TPadel {
 										case 1:
 											String nombre;
 											int capacidad;
+											String resultado;
+											char resultado_opcional;
 
 											System.out.println("\nIntroduzca el id de la pista ");
 											entradaEscaner = new Scanner (System.in);
@@ -411,10 +469,6 @@ class TPadel {
 											entradaEscaner = new Scanner (System.in);
 											idPartido = entradaEscaner.nextInt();
 
-											System.out.println("\nIntroduzca el resultado del partido ");
-											entradaEscaner = new Scanner (System.in);
-											int resultado = entradaEscaner.nextInt();
-
 											System.out.println("\nIntroduzca la edicion ");
 											entradaEscaner = new Scanner (System.in);
 											anio = entradaEscaner.nextInt();
@@ -423,8 +477,30 @@ class TPadel {
 											entradaEscaner = new Scanner (System.in);
 											idPista = entradaEscaner.nextInt();
 
+											resultado = "NULL";
+
+											do{
+												System.out.println("\n¿Desea insertar el resultado del partido? Y/N");
+												entradaEscaner = new Scanner (System.in);
+												resultado_opcional = entradaEscaner.next().charAt(0);
+
+												resultado_opcional = Character.toUpperCase(resultado_opcional);
+
+												if(resultado_opcional == 'Y'){
+														System.out.println("\nIntroduzca el resultado ");
+														entradaEscaner = new Scanner (System.in);
+														resultado = entradaEscaner.nextLine();
+
+												} else if (resultado_opcional == 'N'){
+													resultado = "NULL";
+												} else{
+													System.out.println("\nPor favor, introduzca una opcion valida: Y para si, N para no");
+												}
+											}while(resultado_opcional != 'Y' && resultado_opcional != 'N');
+
+
 											//COMPROBACIÓN DE LA FECHA
-											boolean fecha_correcta = false;
+												boolean fecha_correcta = false;
 			  								boolean formato_correcto = false;
 
 			  								while(!fecha_correcta){
@@ -508,10 +584,32 @@ class TPadel {
 										break;
 
 										case 3:
-											conn.commit();
+										System.out.println("\nIntroduzca el id del partido ");
+										entradaEscaner = new Scanner (System.in);
+										idPartido = entradaEscaner.nextInt();
+
+										System.out.println("\nIntroduzca el resultado ");
+										entradaEscaner = new Scanner (System.in);
+										resultado = entradaEscaner.nextLine();
+
+										try {
+											query = "UPDATE Partido SET Resultado='" + resultado + "' WHERE idPartido=" + idPartido;
+
+											stmt = conn.createStatement();
+											stmt.executeUpdate(query);
+										} catch (SQLException e) {
+											System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
+										} catch (Exception e) {
+											e.printStackTrace();
+										}
+
 										break;
 
 										case 4:
+											conn.commit();
+										break;
+
+										case 5:
 											conn.rollback();
 										break;
 
