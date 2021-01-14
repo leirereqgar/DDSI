@@ -898,7 +898,6 @@ class TPadel {
 											entradaEscaner = new Scanner (System.in);
 											anio = entradaEscaner.nextInt();
 
-
 											System.out.println("\nIntroduzca el sueldo actualizado ");
 											entradaEscaner = new Scanner (System.in);
 											sueldo = entradaEscaner.nextInt();
