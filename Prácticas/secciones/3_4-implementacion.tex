@@ -1,6 +1,146 @@
 \section{Implementación externa del Sistema de Información a la Base de Datos}
 \subsection{Conexión}
+La conexión a la base de datos la hacemos como vimos en el seminario 2, se crea
+un objeto \texttt{Conection conn} en el que introducimos los datos necesarios para
+la conexión:
+\begin{lstlisting}[language=java]
+Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//oracle0.ugr.es:1521/practbd.oracle0.ugr.es", "xDNI", "xDNI")
+\end{lstlisting}
+
+Esta conexión se realiza dentro de un try para que si falla salga la excepción de
+SQL si lo que ha fallado es culpa de la base de datos, o una excepción de java por
+si falla la creación del objeto para la conexión.
 
 \subsection{Interfaz de usuario}
+La interfaz de usuario se implementa con la entrada y salida de datos por
+terminal.
+
+Lo primero que ocurrirá es un mensaje para pedir el usuario y contraseña:
+\begin{lstlisting}
+Introduzca su usuario (que coincide con su password):
+>	xDNI
+Conectado a la base de datos
+\end{lstlisting}
+
+Una vez se realice la conexión nos aparecerá un menú inicial con el que poder
+decidir dentro de que subsistema realizaremos transacciones:
+
+\begin{lstlisting}
+				--- MENU ---
+1.Ediciones
+2.Jugadores/Entrenadores
+3.Pistas/Partidos
+4.Patrocinadores/Colaboradores
+5.Personal/Horarios
+6.Materiales/Pedidos
+7.Salir del programa
+\end{lstlisting}
+
+En cada una de esas opciones se nos abrirán nuevos submenús que muestren cada
+una de las opciones disponibles.
+
+\subsubsection{Ediciones}
+\begin{lstlisting}
+		--- Operaciones sobre Ediciones ---
+1.Insertar nueva edición
+2.Mostrar el total recaudado
+3.Consultar las parejas de un entrenador
+4.Mostrar el personal que no trabaja en una edición
+5.Guardar cambios
+6.Cancelar
+\end{lstlisting}
+
+En cada opción se nos solicitarán los datos necesarios para llamar a los
+procedimientos de la base de datos.
+
+En el caso de las opciones 2, 3 y 4 necesitamos usar un \texttt{CallableStatement}
+para poder leer el parámetro de salida y mostrarlo por pantalla.
+
+\subsubsection{Jugadores/Entrenadores}
+\begin{lstlisting}
+		--- Operaciones sobre jugadores y entrenadores ---
+1.Insertar nuevo jugador
+2.Insertar entrenador
+3.Registrar pareja
+4.Inscribir pareja en edición
+5.Añadir entrenador a pareja
+6.Añadir posicionamiento en el ranking
+7.Guardar cambios
+8.Cancelar
+\end{lstlisting}
+
+Como en el menú anterior se pedirán los datos que sean necesarios para cada
+procedimiento.
+
+En la opción 6, además se preguntará si se desea introducir la posición que ocupa
+la pareja en el ranking. También existe la opción de añadir la posición después
+si durante la realización del torneo esta posición cambiase.
+
+\subsubsection{Pistas/Partidos}
+\begin{lstlisting}
+		--- Operaciones sobre pistas y partidos ---
+1.Insertar pista
+2.Insertar partido
+3.Registrar resultado de partido
+4.Guardar cambios
+5.Cancelar
+\end{lstlisting}
+
+En el caso de registrar el partido nos saldrá la misma pregunta sobre añadir el
+resultado nada más insertar el partido o después.
+
+\subsubsection{Patrocinadores/Colaboradores}
+\begin{lstlisting}
+		--- Operaciones sobre colaboradores y patrocinadores ---
+1.Insertar entidad
+2.Registrar colaborador
+3.Registrar patrocinador
+4.Modificar dinero aportado
+5.Guardar cambios
+6.Cancelar
+\end{lstlisting}
+
+En modificar dinero aportado saldrá un menú más pequeño para decidir si modificar
+sobre colaborador o sobre patrocinador, se podrán realizar varias modificaciones
+hasta que decidamos o no guardar los cambios, entonces se volverá al menú del
+subsistema para continuar la ejecución del programa.
+
+\subsubsection{Personal/Horarios}
+\begin{lstlisting}
+		--- Operaciones sobre personal y horarios ---
+1.Insertar personal
+2.Registrar trabajador
+3.Modificar salario
+4.Guardar cambios
+5.Cancelar
+\end{lstlisting}
+
+Este menú, no tiene ninguna particularidad, solo pedirá los datos para cada
+procedimiento.
+
+\subsubsection{Materiales/Pedidos}
+\begin{lstlisting}
+		--- Operaciones sobre materiales y pedidos ---
+1.Insertar material
+2.Insertar pedido
+3.Asignar pedido a trabajador
+4.Guardar cambios
+5.Cancelar
+\end{lstlisting}
+
+Como en el caso anterior, este menú solo pide los datos para los procedimientos.
+
+\subsubsection{Commit/Rollback}
+En cada uno de los menús hay una opción para guardar que hará commit haciendo
+efectivas las transacciones y otra para cancelar que hace un rollback anulando
+los cambios que se han hecho.
+
+En el caso en el que se modifica el dinero aportado por un colaborador o
+patrocinador solo se anula lo insertado hasta antes de empezar a llamar al
+procedimiento.
 
 \subsection{Control de excepciones}
+Para el control de excepciones cada llamada a una sentencia de SQL o que tenga
+que ver con el control de la base de datos está dentro de un \texttt{try/except}
+que gestionará si ha habido una excepción de SQL \texttt{SQLException} o una
+generada por java: \texttt{Excepction}.
