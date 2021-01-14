@@ -16,7 +16,7 @@ class TPadel {
 		System.out.println("Introduzca su usuario (que coincide con su password): ");
 		String entrada;
 		Scanner entradaEscaner = new Scanner (System.in);
-		entrada = "x5985367";//entradaEscaner.nextLine();
+		entrada = entradaEscaner.nextLine();
 
 		try(Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//oracle0.ugr.es:1521/practbd.oracle0.ugr.es", entrada, entrada)){
 			if(conn != null){
@@ -500,7 +500,7 @@ class TPadel {
 
 
 											//COMPROBACIÓN DE LA FECHA
-												boolean fecha_correcta = false;
+											boolean fecha_correcta = false;
 			  								boolean formato_correcto = false;
 
 			  								while(!fecha_correcta){

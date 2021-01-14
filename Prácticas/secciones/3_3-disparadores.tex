@@ -1,8 +1,8 @@
 \section{Disparadores}
 
 \subsection{Un jugador no puede pertenecer a dos parejas distintas en la misma edición}
-Este disparador afecta a la tabla \texttt{Inscrita} donde se almacenan las parejas
-junto a la edición en la que participan.
+Este trigger saltará si se intenta insertar una pareja con un jugador que ya esté
+inscrito con otro en la misma edición.
 
 Con el cursor \texttt{cJugador} recorremos la tabla primero comprobando que el
 id de ninguno de los nuevos jugadores esté ya inscrito como pareja de otro jugador
@@ -37,9 +37,15 @@ END;
 \end{lstlisting}
 
 \subsection{No se pueden jugar más de dos partidos en la misma pista}
+Este disparador se encargará de comprobar si se puede o no insertar un partido
+y pista en la tabla \texttt{SeJuegaEn} teniendo en cuenta la restricción.
 
-Según nuestro diseño del sistema de información este disparador necesitaba acceder
-a atributos de varias tablas por lo que para simplificarlo hemos creado una vista:
+El principal problema de este disparador es que la fecha en la que se juega el
+partido no está en la tabla de \texttt{SeJuegaEn} donde actúa nuestro disparador,
+si no en la tabla de \texttt{Partido}, luego para poder relacionarla hemos creado
+una vista \texttt{PistaPartidoFecha} que muestre la fecha, el identificador del
+partido y el identificador de la pista en los casos donde se juegue un partido en
+la misma pista y el mismo día:
 
 \begin{lstlisting}[language=sql]
 CREATE VIEW PistaPartidoFecha
@@ -54,13 +60,15 @@ AS (SELECT DISTINCT SeJuegaEn.idPista,SeJuegaEn.idPartido,Partido.fecha
 ));
 \end{lstlisting}
 
-Para el disparador necesitamos dos cursores: uno para coger las fechas de los partidos
-(\texttt{cPartidoFecha}) y otro para recoger solo los partidos (\texttt{cPartido}),
-y una variable donde guardemos el número de partidos que hay en la misma pista el mismo día.
+Para el disparador necesitamos dos cursores: uno para coger las fechas de los
+partidos (\texttt{cPartidoFecha}) y otro para recoger solo los partidos
+(\texttt{cPartido}), y una variable donde guardemos el número de partidos que
+hay en la misma pista el mismo día.
 
-Dentro de los bucles comprobaremos si en el caso de que el nuevo partido coincida en fecha
-y pista con alguno de los que ya existen no sea el tercero que se jugara ese día, es decir,
-si ya hay dos no se insertará en la tabla.
+Si \texttt{numPartidos} es igual a dos, alcanzando el máximo de partidos por
+día, el \texttt{idPista} corresponde a alguna que ya tenga dos partidos o la
+fecha del partido nuevo insertado transcurre con menos de un dia de diferencia
+lanzamos el trigger con el mensaje de error.
 
 \begin{lstlisting}[language=sql]
 CREATE OR REPLACE TRIGGER partido_unico
@@ -99,6 +107,17 @@ END;
 \end{lstlisting}
 
 \subsection{No se puede modificar el dinero aportado por un colaborador o patrocinador si ya ha empezado el torneo}
+En esta ocasión hemos creado dos triggers porque era necesario uno para la tabla
+\texttt{Colaborador} y otro para la tabla \texttt{Patrocinador}. Ambos triggers
+se dispararán si se intenta modificar el dinero aportado en una edición si ya ha
+empezado el torneo.
+
+Con el cursor \texttt{cPrimerPartido} buscamos en la tabla \texttt{Partido} la
+tupla qeu tenga la fecha más antigua dentro de la edición y la guardamos en
+\texttt{earliest}.
+
+Si \texttt{earliest} es menor que la fecha actual, es decir, es más antigua; se
+cancela la modificación y salta el mensaje de error.
 
 \begin{lstlisting}[language=sql]
 CREATE OR REPLACE TRIGGER dinero_tras_inicio_colab
@@ -145,6 +164,13 @@ END;
 \end{lstlisting}
 
 \subsection{No se puede modificar el salario de un trabajador si ya ha realizado algún trabajo}
+Este trigger se disparará al intentar modificar el salario de un trabajador
+cuando ya haya realizado algún trabajo.
+
+Con el cursor \texttt{fechas} recorreremos todas las \texttt{FechaInicio} (del
+trabajador que estemos intentando modificar) de la tabla \texttt{Asigna} y si
+hay una tupla que tenga una fecha anterior a la actual, se lanza el mensaje de
+error del trigger.
 
 \begin{lstlisting}[language=sql]
 CREATE OR REPLACE TRIGGER modificaSalario
@@ -170,6 +196,20 @@ END;
 \end{lstlisting}
 
 \subsection{No se puede asignar un nuevo pedido al mismo trabajador con menos de una hora de diferencia}
+Este trigger se disparará si al intentar hacer una inserción en \texttt{Recoge},
+la hora de la recogida no tiene al menos una hora de diferencia con las
+anteriores.
+
+Utilizaremos el cursor \texttt{cRecoge} para iterar en la tabla \texttt{Recoge},
+la variable \texttt{diferencia} para calcular la diferencia entre la hora de la
+nueva recogida y las que había en la tabla, y una variable \texttt{asignacion}
+para guardar las tuplas que recoja el cursor.
+
+Con un bucle iteraremos en la tabla extrayendo la hora de la \texttt{fecha} de
+la tupla ya existente y calcular la diferencia de con la nueva. Si esa diferencia
+es menor que 1 y el \texttt{idTrabajador} y la edición coinciden, mostraremos
+el error y se cancelará la inserción.
+
 \begin{lstlisting}[language=sql]
 CREATE TRIGGER recogida
 	BEFORE INSERT ON Recoge
