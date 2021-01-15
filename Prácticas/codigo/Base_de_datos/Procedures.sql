@@ -316,6 +316,22 @@ END;
 /
 
 /******************************************************************************************************************************/
+CREATE OR REPLACE PROCEDURE InsertarProporciona(idM INT, idE INT, anio INT, articulos INT)
+IS
+BEGIN
+INSERT INTO Proporciona(idmaterial,identidad,Año,cantidad_suministrada)
+VALUES(idM,idE,anio,articulos);
+END;
+/
+
 /******************************************************************************************************************************/
+CREATE OR REPLACE PROCEDURE InsertarArticuloPedido(idM INT, idP INT, cant INT,)
+IS
+BEGIN
+INSERT INTO Contiene(idmaterial,idpedido,cantidad)
+VALUES(idM,idP,cant);
+END;
+/
+
 /******************************************************************************************************************************/
 /******************************************************************************************************************************/

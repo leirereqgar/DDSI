@@ -1004,13 +1004,14 @@ class TPadel {
 
 							case 6:
 								int matped = -1;
-								while(matped != 4 && matped != 5) {
+								while(matped != 5 && matped != 6) {
 									System.out.println("\n\u001B[36m\t\t" + "--- Operaciones sobre materiales y pedidos ---" + "\u001B[0m");
-									System.out.println("\u001B[33m" + "1.Insertar material" + "\u001B[0m"); // proporciona
-									System.out.println("\u001B[33m" + "2.Insertar pedido" + "\u001B[0m"); // bucle para insertar varios materiales en compuesto
+									System.out.println("\u001B[33m" + "1.Insertar material" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "2.Insertar pedido" + "\u001B[0m");
 									System.out.println("\u001B[33m" + "3.Asignar pedido a trabajador" + "\u001B[0m");
-									System.out.println("\u001B[33m" + "4.Guardar cambios" + "\u001B[0m");
-									System.out.println("\u001B[33m" + "5.Cancelar" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "4.Introducir materiales a pedido" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "5.Guardar cambios" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "6.Cancelar" + "\u001B[0m");
 
 									entradaEscaner = new Scanner (System.in);
 									matped = entradaEscaner.nextInt();
@@ -1027,8 +1028,31 @@ class TPadel {
 											entradaEscaner = new Scanner (System.in);
 											String nombrem = entradaEscaner.nextLine();
 
+											System.out.println("\nIntroduzca el id del patrocinador proveedor ");
+											entradaEscaner = new Scanner (System.in);
+											int idEntidad = entradaEscaner.nextInt();
+
+											System.out.println("\nIntroduzca la cantidad proporcionada ");
+											entradaEscaner = new Scanner (System.in);
+											int cantidad = entradaEscaner.nextInt();
+
+											System.out.println("\nIntroduzca el año en el que se ha proporcionado ");
+											entradaEscaner = new Scanner (System.in);
+											int ano = entradaEscaner.nextInt();
+
 											try {
 												query = "CALL insertarMaterial("+ idMaterial + ",'" + nombrem + "')";
+
+												stmt = conn.createStatement();
+												stmt.executeUpdate(query);
+											} catch (SQLException e) {
+												System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
+											} catch (Exception e) {
+												e.printStackTrace();
+											}
+
+											try {
+												query = "CALL insertarProporciona("+ idMaterial + "," + idEntidad + "," + ano + "," + cantidad + ")";
 
 												stmt = conn.createStatement();
 												stmt.executeUpdate(query);
@@ -1107,10 +1131,49 @@ class TPadel {
 										break;
 
 										case 4:
-											conn.commit();
+											System.out.println("\nIntroduzca el numero del pedido ");
+											entradaEscaner = new Scanner (System.in);
+											idPedido = entradaEscaner.nextInt();
+
+											char continuar_pedido;
+
+											do{
+												continuar_pedido = 'N';
+
+												System.out.println("\nIntroduzca el id del material ");
+												entradaEscaner = new Scanner (System.in);
+												idMaterial = entradaEscaner.nextInt();
+
+												System.out.println("\nIntroduzca la cantidad deseada ");
+												entradaEscaner = new Scanner (System.in);
+												int cant = entradaEscaner.nextInt();
+
+												try {
+													query = "CALL InsertarArticuloPedido("+ idMaterial + "," + idPedido + "," + cant + ")";
+
+													stmt = conn.createStatement();
+													stmt.executeUpdate(query);
+												} catch (SQLException e) {
+													System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
+												} catch (Exception e) {
+													e.printStackTrace();
+												}
+
+												System.out.println("\nDesea introducir más materiales al pedido? Y/N");
+												entradaEscaner = new Scanner (System.in);
+												continuar_pedido = entradaEscaner.next().charAt(0);
+
+												continuar_pedido = Character.toUpperCase(continuar_pedido);
+
+											}while(continuar_pedido == 'Y');
+
 										break;
 
 										case 5:
+											conn.commit();
+										break;
+
+										case 6:
 											conn.rollback();
 										break;
 
