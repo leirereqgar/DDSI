@@ -325,10 +325,10 @@ END;
 /
 
 /******************************************************************************************************************************/
-CREATE OR REPLACE PROCEDURE InsertarArticuloPedido(idM INT, idP INT, cant INT,)
+CREATE OR REPLACE PROCEDURE InsertarArticuloPedido(idM INT, idP INT, cant INT)
 IS
 BEGIN
-INSERT INTO Contiene(idmaterial,idpedido,cantidad)
+INSERT INTO Compuesto(idmaterial,numero_pedido,cantidad)
 VALUES(idM,idP,cant);
 END;
 /
