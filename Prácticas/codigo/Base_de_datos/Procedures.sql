@@ -315,6 +315,9 @@ VALUES(personal, edicion, pista, inicio, fin);
 END;
 /
 
+CALL InsertarAsigna(9,2021,9,TO_TIMESTAMP('2021-07-02 09:00:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),
+	TO_TIMESTAMP('2021-07-02 16:00:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'));
+
 /******************************************************************************************************************************/
 CREATE OR REPLACE PROCEDURE InsertarProporciona(idM INT, idE INT, anio INT, articulos INT)
 IS

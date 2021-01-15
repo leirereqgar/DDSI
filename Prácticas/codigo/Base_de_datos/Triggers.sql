@@ -103,7 +103,7 @@ BEGIN
      FETCH cPartido INTO datosPartido;
      WHILE(cPartidoFecha%FOUND)LOOP
         WHILE(cPartido%FOUND)LOOP
-            IF(numPartidos > 2 AND :new.idPista = datos.idPista AND :new.idPartido <> datos.idPartido AND
+            IF(numPartidos >= 2 AND :new.idPista = datos.idPista AND :new.idPartido <> datos.idPartido AND
             (:new.idPartido = datosPartido.idPartido AND (datosPartido.fecha-datos.fecha) < 1))
             THEN
                 raise_application_error(-20600, :new.idPartido || 'No se puede jugar más de dos partidos en la misma pista en un mismo dia');
@@ -116,6 +116,8 @@ BEGIN
   CLOSE cPartidoFecha;
 END;
 /
+
+INSERT INTO SeJuegaEn (idPartido, idPista) VALUES (1,9);
 
 /******************************************************************************************************************************/
 CREATE OR REPLACE TRIGGER recogida
@@ -184,8 +186,6 @@ BEGIN
 END;
 /
 
-INSERT INTO Patrocina (idEntidad, Año, dinero_aportado) VALUES (1,2020,123);
-
 /******************************************************************************************************************************/
 CREATE OR REPLACE TRIGGER colab_edicion
 BEFORE
@@ -208,7 +208,6 @@ BEGIN
 END;
 /
 
---INSERT INTO Colabora (idEntidad, Año, dinero_aportado) VALUES (2,2016,123);
 
 /******************************************************************************************************************************/
 CREATE OR REPLACE TRIGGER ranking_unico
