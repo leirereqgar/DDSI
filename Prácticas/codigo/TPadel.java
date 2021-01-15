@@ -538,7 +538,7 @@ class TPadel {
 										case 2:
 											String fecha;
 											String hora;
-											
+
 											System.out.println("\nIntroduzca el id del partido ");
 											entradaEscaner = new Scanner (System.in);
 											idPartido = entradaEscaner.nextInt();
@@ -845,13 +845,14 @@ class TPadel {
 
 							case 5:
 								int perhor = -1;
-								while(perhor != 4 && perhor != 5) {
+								while(perhor != 5 && perhor != 6) {
 									System.out.println("\n\u001B[36m\t\t" + "--- Operaciones sobre personal y horarios ---" + "\u001B[0m");
 									System.out.println("\u001B[33m" + "1.Insertar personal" + "\u001B[0m");
 									System.out.println("\u001B[33m" + "2.Registrar trabajador" + "\u001B[0m");
 									System.out.println("\u001B[33m" + "3.Modificar salario" + "\u001B[0m");
-									System.out.println("\u001B[33m" + "4.Guardar cambios" + "\u001B[0m");
-									System.out.println("\u001B[33m" + "5.Cancelar" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "4.Asignar trabajador a una pista" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "5.Guardar cambios" + "\u001B[0m");
+									System.out.println("\u001B[33m" + "6.Cancelar" + "\u001B[0m");
 
 									entradaEscaner = new Scanner (System.in);
 									perhor = entradaEscaner.nextInt();
@@ -946,10 +947,52 @@ class TPadel {
 										break;
 
 										case 4:
-											conn.commit();
+											System.out.println("\nIntroduzca el id del personal ");
+											entradaEscaner = new Scanner (System.in);
+											idPersonal = entradaEscaner.nextInt();
+
+											System.out.println("\nIntroduzca el año ");
+											entradaEscaner = new Scanner (System.in);
+											anio = entradaEscaner.nextInt();
+
+											System.out.println("\nIntroduzca el id de la pista");
+											entradaEscaner = new Scanner (System.in);
+											int idPista = entradaEscaner.nextInt();
+
+											String fechain;
+											do {
+												System.out.println("\nIntroduzca la fecha de inicio del contrato ");
+												entradaEscaner = new Scanner(System.in);
+												fechain = entradaEscaner.nextLine();
+											} while (!compruebaFecha(fechain));
+
+											String fechaf;
+											do {
+												System.out.println("\nIntroduzca la fecha de fin del contrato ");
+												entradaEscaner = new Scanner(System.in);
+												fechaf = entradaEscaner.nextLine();
+											} while (!compruebaFecha(fechaf));
+
+											try{
+												query = "CALL insertarAsigna(" + idPersonal +
+												"," + anio + "," + idPista + ",TO_TIMESTAMP('"
+												+ fechain + "09:00:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),"
+												+ ",TO_TIMESTAMP('" + fechaf + "16:00:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'))";
+
+												stmt = conn.createStatement();
+												stmt.executeUpdate(query);
+											}catch (SQLException e) {
+												System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
+											} catch (Exception e) {
+												e.printStackTrace();
+											}
 										break;
 
 										case 5:
+											conn.commit();
+										break;
+
+										case 6:
 											conn.rollback();
 										break;
 
@@ -1042,10 +1085,17 @@ class TPadel {
 											entradaEscaner = new Scanner (System.in);
 											String fecharecogida = entradaEscaner.nextLine();
 
+											String horarecogida = "-1:-1";
+											do {
+												System.out.println("\nIntroduzca la hora de recogida ");
+												entradaEscaner = new Scanner(System.in);
+												horarecogida = entradaEscaner.nextLine();
+											} while (!compruebaHora(horarecogida));
+
 											try {
 												query = "CALL insertarAsignacionRecogida("+ idPedido + "," + idTrabajador + "," +
-												                                          anio + "," + idPista + ",TO_TIMESTAMP('" + fechainicio + "06:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),TO_TIMESTAMP('" +
-																										fechafin + "11:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),TO_TIMESTAMP('" + fecharecogida + "09:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'))";
+												                                          anio + "," + idPista + ",TO_TIMESTAMP('" + fechainicio + "09:00:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),TO_TIMESTAMP('" +
+																										fechafin + "16:00:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),TO_TIMESTAMP('" + fecharecogida + horarecogida + ":00.742000000','YYYY-MM-DD HH24:MI:SS.FF'))";
 
 												stmt = conn.createStatement();
 												stmt.executeUpdate(query);
