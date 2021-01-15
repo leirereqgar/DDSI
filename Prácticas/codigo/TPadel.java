@@ -538,7 +538,7 @@ class TPadel {
 										case 2:
 											String fecha;
 											String hora;
-											
+
 											System.out.println("\nIntroduzca el id del partido ");
 											entradaEscaner = new Scanner (System.in);
 											idPartido = entradaEscaner.nextInt();

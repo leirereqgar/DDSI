@@ -103,10 +103,10 @@ BEGIN
      FETCH cPartido INTO datosPartido;
      WHILE(cPartidoFecha%FOUND)LOOP
         WHILE(cPartido%FOUND)LOOP
-            IF(numPartidos >= 2 AND :new.idPista = datos.idPista AND :new.idPartido <> datos.idPartido AND
+            IF(numPartidos > 2 AND :new.idPista = datos.idPista AND :new.idPartido <> datos.idPartido AND
             (:new.idPartido = datosPartido.idPartido AND (datosPartido.fecha-datos.fecha) < 1))
             THEN
-                raise_application_error(-20600, :new.idPartido || 'No se jugar más de dos partidos en la misma pista en un mismo dia');
+                raise_application_error(-20600, :new.idPartido || 'No se puede jugar más de dos partidos en la misma pista en un mismo dia');
             END IF;
         FETCH cPartido INTO datosPartido;
         END LOOP;
@@ -159,5 +159,75 @@ BEGIN
             FETCH cAsigna INTO fechas_asigna;
         END LOOP;
     CLOSE cAsigna;
+END;
+/
+
+/******************************************************************************************************************************/
+CREATE OR REPLACE TRIGGER patr_edicion
+BEFORE
+    INSERT ON Patrocina
+    FOR EACH ROW
+DECLARE
+    CURSOR cColabora IS SELECT * FROM Colabora WHERE (Año = :new.Año);
+    colaboradores Colabora%ROWTYPE;
+BEGIN
+    OPEN cColabora;
+        FETCH cColabora INTO colaboradores;
+        WHILE (cColabora%FOUND) LOOP
+            IF (colaboradores.idEntidad = :new.idEntidad) THEN
+                RAISE_APPLICATION_ERROR(-20600, :new.idEntidad || '***EXCEPTION**** No se puede ser patrocinador y colaborador en la misma edicion');
+            END IF;
+            
+            FETCH cColabora INTO colaboradores;
+        END LOOP;
+    CLOSE cColabora;
+END;
+/
+
+INSERT INTO Patrocina (idEntidad, Año, dinero_aportado) VALUES (1,2020,123);
+
+/******************************************************************************************************************************/
+CREATE OR REPLACE TRIGGER colab_edicion
+BEFORE
+    INSERT ON Colabora
+    FOR EACH ROW
+DECLARE
+    CURSOR cPatrocina IS SELECT * FROM Patrocina WHERE (Año = :new.Año);
+    patrocinadores Patrocina%ROWTYPE;
+BEGIN
+    OPEN cPatrocina;
+        FETCH cPatrocina INTO patrocinadores;
+        WHILE (cPatrocina%FOUND) LOOP
+            IF (patrocinadores.idEntidad = :new.idEntidad) THEN
+                RAISE_APPLICATION_ERROR(-20600, :new.idEntidad || '***EXCEPTION**** No se puede ser patrocinador y colaborador en la misma edicion');
+            END IF;
+            
+            FETCH cPatrocina INTO patrocinadores;
+        END LOOP;
+    CLOSE cPatrocina;
+END;
+/
+
+--INSERT INTO Colabora (idEntidad, Año, dinero_aportado) VALUES (2,2016,123);
+
+/******************************************************************************************************************************/
+CREATE OR REPLACE TRIGGER ranking_unico
+BEFORE
+    INSERT ON Inscrita
+    FOR EACH ROW
+DECLARE
+    CURSOR cInscrita IS SELECT * FROM Inscrita WHERE (Año = :new.Año);
+    inscritos Inscrita%ROWTYPE;
+BEGIN
+    OPEN cInscrita;
+        FETCH cInscrita INTO inscritos;
+        WHILE (cInscrita%FOUND) LOOP
+            IF (inscritos.pos_ranking = :new.pos_ranking) THEN
+                RAISE_APPLICATION_ERROR(-20600, :new.pos_ranking || '***EXCEPTION**** Esa posicion del ranking ya esta ocupada');
+            END IF;
+            
+            FETCH cInscrita INTO inscritos;
+        END LOOP;
+    CLOSE cInscrita;
 END;
 /
