@@ -8,6 +8,77 @@ import java.time.format.*;
 //Compilar con javac Tutorial.java
 //Ejecutar con java -cp ojdbc8.jar:. Tutorial (en el mismo directorio donde está ojdbc8.jar)
 class TPadel {
+
+	static boolean compruebaHora(String hora) {
+		boolean hora_correcta = false;
+		int h = -1;
+		int m = -1;
+
+		if(hora.charAt(2) == ':' && hora.length() == 5){
+			try{
+				h = Integer.parseInt(hora.substring(0,2));
+				m = Integer.parseInt(hora.substring(3,5));
+			}
+			catch(NumberFormatException nfe){
+				hora_correcta = false;
+			}
+
+			if((h >= 0 && h < 24) && (m >= 0 && m < 60)){
+				hora_correcta = true;
+			}
+
+		}
+
+		return hora_correcta;
+	}
+
+	static boolean compruebaFecha(String fecha) {
+		boolean fecha_correcta = false;
+		boolean formato_correcto = false;
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		try{
+			formatter.parse(fecha, LocalDate::from);
+			formato_correcto = true;
+		}
+		catch(DateTimeParseException e){
+			formato_correcto = false;
+		}
+
+		if(formato_correcto){
+			//mes
+			String res = fecha.substring(5,7);
+			int mes = Integer.parseInt(res);
+
+			//día
+			res = fecha.substring(8,10);
+			int dia = Integer.parseInt(res);
+
+			if(mes == 2){
+				if(1 <= dia && dia <= 28){
+					fecha_correcta = true;
+				}
+			}
+
+			else{
+				if(mes%2 == 1){
+					if(1 <= dia && dia <= 31){
+						fecha_correcta = true;
+					}
+				}
+
+				else{
+					if(1 <= dia && dia <= 30){
+						fecha_correcta = true;
+					}
+				}
+			}
+		}
+
+		return fecha_correcta && formato_correcto;
+	}
+
+
 	public static void main(String ar[]) {
 		System.out.println("___________________\n" +
 		                   "| Torneo de padel |\n" +
@@ -465,6 +536,9 @@ class TPadel {
 										break;
 
 										case 2:
+											String fecha;
+											String hora;
+											
 											System.out.println("\nIntroduzca el id del partido ");
 											entradaEscaner = new Scanner (System.in);
 											idPartido = entradaEscaner.nextInt();
@@ -499,87 +573,44 @@ class TPadel {
 											}while(resultado_opcional != 'Y' && resultado_opcional != 'N');
 
 
-											//COMPROBACIÓN DE LA FECHA
-											boolean fecha_correcta = false;
-			  								boolean formato_correcto = false;
+											//COMPROBACIÓN DE LA FECHA Y HORA
+												boolean fecha_correcta 	 = false;
+												boolean hora_correcta 	 = false;
 
-			  								while(!fecha_correcta){
-												System.out.println("Fecha del partido (YYYY-MM-DD): ");
-												entradaEscaner = new Scanner (System.in);
-												String fecha = entradaEscaner.nextLine();
+												do{
+													System.out.println("\nFecha del partido (YYYY-MM-DD): ");
+													entradaEscaner = new Scanner (System.in);
+													fecha = entradaEscaner.nextLine();
 
-												//COMPROBACIÓN DEL FORMATO
-												DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-												try{
-													formatter.parse(fecha, LocalDate::from);
-													formato_correcto = true;
-												}
-												catch(DateTimeParseException e){
-													System.out.println("\u001B[31m" + "Formato incorrecto " + "\u001B[0m");
-												}
+													fecha_correcta = compruebaFecha(fecha);
 
-												if(formato_correcto){
-													//COMPROBACIÓN DE LA FECHA
-													//mes
-													String res = fecha.substring(5,7);
-													int mes = Integer.parseInt(res);
-
-													//día
-													res = fecha.substring(8,10);
-													int dia = Integer.parseInt(res);
-//CALL insertarPartido(10,TO_TIMESTAMP('2018-08-06 08:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),1,2019,11);
-													if(mes == 2){
-														if(1 <= dia && dia <= 28){
-															try {
-																query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " 08:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),'" + resultado + "'," + anio + "," + idPista + ")";
-
-																stmt = conn.createStatement();
-																stmt.executeUpdate(query);
-															} catch (SQLException e) {
-																System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
-															} catch (Exception e) {
-																e.printStackTrace();
-															}
-
-															fecha_correcta = true;
-														}
+													if(!fecha_correcta){
+														System.out.println("\u001B[31m" + "Fecha incorrecta " + "\u001B[0m");
 													}
-													else{
-														if(mes%2 == 1){
-															if(1 <= dia && dia <= 31){
-																try {
-																	query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " 08:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),'" + resultado + "'," + anio + "," + idPista + ")";
+												}while(!fecha_correcta);
 
-																	stmt = conn.createStatement();
-																	stmt.executeUpdate(query);
-																} catch (SQLException e) {
-																	System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
-																} catch (Exception e) {
-																	e.printStackTrace();
-																}
+												do{
+													System.out.println("\nHora del partido en formato 24h (HH:MM)");
+													entradaEscaner = new Scanner (System.in);
+													hora = entradaEscaner.nextLine();
 
-																fecha_correcta = true;
-															}
-														}
-														else{
-															if(1 <= dia && dia <= 30){
-																try {
-																	query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " 08:14:00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),'" + resultado + "'," + anio + "," + idPista + ")";
+													hora_correcta = compruebaHora(hora);
 
-																	stmt = conn.createStatement();
-																	stmt.executeUpdate(query);
-																} catch (SQLException e) {
-																	System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
-																} catch (Exception e) {
-																	e.printStackTrace();
-																}
-
-																fecha_correcta = true;
-															}
-														}
+													if(!hora_correcta){
+														System.out.println("\u001B[31m" + "Hora incorrecta " + "\u001B[0m");
 													}
+												} while(!hora_correcta);
+
+												try {
+													query = "CALL insertarPartido("+ idPartido + ",TO_TIMESTAMP('" + fecha + " " + hora + ":00.742000000','YYYY-MM-DD HH24:MI:SS.FF'),'" + resultado + "'," + anio + "," + idPista + ")";
+
+													stmt = conn.createStatement();
+													stmt.executeUpdate(query);
+												} catch (SQLException e) {
+													System.err.format("SQL State; %s\n%s",e.getSQLState(), e.getMessage());
+												} catch (Exception e) {
+													e.printStackTrace();
 												}
-											}
 
 										break;
 
