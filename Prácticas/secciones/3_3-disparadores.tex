@@ -28,7 +28,6 @@ BEGIN
 		IF (:new.idJugador2 = jugadores.idJugador1 OR :new.IdJugador2 = jugadores.idJugador2)
 			THEN raise_application_error(-20600, :new.idJugador2 || 'JUGADOR 2: No se puede pertenecer a más de una pareja en la misma edicion');
 		END IF;
-
 		FETCH cJugador INTO jugadores;
 	END LOOP;
 
