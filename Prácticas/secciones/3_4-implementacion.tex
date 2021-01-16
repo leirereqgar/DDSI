@@ -1,14 +1,17 @@
 \section{Implementación externa del Sistema de Información a la Base de Datos}
+Para saber como compilar y ejecutar el programa ir al
+\hyperref[cap:instrucciones]{ApéndiceB}
+
 \subsection{Conexión}
 La conexión a la base de datos la hacemos como vimos en el seminario 2, se crea
-un objeto \texttt{Conection conn} en el que introducimos los datos necesarios para
+un objeto \texttt{Connection conn} en el que introducimos los datos necesarios para
 la conexión:
 \begin{lstlisting}[language=java]
 Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//oracle0.ugr.es:1521/practbd.oracle0.ugr.es", "xDNI", "xDNI")
 \end{lstlisting}
 
 Esta conexión se realiza dentro de un try para que si falla salga la excepción de
-SQL si lo que ha fallado es culpa de la base de datos, o una excepción de java por
+SQL si lo que ha fallado es culpa de la base de datos, o una excepción de java
 si falla la creación del objeto para la conexión.
 
 \subsection{Interfaz de usuario}
@@ -22,8 +25,8 @@ Introduzca su usuario (que coincide con su password):
 Conectado a la base de datos
 \end{lstlisting}
 
-Una vez se realice la conexión nos aparecerá un menú inicial con el que poder
-decidir dentro de que subsistema realizaremos transacciones:
+Una vez nos conectemos a la base de datos, aparecerá un menú incial. Desde éste
+podremos acceder a los distintos subsistemas o cerrar la conexión.
 
 \begin{lstlisting}
 				--- MENU ---
@@ -36,8 +39,8 @@ decidir dentro de que subsistema realizaremos transacciones:
 7.Salir del programa
 \end{lstlisting}
 
-En cada una de esas opciones se nos abrirán nuevos submenús que muestren cada
-una de las opciones disponibles.
+En cada una de esas opciones se nos abrirán nuevos submenús en los que podremos
+seleccionar las distintas funcionalidades.
 
 \subsubsection{Ediciones}
 \begin{lstlisting}
@@ -53,8 +56,10 @@ una de las opciones disponibles.
 En cada opción se nos solicitarán los datos necesarios para llamar a los
 procedimientos de la base de datos.
 
-En el caso de las opciones 2, 3 y 4 necesitamos usar un \texttt{CallableStatement}
+En el caso de las opciones 2, 3 y 4 empleamos un \texttt{CallableStatement}
 para poder leer el parámetro de salida y mostrarlo por pantalla.
+
+\pagebreak
 
 \subsubsection{Jugadores/Entrenadores}
 \begin{lstlisting}
@@ -69,12 +74,14 @@ para poder leer el parámetro de salida y mostrarlo por pantalla.
 8.Cancelar
 \end{lstlisting}
 
-Como en el menú anterior se pedirán los datos que sean necesarios para cada
+Como en el menú anterior, se pedirán los datos que sean necesarios para cada
 procedimiento.
 
-En la opción 6, además se preguntará si se desea introducir la posición que ocupa
-la pareja en el ranking. También existe la opción de añadir la posición después
-si durante la realización del torneo esta posición cambiase.
+En la entrada de datos de la opción 4, existe la posibilidad de elegir si
+introducimos o no la posición del ranking. Esto se debe a que existe la posibilidad
+de inscribir la pareja antes del torneo, caso en el que no se conoce el ranking.
+En cualquier caso, siempre tendremos la opción de añadirla más tarde desde la
+opción 6.
 
 \subsubsection{Pistas/Partidos}
 \begin{lstlisting}
@@ -86,8 +93,9 @@ si durante la realización del torneo esta posición cambiase.
 5.Cancelar
 \end{lstlisting}
 
-En el caso de registrar el partido nos saldrá la misma pregunta sobre añadir el
-resultado nada más insertar el partido o después.
+En el caso de registrar el partido se nos dará, de nuevo, la posibilidad de
+insertar o no el resultado. En caso de no hacerlo, podremos actualizar la tabla
+con el resultado desde la opción 3.
 
 \subsubsection{Patrocinadores/Colaboradores}
 \begin{lstlisting}
@@ -100,10 +108,10 @@ resultado nada más insertar el partido o después.
 6.Cancelar
 \end{lstlisting}
 
-En modificar dinero aportado saldrá un menú más pequeño para decidir si modificar
-sobre colaborador o sobre patrocinador, se podrán realizar varias modificaciones
-hasta que decidamos o no guardar los cambios, entonces se volverá al menú del
-subsistema para continuar la ejecución del programa.
+En \textit{Modificar dinero aportado} saldrá un menú más pequeño para elegir
+si modificar sobre colaborador o sobre patrocinador: se podrán realizar varias
+modificaciones hasta que decidamos o no guardar los cambios, entonces se volverá
+al menú del subsistema para continuar la ejecución del programa.
 
 \subsubsection{Personal/Horarios}
 \begin{lstlisting}
@@ -111,12 +119,15 @@ subsistema para continuar la ejecución del programa.
 1.Insertar personal
 2.Registrar trabajador
 3.Modificar salario
-4.Guardar cambios
-5.Cancelar
+4.Asignar trabajador a una pista
+5.Guardar cambios
+6.Cancelar
 \end{lstlisting}
 
-Este menú, no tiene ninguna particularidad, solo pedirá los datos para cada
+Este menú no tiene ninguna particularidad, solo pedirá los datos para cada
 procedimiento.
+
+\pagebreak
 
 \subsubsection{Materiales/Pedidos}
 \begin{lstlisting}
@@ -124,23 +135,26 @@ procedimiento.
 1.Insertar material
 2.Insertar pedido
 3.Asignar pedido a trabajador
-4.Guardar cambios
-5.Cancelar
+4.Introducir materiales a pedido
+5.Guardar cambios
+6.Cancelar
 \end{lstlisting}
 
-Como en el caso anterior, este menú solo pide los datos para los procedimientos.
+Para \textit{Introducir materiales a pedido}, una vez elegido el pedido,
+seleccionaremos en bucle los distintos materiales y cantidades deseados. El bucle
+puede detenerse tras cada material.
 
 \subsubsection{Commit/Rollback}
-En cada uno de los menús hay una opción para guardar que hará commit haciendo
-efectivas las transacciones y otra para cancelar que hace un rollback anulando
-los cambios que se han hecho.
+En cada uno de los menús, menos en el principal, hay una opción para guardar,
+que hará \texttt{commit} haciendo efectivas las transacciones; y otra para cancelar,
+que hace un \texttt{rollback} anulando los cambios que se han hecho.
 
 En el caso en el que se modifica el dinero aportado por un colaborador o
-patrocinador solo se anula lo insertado hasta antes de empezar a llamar al
+patrocinador solo se anula lo actualizado hasta antes de empezar a llamar al
 procedimiento.
 
 \subsection{Control de excepciones}
 Para el control de excepciones cada llamada a una sentencia de SQL o que tenga
 que ver con el control de la base de datos está dentro de un \texttt{try/except}
 que gestionará si ha habido una excepción de SQL \texttt{SQLException} o una
-generada por java: \texttt{Excepction}.
+generada por java: \texttt{Exception}.
