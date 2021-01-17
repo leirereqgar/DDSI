@@ -44,16 +44,16 @@ VALUES (4, 'Curro', 'Toledano', '124567890', 'Curreoat@gmail.com');
 \subsection{Partido}
 \begin{lstlisting}[language=sql]
 INSERT INTO Partido(idPartido,fecha,resultado)
-VALUES(1,TO_TIMESTAMP('2018-08-06 08:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),15);
+VALUES(1,TO_TIMESTAMP('2016-08-06 08:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),'1-5');
 
 INSERT INTO Partido(idPartido,fecha,resultado)
-VALUES(2,TO_TIMESTAMP('2018-08-07 08:15:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),17);
+VALUES(2,TO_TIMESTAMP('2015-08-07 08:15:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),'2-2');
+
+INSERT INTO Partido(idPartido,fecha)
+VALUES(3,TO_TIMESTAMP('2020-08-08 08:16:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'));
 
 INSERT INTO Partido(idPartido,fecha,resultado)
-VALUES(3,TO_TIMESTAMP('2018-08-08 08:16:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),18);
-
-INSERT INTO Partido(idPartido,fecha,resultado)
-VALUES(4,TO_TIMESTAMP('2018-08-09 08:17:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),19);
+VALUES(4,TO_TIMESTAMP('2019-08-09 08:17:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),'4-3');
 \end{lstlisting}
 
 \pagebreak
@@ -159,27 +159,41 @@ INSERT INTO Arbitrado (idPartido,idArbitro) VALUES (3,3);
 
 INSERT INTO Arbitrado (idPartido,idArbitro) VALUES (4,4);
 \end{lstlisting}
-
+\pagebreak
 \subsection{Pareja}
 \begin{lstlisting}[language=sql]
 INSERT INTO Pareja(idJugador1, idJugador2) VALUES (1,2);
 
-INSERT INTO Pareja(idJugador1, idJugador2) VALUES (3,4);
-
 INSERT INTO Pareja(idJugador1, idJugador2) VALUES (1,3);
 
-INSERT INTO Pareja(idJugador1, idJugador2) VALUES (2,4);
-\end{lstlisting}
+INSERT INTO Pareja(idJugador1, idJugador2) VALUES (1,4);
 
-\pagebreak
+INSERT INTO Pareja(idJugador1, idJugador2) VALUES (2,1);
+
+INSERT INTO Pareja(idJugador1, idJugador2) VALUES (2,3);
+
+INSERT INTO Pareja(idJugador1, idJugador2) VALUES (2,4);
+
+INSERT INTO Pareja(idJugador1, idJugador2) VALUES (3,1);
+
+INSERT INTO Pareja(idJugador1, idJugador2) VALUES (3,2);
+
+INSERT INTO Pareja(idJugador1, idJugador2) VALUES (3,4);
+
+INSERT INTO Pareja(idJugador1, idJugador2) VALUES (4,1);
+
+INSERT INTO Pareja(idJugador1, idJugador2) VALUES (4,2);
+
+INSERT INTO Pareja(idJugador1, idJugador2) VALUES (4,3);
+\end{lstlisting}
 
 \subsection{Inscrita}
 \begin{lstlisting}[language=sql]
-INSERT INTO Inscrita(idJugador1, idJugador2, Año, Pos_ranking)
-VALUES ('1','2','2020','3');
+INSERT INTO Inscrita(idJugador1, idJugador2, Año)
+VALUES ('1','2','2020');
 
-INSERT INTO Inscrita(idJugador1, idJugador2, Año, Pos_ranking)
-VALUES ('3','4','2020','2');
+INSERT INTO Inscrita(idJugador1, idJugador2, Año)
+VALUES ('3','4','2020');
 
 INSERT INTO Inscrita(idJugador1, idJugador2, Año, Pos_ranking)
 VALUES ('1','3','2015','6');
@@ -240,28 +254,30 @@ INSERT INTO Trabaja  (idPersonal, Año, sueldo)  values (3, 2020, 860.5);
 \begin{lstlisting}[language=sql]
 INSERT INTO Asigna(idPersonal,Año,idPista,FechaInicio,FechaFin)
 VALUES(3, 2020, 2,
-	TO_TIMESTAMP('2018-07-02 06:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),
-	TO_TIMESTAMP('2018-07-02 11:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF')
+	TO_TIMESTAMP('2020-07-02 09:00:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),
+	TO_TIMESTAMP('2020-07-02 16:00:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF')
 );
 
 INSERT INTO Asigna(idPersonal,Año,idPista,FechaInicio,FechaFin)
 VALUES(1, 2019, 2,
-	TO_TIMESTAMP('2018-08-06 08:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),
-	TO_TIMESTAMP('2018-08-06 12:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF')
+	TO_TIMESTAMP('2019-08-06 09:00:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),
+	TO_TIMESTAMP('2019-08-06 16:00:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF')
 	);
 
 INSERT INTO Asigna(idPersonal,Año,idPista,FechaInicio,FechaFin)
 VALUES(2, 2016, 2,
-	TO_TIMESTAMP('2018-09-15 06:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),
-	TO_TIMESTAMP('2018-09-15 12:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF')
+	TO_TIMESTAMP('2016-09-15 09:00:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),
+	TO_TIMESTAMP('2016-09-15 16:00:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF')
 );
 
 INSERT INTO Asigna(idPersonal,Año,idPista,FechaInicio,FechaFin)
 VALUES(2, 2016, 2,
-	TO_TIMESTAMP('2018-07-02 06:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),
-	TO_TIMESTAMP('2018-07-02 11:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF')
+	TO_TIMESTAMP('2016-07-02 09:00:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'),
+	TO_TIMESTAMP('2016-07-02 16:00:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF')
 );
 \end{lstlisting}
+
+\pagebreak
 
 \subsection{Colabora}
 \begin{lstlisting}[language=sql]
@@ -293,8 +309,6 @@ INSERT INTO Patrocina (idEntidad, Año, dinero_aportado)
 VALUES (4,2015,250);
 \end{lstlisting}
 
-\pagebreak
-
 \subsection{Proporciona}
 \begin{lstlisting}[language=sql]
 INSERT INTO Proporciona(idmaterial,identidad,Año,cantidad_suministrada)
@@ -309,6 +323,8 @@ VALUES(3,2,2015,80);
 INSERT INTO Proporciona(idmaterial,identidad,Año,cantidad_suministrada)
 VALUES(4,3,2020,50);
 \end{lstlisting}
+
+\pagebreak
 
 \subsection{Recoge}
 \begin{lstlisting}[language=sql]

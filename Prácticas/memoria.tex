@@ -8,6 +8,7 @@
 
 \usepackage{pdfpages}
 \usepackage{lscape}
+\usepackage{hyperref}
 
 \title{Sistema de un torneo de pádel}
 \author{Expósito, Nieto, Sánchez, Requena, Romero}
@@ -35,15 +36,26 @@
 \chapter{Diseño de datos}
 \vfill
 	\input{secciones/2_1-diagramas-externos.tex}
+	\pagebreak
 	\input{secciones/2_2-bd-conceptual.tex}
+	\pagebreak
 	\input{secciones/2_3-paso-tablas.tex}
+	\pagebreak
 	\input{secciones/2_4-sql.tex}
 
 \chapter{Implementación}
 	\input{secciones/3_1-software.tex}
+	\pagebreak
 	\input{secciones/3_2-transacciones.tex}
+	\pagebreak
 	\input{secciones/3_3-disparadores.tex}
+	\pagebreak
 	\input{secciones/3_4-implementacion.tex}
+
+\appendix
+	\input{secciones/extras.tex}
+	\input{secciones/instrucciones.tex}
+	\input{secciones/repo.tex}
 
 
 \end{document}
