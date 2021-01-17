@@ -26,7 +26,7 @@ De nuevo, hemos creado una base de datos muy similar a la del Seminario 2. Cuent
 {\large Añadir un campo a todos los documentos de una colección (ALTER)}
 
   \begin{lstlisting}
-  db.Pedidos.update({}, {\$set : {"fecha":new Date()}},{upsert:false, multi:true})
+  db.Pedidos.update({}, {$set : {"fecha":new Date()}},{upsert:false, multi:true})
   \end{lstlisting}
 
   Vamos a profundizar un poco en esta sentencia para destacar la variedad de usos del \texttt{update()}: estamos filtrando sin especificar ningún criterio para tomar todos los documentos de la colección, creamos y insertamos simultáneamente el nuevo campo (fecha), y con la flag multi nos aseguramos que esto se aplique a todos los documentos.
@@ -36,7 +36,7 @@ De nuevo, hemos creado una base de datos muy similar a la del Seminario 2. Cuent
 {\large Actualizar información en documento (UPDATE)}
 
   \begin{lstlisting}
-  db.Pedidos.update( { _id: 3 }, {\$set:{ "Cliente_id":2, "Stock_id": 4}} )
+  db.Pedidos.update( { _id: 3 }, {$set:{ "Cliente_id":2, "Stock_id": 4}} )
   \end{lstlisting}
 
 \bigskip
@@ -54,7 +54,7 @@ De nuevo, hemos creado una base de datos muy similar a la del Seminario 2. Cuent
   \begin{lstlisting}
   db.Pruebas.insert( {"_id": 1, "test": "123"} )
 
-  db.Pruebas.update( { _id: 1 }, { \$unset: { test: ""} })
+  db.Pruebas.update( { _id: 1 }, { $unset: { test: ""} })
 
   db.Pruebas.deleteOne( {"_id": 1} )
   \end{lstlisting}

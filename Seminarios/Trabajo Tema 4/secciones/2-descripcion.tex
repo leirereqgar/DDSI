@@ -31,7 +31,7 @@ Es realmente importante tener esto en mente al desplegar una base de datos NoSQL
   \begin{itemize}
     \item \textbf{INSERT}: Como hemos dicho, si es la primera instancia implica la declaración de la colección. Si al nombre de un campo le añadimos \_id, este campo será considerado automáticamente clave primaria. Para la sentencia, sería simplemente \texttt{db.collection.insert(\{'campo1':valor1, 'campo2':valor2,...\}}
 
-    \item \textbf{SELECT}: Devuelve los documentos que coincidan con los criterios indicados. La orden es \texttt{db.collection.find(criterio, proyeccion)}, donde criterio son los criterios de búsqueda; y proyección los campos que devuelve de los documentos coincidentes.
+    \item \textbf{SELECT}: Devuelve los documentos que coincidan con los criterios indicados. La orden en cuestión sería esta: \texttt{db.collection.find(criterio, proyeccion)}, donde criterio son los criterios de búsqueda; y proyección los campos que devuelve de los documentos coincidentes.
 
     \item \textbf{UPDATE}: Para actualizar información de un campo, se mantiene de forma muy similar a SQL, y además cuenta con los añadidos vistos en ALTER o DELETE. Emplea operadores para especificar el tipo de actualización (\texttt{\$set, \$unset...}).
 
