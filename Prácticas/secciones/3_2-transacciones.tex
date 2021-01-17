@@ -1,0 +1,172 @@
+\section{Identificación de transacciones}
+\subsubsection{Jugadores/Entrenadores: Clara María Romero Lara}
+Consultar entrenador y parejas que entrena en una edición \texttt{mostrarEntrenador}
+
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE mostrarEntrenador(anio IN NUMBER, idEntr IN NUMBER, salida OUT CLOB)
+IS
+	CURSOR cEntrena IS SELECT * FROM Entrena WHERE (anio = Año) AND (idEntr=idEntrenador);
+	coach Entrena%ROWTYPE;
+	coach_row CLOB;
+BEGIN
+	salida := 'Entrenador '||idEntr||' en la edicion '||anio||' entrena:'||CHR(10);
+	OPEN cEntrena;
+	FETCH cEntrena INTO coach;
+
+	WHILE (cEntrena%FOUND) LOOP
+		coach_row := '   Pareja: ' || coach.idJugador1 || ' ' || coach.idJugador2;
+		salida := salida || coach_row || CHR(10);
+		FETCH cEntrena INTO coach;
+	END LOOP;
+
+	CLOSE cEntrena;
+END;
+/
+\end{lstlisting}
+
+Previa su ejecución, deberíamos:
+\begin{itemize}
+	\item Insertar una edición \texttt{insertarEdicion}
+	\item Insertar al menos dos jugadores \texttt{insertarJugador}
+	\item Registrar una pareja \texttt{registrarPareja}
+	\item Registrar una pareja en una edición \texttt{registrarInscrita}
+	\item Insertar un entrenador \texttt{insertarEntrenador}
+	\item Asignar un entrenador a una pareja en una edición \texttt{registrarEntrena}
+\end{itemize}
+
+\subsubsection{Pistas/Partidos: Javier Expósito Martínez}
+Insertar un nuevo partido \texttt{insertarPartido}.
+
+Se registra un partido en una pista y se introduce una tupla en la tabla \texttt{Jugado}. Es decir, en las tablas \texttt{SeJuegaEn} y \texttt{Jugado}
+sólo se pueden insertar tuplas si insertamos un partido.
+
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE InsertarPartido(idPartido NUMBER, fecha TIMESTAMP, resultado VARCHAR2, idEdicion NUMBER, idPista NUMBER) IS
+BEGIN
+	INSERT INTO Partido(idPartido,fecha,resultado) VALUES (idPartido,fecha,resultado);
+	 INSERT INTO SeJuegaEN(idPartido,idPista) VALUES (idPartido,idPista);
+	 INSERT INTO Jugado(idPartido,Año) VALUES (idPartido,idEdicion);
+END;
+/
+\end{lstlisting}
+
+Previa su ejecución, deberíamos:
+\begin{itemize}
+	\item Insertar una edición \texttt{InsertarEdicion}
+	\item Insertar una pista \texttt{InsertarPista}
+\end{itemize}
+
+\pagebreak
+
+\subsubsection{Patrocinadores/Colaboradores: Leire Requena Garcia}
+Mostrar el dinero total obtenido en una edición \texttt{mostrarRecaducacion}.
+
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE mostrarRecaudacion(edicion IN NUMBER, recaudacion OUT NUMBER) IS
+	RecaudacionColab INT;
+	RecaudacionPatr INT;
+BEGIN
+	SELECT SUM(Dinero_aportado)
+	INTO RecaudacionColab
+	FROM Colabora
+	WHERE Año=edicion;
+
+	SELECT SUM(Dinero_aportado)
+	INTO RecaudacionPatr
+	FROM Patrocina
+	WHERE Año=edicion;
+
+	recaudacion := RecaudacionPatr + RecaudacionColab;
+END;
+/
+\end{lstlisting}
+
+Previa su ejecución, deberíamos:
+\begin{itemize}
+	\item Insertar una edición \texttt{insertarEdicion}
+	\item Insertar una entidad \texttt{insertarEntidad}
+	\item Registrar al menos un colaborador y/o un patrocinador \texttt{registrarColaborador, registrarPatrocinador}
+\end{itemize}
+
+\subsubsection{Personal/Horarios: Laura Sánchez Sánchez}
+Mostrar el personal que no trabaja en una edición \texttt{mostrarPersonal}.
+
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE mostrarPersonal (anio IN NUMBER, salida OUT CLOB)
+IS
+	CURSOR cPersonal IS
+	(SELECT * FROM Personal
+		WHERE NOT EXISTS(
+				SELECT IDPERSONAL FROM Trabaja
+				WHERE (anio=Trabaja.Año AND Trabaja.idPersonal = Personal.idPersonal)
+	));
+
+	persona Personal%ROWTYPE;
+BEGIN
+	OPEN cPersonal;
+	FETCH cPersonal INTO persona;
+	WHILE (cPersonal%FOUND) LOOP
+		salida := salida ||'ID: ' || persona.idPersonal || ' Nombre y apellidos: ' ||
+		persona.nombreP || ' ' || persona.apellidosP || ' Email: ' || persona.emailp ||
+		CHR(10);
+		FETCH cPersonal INTO persona;
+	END LOOP;
+
+	CLOSE cPersonal;
+END;
+/
+\end{lstlisting}
+
+\pagebreak
+
+Previa su ejecución, deberíamos:
+\begin{itemize}
+	\item Insertar una edición \texttt{insertarEdicion}
+	\item Insertar personal \texttt{insertarPersonal}
+	\item Registrar personal como trabajador en edición \texttt{registrarTrabajador}
+\end{itemize}
+
+\subsubsection{Materiales/Pedidos: Inés Nieto Sánchez}
+Asignar un pedido a un trabajador \texttt{InsertarAsignacionRecogida}.
+
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE InsertarAsignacionRecogida(numeroPedido INT,
+idPersonal INT, Año INT,idPista INT, fechainicio TIMESTAMP, fechafin TIMESTAMP,
+fecha TIMESTAMP)
+IS
+BEGIN
+	INSERT INTO Recoge(numero_pedido,idpersonal,año,idpista,fechainicio,fechafin,fecha)
+	VALUES(numeroPedido,idpersonal,año,idpista,fechainicio,fechafin,fecha);
+END;
+/
+\end{lstlisting}
+
+Previa su ejecución, deberíamos:
+\begin{itemize}
+	\item Insertar una edición \texttt{insertarEdicion}
+	\item Insertar personal \texttt{insertarPersonal}
+	\item Registrar personal como trabajador en edición \texttt{registrarTrabajador}
+	\item Asignar trabajador a pista \texttt{InsertarAsigna}
+	\item Insertar material \texttt{InsertarMaterial}
+	\item Insertar pedido \texttt{InsertarPedido}
+\end{itemize}
+
+\subsubsection{Disparadores y procedimientos adicionales}
+Además de estas funcionalidades y sus respectivas para una correcta ejecución,
+hemos incluído ciertas restricciones y funcionalidades del sistema tales como:
+\begin{itemize}
+	\item Triggers:
+	\begin{itemize}
+		\item No se permite ser patrocinador y colaborador en la misma edición
+		\item No se permite a una pareja inscrita tener la misma posición ranking que otra
+	\end{itemize}
+	\item Procedures:
+	\begin{itemize}
+		\item Registrar qué patrocinador proporciona un material en una edición \texttt{InsertarProporciona}
+		\item Registrar los materiales que componen un pedido \texttt{InsertarArticuloPedido}
+		\item Modificar salario de un trabajador \texttt{modificarSalario}
+		\item Modificar dinero aportado por un colaborador o patrocinador \texttt{modificarDineroPatr}, \texttt{modificaDineroColab}
+	\end{itemize}
+\end{itemize}
+
+Para ver el código de los procedimientos y triggers adicionales ir al \hyperref[cap:extras]{Apéndice A}

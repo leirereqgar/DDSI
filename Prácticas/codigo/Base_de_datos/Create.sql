@@ -1,5 +1,3 @@
-\subsection{Creación de tablas}
-\begin{lstlisting}[language=sql]
 CREATE TABLE Edicion(
 	Año INT,
 	PRIMARY KEY (Año)
@@ -214,4 +212,3 @@ CREATE TABLE Compuesto(
 	FOREIGN KEY(numero_pedido) REFERENCES Pedido(numero_pedido),
 	PRIMARY KEY(idMaterial,numero_pedido)
 );
-\end{lstlisting}

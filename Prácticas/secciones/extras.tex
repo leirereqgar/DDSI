@@ -1,0 +1,278 @@
+\chapter{Funcionalidades y disparadores extras}\label{cap:extras}
+\section{Funcionalidades}
+\subsection{insertarEdicion}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE insertarEdicion(anio NUMBER) AS
+BEGIN
+    INSERT INTO Edicion(Año)
+    VALUES (anio);
+END;
+/
+\end{lstlisting}
+
+\subsection{insertarJugador}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE insertarJugador(idJ NUMBER, nombre VARCHAR2, apellido VARCHAR2, telefono VARCHAR2, email VARCHAR2) AS
+BEGIN
+    INSERT INTO Jugador(idJugador,nombreJ, apellidoJ, telefonoJ, emailJ)
+    VALUES (idJ,nombre,apellido,telefono,email);
+END;
+/
+\end{lstlisting}
+
+\subsection{registrarPareja}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE registrarPareja(idJ1 NUMBER, idJ2 NUMBER) AS
+BEGIN
+    INSERT INTO Pareja(idJugador1, idJugador2)
+    VALUES (idJ1,idJ2);
+END;
+/
+\end{lstlisting}
+
+\subsection{registrarInscrita}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE registrarInscrita(idJ1 NUMBER, idJ2 NUMBER, anio NUMBER, ranking NUMBER) AS
+BEGIN
+    INSERT INTO Inscrita(idJugador1, idJugador2, Año, Pos_ranking)
+    VALUES (idJ1,idJ2,anio,ranking);
+END;
+/
+\end{lstlisting}
+\pagebreak
+\subsection{insertarEntrenador}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE insertarEntrenador(idE NUMBER, nombre VARCHAR2, apellido VARCHAR2, telefono VARCHAR2, email VARCHAR2) AS
+BEGIN
+    INSERT INTO Entrenador(idEntrenador,nombreE, apellidoE, telefonoE, emailE)
+    VALUES (idE,nombre,apellido,telefono,email);
+END;
+/
+\end{lstlisting}
+
+\subsection{registrarEntrena}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE registrarEntrena(idJ1 NUMBER, idJ2 NUMBER, idE NUMBER, anio NUMBER) AS
+BEGIN
+    INSERT INTO Entrena(idJugador1, idJugador2, idEntrenador, Año)
+    VALUES (idJ1,idJ2,idE,anio);
+END;
+/
+\end{lstlisting}
+
+\subsection{insertarPista}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE InsertarPista(idPista INT, nombre VARCHAR2,capacidad INT) IS
+BEGIN
+    INSERT INTO Pista(idPista, nombre,capacidad) VALUES (idPista, nombre,capacidad);
+END;
+/
+\end{lstlisting}
+
+\subsection{insertarEntidad}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE insertarEntidad(idE NUMBER, nombre VARCHAR2, contacto VARCHAR2, telefono NUMBER, email VARCHAR2) AS
+BEGIN
+    INSERT INTO Entidad(idEntidad, nombreEn, persona_de_contacto, telefonoEn, emailEn)
+    VALUES (idE,nombre,contacto,telefono,email);
+END;
+/
+\end{lstlisting}
+
+\subsection{registrarColaborador}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE registrarColaborador(idE NUMBER, anio NUMBER, dinero NUMBER) AS
+BEGIN
+    INSERT INTO Colabora (idEntidad, Año, dinero_aportado)
+    VALUES (idE,anio,dinero);
+END;
+/
+\end{lstlisting}
+\pagebreak
+\subsection{registrarPatrocinador}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE registrarPatrocinador(idE NUMBER, anio NUMBER, dinero NUMBER) AS
+BEGIN
+    INSERT INTO Patrocina (idEntidad, Año, dinero_aportado)
+    VALUES (idE,anio,dinero);
+END;
+/
+\end{lstlisting}
+
+\subsection{insertarPersonal}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE insertarPersonal(idPersonal1 INT,
+                       nombreP1 VARCHAR2,
+                       apellidosP1 VARCHAR2,
+                       telefonoP1 INT,
+                       emailP1 VARCHAR2) AS
+BEGIN
+    INSERT INTO Personal(idPersonal, nombreP, apellidosP, telefonoP, emailP)
+    VALUES (idPersonal1, nombreP1, apellidosP1, telefonoP1, emailP1);
+END;
+/
+\end{lstlisting}
+
+\subsection{registrarTrabajador}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE registrarTrabajador(idPersonal1 INT, edicion INT, sueldo1 NUMBER) AS
+BEGIN
+    INSERT INTO Trabaja(idPersonal, Año, sueldo)
+    VALUES (idPersonal1, edicion, sueldo1);
+END;
+/
+\end{lstlisting}
+
+\subsection{insertarAsigna}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE InsertarAsigna(personal INT, edicion INT, pista INT, inicio TIMESTAMP, fin TIMESTAMP)
+IS
+BEGIN
+INSERT INTO Asigna(idPersonal, año, idPista, FechaInicio, FechaFin)
+VALUES(personal, edicion, pista, inicio, fin);
+END;
+/
+\end{lstlisting}
+
+\subsection{insertarMaterial}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE InsertarMaterial(idMaterial INT, nombre VARCHAR2)
+IS
+BEGIN
+    INSERT INTO Material(idMaterial,nombre) VALUES(idMaterial,nombre);
+END;
+/
+\end{lstlisting}
+
+\subsection{InsertarPedido}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE InsertarPedido(numeroPedido INT)
+IS
+BEGIN
+    INSERT INTO Pedido(numero_Pedido) VALUES(numeroPedido);
+END;
+/
+\end{lstlisting}
+
+\subsection{InsertarProporciona}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE InsertarProporciona(idM INT, idE INT, anio INT, articulos INT)
+IS
+BEGIN
+	INSERT INTO Proporciona(idmaterial,identidad,Año,cantidad_suministrada)
+	VALUES(idM,idE,anio,articulos);
+END;
+/
+\end{lstlisting}
+
+\subsection{InsertarArticuloPedido}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE InsertarArticuloPedido(idM INT, idP INT, cant INT)
+IS
+BEGIN
+	INSERT INTO Compuesto(idmaterial,numero_pedido,cantidad)
+	VALUES(idM,idP,cant);
+END;
+/
+\end{lstlisting}
+
+\subsection{modificarSalario}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE modificarSalario(idPersonal1 INT, anio NUMBER, nuevoSueldo NUMBER) AS
+BEGIN
+    UPDATE Trabaja
+    SET sueldo = nuevoSueldo
+    WHERE idPersonal = idPersonal1 AND Año = anio;
+END;
+/
+\end{lstlisting}
+
+\subsection{modificaDineroPatr}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE modificaDineroPatr(idE NUMBER, anio NUMBER, dinero NUMBER) AS
+BEGIN
+    UPDATE Patrocina
+    SET dinero_aportado = dinero
+    WHERE idEntidad = idE AND Año = anio;
+END;
+/
+\end{lstlisting}
+
+\subsection{modificaDineroColab}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE PROCEDURE modificaDineroColab(idE NUMBER, anio NUMBER, dinero NUMBER) AS
+BEGIN
+    UPDATE Colabora
+    SET dinero_aportado = dinero
+    WHERE idEntidad = idE AND Año = anio;
+END;
+/
+\end{lstlisting}
+
+\section{Triggers}
+\subsection{No se permite ser patrocinador y colaborador en la misma edición}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE TRIGGER patr_edicion
+BEFORE
+    INSERT ON Patrocina
+    FOR EACH ROW
+DECLARE
+    CURSOR cColabora IS SELECT * FROM Colabora WHERE (Año = :new.Año);
+    colaboradores Colabora%ROWTYPE;
+BEGIN
+    OPEN cColabora;
+        FETCH cColabora INTO colaboradores;
+        WHILE (cColabora%FOUND) LOOP
+            IF (colaboradores.idEntidad = :new.idEntidad) THEN
+                RAISE_APPLICATION_ERROR(-20600, :new.idEntidad || '***EXCEPTION**** No se puede ser patrocinador y colaborador en la misma edicion');
+            END IF;
+
+            FETCH cColabora INTO colaboradores;
+        END LOOP;
+    CLOSE cColabora;
+END;
+/
+CREATE OR REPLACE TRIGGER colab_edicion
+BEFORE
+    INSERT ON Colabora
+    FOR EACH ROW
+DECLARE
+    CURSOR cPatrocina IS SELECT * FROM Patrocina WHERE (Año = :new.Año);
+    patrocinadores Patrocina%ROWTYPE;
+BEGIN
+    OPEN cPatrocina;
+        FETCH cPatrocina INTO patrocinadores;
+        WHILE (cPatrocina%FOUND) LOOP
+            IF (patrocinadores.idEntidad = :new.idEntidad) THEN
+                RAISE_APPLICATION_ERROR(-20600, :new.idEntidad || '***EXCEPTION**** No se puede ser patrocinador y colaborador en la misma edicion');
+            END IF;
+
+            FETCH cPatrocina INTO patrocinadores;
+        END LOOP;
+    CLOSE cPatrocina;
+END;
+/
+\end{lstlisting}
+\subsection{No se permite a una pareja inscrita tener la misma posición}
+\begin{lstlisting}[language=sql]
+CREATE OR REPLACE TRIGGER ranking_unico
+BEFORE
+    INSERT ON Inscrita
+    FOR EACH ROW
+DECLARE
+    CURSOR cInscrita IS SELECT * FROM Inscrita WHERE (Año = :new.Año);
+    inscritos Inscrita%ROWTYPE;
+BEGIN
+    OPEN cInscrita;
+        FETCH cInscrita INTO inscritos;
+        WHILE (cInscrita%FOUND) LOOP
+            IF (inscritos.pos_ranking = :new.pos_ranking) THEN
+                RAISE_APPLICATION_ERROR(-20600, :new.pos_ranking || '***EXCEPTION**** Esa posicion del ranking ya esta ocupada');
+            END IF;
+
+            FETCH cInscrita INTO inscritos;
+        END LOOP;
+    CLOSE cInscrita;
+END;
+/
+\end{lstlisting}
